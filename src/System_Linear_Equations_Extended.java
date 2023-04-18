@@ -204,26 +204,28 @@ public class System_Linear_Equations_Extended {
         return true;
     }
 
-    // check if exist in the matrix a zeros row
-    public static boolean Is_Zero_Row(float[][] A, int r) {
-        int n = A[0].length;
-        for (int j = 0; j < n; j++) {
-            if (A[r][j] != 0) {
-                return false;
+    // check if a matrix is a unit matrix
+    public static boolean Is_Unit_Matrix(float[][] A) {
+        int n = A.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (A[i][i] != 1 || (i != j && A[i][j] != 0)) {
+                    return false;
+                }
             }
         }
         return true;
     }
 
-    // check if exist in the vector a zeros column
-    public static boolean Is_Zero_Col(float[][] b, int c) {
-        int m = b.length, n = b[0].length;
-        for (int i = 0; i < m && c < n; i++) {
-            if (b[i][c] != 0) {
-                return false;
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Unit_Vector(float[][] A, int i) {
+        int n = A[0].length, c = 0;
+        for (int j = 0; j < n; j++) {
+            if (A[i][j] != 0) {
+                c++;
             }
         }
-        return true;
+        return (c <= 1);
     }
 
     // check if the matrix is an upper triangular
@@ -252,6 +254,28 @@ public class System_Linear_Equations_Extended {
         return true;
     }
 
+    // check if exist in the matrix a zeros row
+    public static boolean Is_Zero_Row(float[][] A, int r) {
+        int n = A[0].length;
+        for (int j = 0; j < n; j++) {
+            if (A[r][j] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if exist in the vector a zeros column
+    public static boolean Is_Zero_Col(float[][] b, int c) {
+        int m = b.length, n = b[0].length;
+        for (int i = 0; i < m && c < n; i++) {
+            if (b[i][c] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // check if all vector values is equal to each other
     public static boolean Is_Equals_Values(Vector<Float> R) {
         int n = R.size();
@@ -261,30 +285,6 @@ public class System_Linear_Equations_Extended {
             }
         }
         return true;
-    }
-
-    // check if a matrix is a unit matrix
-    public static boolean Is_Unit_Matrix(float[][] A) {
-        int n = A.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][i] != 1 || (i != j && A[i][j] != 0)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Unit_Vector(float[][] A, int i) {
-        int n = A[0].length, c = 0;
-        for (int j = 0; j < n; j++) {
-            if (A[i][j] != 0) {
-                c++;
-            }
-        }
-        return (c <= 1);
     }
 
     // check if the specific row in the matrix is a unit vector
