@@ -120,21 +120,6 @@ public class System_Linear_Equations {
         System.out.println();
     }
 
-    // display a vector each current status
-    public static void Print_Vector(float[] b, String fn) {
-        int n = b.length;
-        for (int i = 0; i < n; i++) {
-            if ((Math.round(b[i] * 1000.0) / 1000.0) % 1 == 0) {
-                System.out.println((int) (Math.round(b[i] * 1000.0) / 1000.0));
-            } else if (fn.equals("d")) {
-                System.out.println(Math.round(b[i] * 1000.0) / 1000.0);
-            } else if (fn.equals("r")) {
-                System.out.println(convertDecimalToFraction(b[i]));
-            }
-        }
-        System.out.println();
-    }
-
     // show the resulting solution as a vector representation
     public static void Print_Solution(float[] x, String fn) {
         int n = x.length;
@@ -367,13 +352,11 @@ public class System_Linear_Equations {
     // calculate ranking of a matrix by upper triangular
     public static float[][] Ranking_Matrix(float[][] A, String fn) {
         int n = A.length;
-        Print_Matrix(A,fn);
         float[][] rA = Copy_Matrix(A);
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
                 if (rA[i][i] == 0) {
                     int r = (i + 1) % n;
-                    System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                     for (int k = 0; k < n; k++) {
                         float t = rA[i][k];
                         rA[i][k] = rA[r][k];
@@ -381,11 +364,9 @@ public class System_Linear_Equations {
                     }
                 } if (rA[j][i] != 0) {
                     float c = rA[j][i] / rA[i][i];
-                    Sum_Elementary_Action(c,j,i,fn);
                     for (int k = 0; k < n; k++) {
                         rA[j][k] = rA[j][k] - rA[i][k] * c;
                     }
-                    Print_Matrix(rA,fn);
                 }
             }
         }
@@ -497,9 +478,7 @@ public class System_Linear_Equations {
         int n = A.length;
         float[] x = new float[n];
         float[][] invA = Invertible(A);
-        System.out.println("the solution is: Inv(A)*b:");
-        Print_Matrix(invA,fn);
-        Print_Vector(b,fn);
+        System.out.println("the solution is: Inv(A)*b");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 x[i] += b[j] * invA[i][j];
@@ -586,8 +565,9 @@ public class System_Linear_Equations {
     // solve system of linear equations Ax = b by forward backward method: Ly = b and then Ux = y
     public static float[] Forward_Backward_Method(float[][] A, float[] b, String fn) {
         int n = b.length;
-        System.out.println("first, we will upper ranking of A:");
+        System.out.println("first, we will calculate upper ranking of A:");
         float[][] U = Ranking_Matrix(A,fn);
+		Print_Matrix(A,fn);
         System.out.println("second, we will calculate lower ranking of A:");
         float[][] L = Mul_Mats(A, Invertible(U));
         Print_Matrix(L,fn);
