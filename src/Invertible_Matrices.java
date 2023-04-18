@@ -72,6 +72,7 @@ public class Invertible_Matrices {
         System.out.println();
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for solution
     public static void User_Menu_System() {
         System.out.println("choose number method to solution:");
@@ -91,21 +92,72 @@ public class Invertible_Matrices {
         System.out.println("r. rational");
     }
 
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
-    // calculate multiplication between two matrices
-    public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
-        int n = M1.length;
-        float[][] M = new float[n][n];
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if a matrix is a unit matrix
+    public static boolean Is_Unit_Matrix(float[][] M) {
+        int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    M[i][j] += M1[i][k] * M2[k][j];
+                if (M[i][i] != 1 || (i != j && M[i][j] != 0)) {
+                    return false;
                 }
             }
         }
-        return M;
+        return true;
     }
 
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Unit_Vector(float[][] M, int k) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n && M[k][i] != 0; j++) {
+                if (i != j && M[k][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // check if the matrix is an upper triangular
+    public static boolean Is_Upper_Triangular(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (M[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // check if the matrix is a lower triangular
+    public static boolean Is_Lower_Triangular(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (M[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the index starting from the specific column in the matrix which are him value not equal to 0
+    public static int Get_Index_UnZero_Value(float[][] M, int k) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[k][i] != 0) {
+                return i % n;
+            }
+        }
+        return -1;
+    }
+
+    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
     // replace between two rows in a matrix
     public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
         int n = M.length;
@@ -129,6 +181,7 @@ public class Invertible_Matrices {
         }
     }
 
+    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
     // create a unit matrix with "n*n" size
     public static float[][] Unit_Matrix(int n) {
         float[][] I = new float[n][n];
@@ -183,43 +236,6 @@ public class Invertible_Matrices {
         return Adj;
     }
 
-    // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public static int Get_Index_UnZero_Value(float[][] M, int k) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            if (M[k][i] != 0) {
-                return i % n;
-            }
-        }
-        return -1;
-    }
-
-    // check if a matrix is a unit matrix
-    public static boolean Is_Unit_Matrix(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (M[i][i] != 1 || (i != j && M[i][j] != 0)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Unit_Vector(float[][] M, int k) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n && M[k][i] != 0; j++) {
-                if (i != j && M[k][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // multiplication of a matrix by a constant
     public static float[][] Mul_Const_Matrix(float k, float[][] M) {
         int n = M.length;
@@ -231,32 +247,21 @@ public class Invertible_Matrices {
         return M;
     }
 
-    // check if the matrix is an upper triangular
-    public static boolean Is_Upper_Triangular(float[][] M) {
-        int n = M.length;
+    // calculate multiplication between two matrices
+    public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
+        int n = M1.length;
+        float[][] M = new float[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < i; j++) {
-                if (M[i][j] != 0) {
-                    return false;
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    M[i][j] += M1[i][k] * M2[k][j];
                 }
             }
         }
-        return true;
+        return M;
     }
 
-    // check if the matrix is a lower triangular
-    public static boolean Is_Lower_Triangular(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n - 1; i++) {
-            for (int j = i + 1; j < n; j++) {
-                if (M[i][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
+    ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
     public static String convertDecimalToFraction(float x) {
         if (x < 0) {

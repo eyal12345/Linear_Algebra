@@ -39,6 +39,7 @@ public class Decomposition_Matrices {
         System.out.println();
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for decompose matrices
     public static void User_Menu_System_Decompose() {
         System.out.println("choose number method to solution:");
@@ -75,7 +76,7 @@ public class Decomposition_Matrices {
         System.out.println("r. get M by multiplication of the components");
     }
 
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if the matrix is a lower triangular
     public static boolean Is_Lower_Triangular(float[][] M) {
         int n = M.length;
@@ -84,6 +85,17 @@ public class Decomposition_Matrices {
                 if (M[i][j] != 0) {
                     return false;
                 }
+            }
+        }
+        return true;
+    }
+
+    // check if all the values in the main diagonal which are equals to 1
+    public static boolean Is_One_Slant(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] != 1) {
+                return false;
             }
         }
         return true;
@@ -113,15 +125,17 @@ public class Decomposition_Matrices {
         return true;
     }
 
-    // check if all the values in the main diagonal which are equals to 1
-    public static boolean Is_One_Slant(float[][] M) {
+    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
+    // calculate transpose matrix of a matrix
+    public static float[][] Transpose(float[][] M) {
         int n = M.length;
+        float[][] MT = new float[n][n];
         for (int i = 0; i < n; i++) {
-            if (M[i][i] != 1) {
-                return false;
+            for (int j = 0; j < n; j++) {
+                MT[j][i] = M[i][j];
             }
         }
-        return true;
+        return MT;
     }
 
     // calculate multiplication between two matrices
@@ -138,18 +152,7 @@ public class Decomposition_Matrices {
         return M;
     }
 
-    // calculate transpose matrix of a matrix
-    public static float[][] Transpose(float[][] M) {
-        int n = M.length;
-        float[][] MT = new float[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                MT[j][i] = M[i][j];
-            }
-        }
-        return MT;
-    }
-
+    ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
     public static String convertDecimalToFraction(float x) {
         if (x < 0) {
@@ -680,23 +683,24 @@ public class Decomposition_Matrices {
     ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
         ///////////////////////// Decompose M /////////////////////////
-        float[][] LU = {{2,1,-1},{-3,-1,2},{-2,1,2}};
+        float[][] LU1 = {{2,1,-1},{-3,-1,2},{-2,1,2}};
         float[][] LU2 = {{2,1,0},{6,0,4},{-8,5,0}};
         float[][] LU3 = {{2,0,0},{6,4,0},{-8,5,0}};
         float[][] LU4 = {{2,0,0},{6,0,0},{-8,5,0}};
-        float[][] LLT = {{4,12,-16},{12,37,-43},{-16,-43,98}};
+        float[][] LU5 = {{2,6,-8},{6,0,5},{-8,5,0}};
+        float[][] LLT1 = {{4,12,-16},{12,37,-43},{-16,-43,98}};
         float[][] LLT2 = {{4,-2,2},{-2,17,11},{2,11,35}};
         float[][] LLT3 = {{1,3,-4},{3,10,-7},{-4,-7,42}};
-        float[][] LDLT = {{-1,-3,4},{-3,-5,32},{4,32,75}};
+        float[][] LDLT1 = {{-1,-3,4},{-3,-5,32},{4,32,75}};
         float[][] LDLT2 = {{4,12,-16},{12,52,-28},{-16,-28,89}};
         float[][] LDLT3 = {{4,24,-32},{24,144,-192},{-32,-192,256}};
         ////////////////////////// Receive M //////////////////////////
-        float[][] L = {{1,0,0},{-2,1,0},{-1,4,1}};
+        float[][] L1 = {{1,0,0},{-2,1,0},{-1,4,1}};
         float[][] L2 = {{1,0,0},{3,1,0},{-4,5,1}};
         float[][] L3 = {{2,0,0},{6,1,0},{-8,5,3}};
         float[][] L4 = {{1,0,0},{6,1,0},{-8,5,1}};
         try {
-            Check_User_Input(LLT);
+            Check_User_Input(LU5);
         } catch (Exception e) {
             e.printStackTrace();
         }

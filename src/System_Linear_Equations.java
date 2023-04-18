@@ -100,29 +100,6 @@ public class System_Linear_Equations {
         System.out.println();
     }
 
-    // display user interface by selection method for solution
-    public static void User_Menu_System() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. invertible method");
-        System.out.println("2. cramer method with |A(i)| calculate");
-        System.out.println("3. cramer method without |A(i)| calculate");
-        System.out.println("4. cramer method without |A(i)| calculate (recursive)");
-        System.out.println("5. forward backward method");
-        System.out.println("6. upper --> lower ranking method");
-        System.out.println("7. lower --> upper ranking method");
-        System.out.println("8. parallel ranking method");
-        System.out.println("9. parallel ranking method (recursive)");
-        System.out.println("10. parallel ranking method with elementary matrices");
-        System.out.println("11. parallel ranking method with elementary matrices (recursive)");
-    }
-
-    // display user interface by selection format for solution
-    public static void User_Menu_Solution() {
-        System.out.println("choose the character of format to representation of solution:");
-        System.out.println("d. decimal");
-        System.out.println("r. rational");
-    }
-
     // display a matrix each current status
     public static void Print_Matrix(float[][] A, String fn) {
         int n = A.length;
@@ -177,7 +154,31 @@ public class System_Linear_Equations {
         System.out.println(s);
     }
 
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    // display user interface by selection method for solution
+    public static void User_Menu_System() {
+        System.out.println("choose number method to solution:");
+        System.out.println("1. invertible method");
+        System.out.println("2. cramer method with |A(i)| calculate");
+        System.out.println("3. cramer method without |A(i)| calculate");
+        System.out.println("4. cramer method without |A(i)| calculate (recursive)");
+        System.out.println("5. forward backward method");
+        System.out.println("6. upper --> lower ranking method");
+        System.out.println("7. lower --> upper ranking method");
+        System.out.println("8. parallel ranking method");
+        System.out.println("9. parallel ranking method (recursive)");
+        System.out.println("10. parallel ranking method with elementary matrices");
+        System.out.println("11. parallel ranking method with elementary matrices (recursive)");
+    }
+
+    // display user interface by selection format for solution
+    public static void User_Menu_Solution() {
+        System.out.println("choose the character of format to representation of solution:");
+        System.out.println("d. decimal");
+        System.out.println("r. rational");
+    }
+
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if a matrix is zero matrix
     public static boolean Is_Zero_Matrix(float[][] A) {
         int n = A.length;
@@ -230,15 +231,6 @@ public class System_Linear_Equations {
         return flag;
     }
 
-    // create a unit matrix with "n*n" size
-    public static float[][] Unit_Matrix(int n) {
-        float[][] I = new float[n][n];
-        for (int i = 0; i < n; i++) {
-            I[i][i] = 1;
-        }
-        return I;
-    }
-
     // check if the matrix is an upper triangular
     public static boolean Is_Upper_Triangular(float[][] A) {
         int n = A.length;
@@ -263,6 +255,42 @@ public class System_Linear_Equations {
             }
         }
         return true;
+    }
+
+    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the index starting from the specific column in the matrix which are him value not equal to 0
+    public static int Get_Index_UnZero_Value(float[][] A, int k) {
+        int n = A.length;
+        for (int i = k + 1; i < n + k; i++) {
+            if (A[i % n][k] != 0) {
+                return i % n;
+            }
+        }
+        return -1;
+    }
+
+    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
+    // replace between two rows in a system Ax = b
+    public static void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
+        int n = A.length;
+        for (int j = 0; j < n; j++) {
+            float t = A[r1][j];
+            A[r1][j] = A[r2][j];
+            A[r2][j] = t;
+        }
+        float t = b[r1];
+        b[r1] = b[r2];
+        b[r2] = t;
+    }
+
+    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
+    // create a unit matrix with "n*n" size
+    public static float[][] Unit_Matrix(int n) {
+        float[][] I = new float[n][n];
+        for (int i = 0; i < n; i++) {
+            I[i][i] = 1;
+        }
+        return I;
     }
 
     // calculate determinant of a matrix
@@ -364,19 +392,6 @@ public class System_Linear_Equations {
         return rA;
     }
 
-    // replace between two rows in a system Ax = b
-    public static void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
-        int n = A.length;
-        for (int j = 0; j < n; j++) {
-            float t = A[r1][j];
-            A[r1][j] = A[r2][j];
-            A[r2][j] = t;
-        }
-        float t = b[r1];
-        b[r1] = b[r2];
-        b[r2] = t;
-    }
-
     // duplicate the matrix values into a new matrix
     public static float[][] Copy_Matrix(float[][] A) {
         int n = A.length;
@@ -389,17 +404,7 @@ public class System_Linear_Equations {
         return copyA;
     }
 
-    // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public static int Get_Index_UnZero_Value(float[][] A, int k) {
-        int n = A.length;
-        for (int i = k + 1; i < n + k; i++) {
-            if (A[i % n][k] != 0) {
-                return i % n;
-            }
-        }
-        return -1;
-    }
-
+    ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
     public static String convertDecimalToFraction(float x){
         if (x < 0) {
