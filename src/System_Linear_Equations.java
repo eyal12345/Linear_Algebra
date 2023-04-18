@@ -144,9 +144,9 @@ public class System_Linear_Equations {
     public static void User_Menu_System() {
         System.out.println("choose number method to solution:");
         System.out.println("1. invertible method");
-        System.out.println("2. cramer method with |A(i)| calculate");
-        System.out.println("3. cramer method without |A(i)| calculate");
-        System.out.println("4. cramer method without |A(i)| calculate (recursive)");
+        System.out.println("2. cramer method (first method)");
+        System.out.println("3. cramer method (second method)");
+        System.out.println("4. cramer method (second method) (recursive)");
         System.out.println("5. forward backward method");
         System.out.println("6. upper --> lower ranking method");
         System.out.println("7. lower --> upper ranking method");
@@ -350,7 +350,7 @@ public class System_Linear_Equations {
     }
 
     // calculate ranking of a matrix by upper triangular
-    public static float[][] Ranking_Matrix(float[][] A, String fn) {
+    public static float[][] Ranking_Matrix(float[][] A) {
         int n = A.length;
         float[][] rA = Copy_Matrix(A);
         for (int i = 0; i < n - 1; i++) {
@@ -474,11 +474,10 @@ public class System_Linear_Equations {
 
     /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
     // solve system of linear equations Ax = b by invertible multiplication method: x = Inv(A)*b
-    public static float[] Invertible_Method(float[][] A, float[] b, String fn) {
+    public static float[] Invertible_Method(float[][] A, float[] b) {
         int n = A.length;
         float[] x = new float[n];
         float[][] invA = Invertible(A);
-        System.out.println("the solution is: Inv(A)*b");
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 x[i] += b[j] * invA[i][j];
@@ -488,12 +487,11 @@ public class System_Linear_Equations {
         return x;
     }
 
-    // solve system of linear equations Ax = b by cramer method: x[i] = det(A[i]) / det(A)
-    public static float[] Cramer_Method_V1(float[][] A, float[] b, String fn) {
+    // solve system of linear equations Ax = b by cramer method: x[i] = |A(i)|/|A| for each i from 1 to n
+    public static float[] Cramer_Method_V1(float[][] A, float[] b) {
         int n = A.length;
-        float[] x = new float[n];
         float det = Determinant(A);
-        System.out.println("|A| = " + det);
+        float[] x = new float[n];
         float[] h = new float[n];
         for (int j = 0; j < n; j++) {
             for (int i = 0; i < n; i++) {
@@ -501,25 +499,16 @@ public class System_Linear_Equations {
                 A[i][j] = b[i];
             }
             float detj = Determinant(A);
-            Print_Matrix(A,fn);
-            System.out.println("|A" + (j + 1) + "| = " + detj);
             for (int i = 0; i < n; i++) {
                 A[i][j] = h[i];
             }
             x[j] = detj / det;
-            if (x[j] % 1 == 0) {
-                System.out.println("x" + (j + 1) + " = " + (int) x[j] + "\n");
-            } else if (fn.equals("d")) {
-                System.out.println("x" + (j + 1) + " = " + x[j] + "\n");
-            } else if (fn.equals("r")) {
-                System.out.println("x" + (j + 1) + " = " + convertDecimalToFraction(x[j]) + "\n");
-            }
         }
         return x;
     }
 
     // solve system of linear equations Ax = b by cramer method
-    public static float[] Cramer_Method_V2(float[][] A, float[] b, String fn) {
+    public static float[] Cramer_Method_V2(float[][] A, float[] b) {
         int n = A.length;
         float[] x = new float[n];
         float det = Determinant(A);
@@ -529,19 +518,12 @@ public class System_Linear_Equations {
                 sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
             }
             x[i] = sum / det;
-            if (x[i] % 1 == 0) {
-                System.out.println("x" + (i + 1) + " = " + (int) x[i]);
-            } else if (fn.equals("d")) {
-                System.out.println("x" + (i + 1) + " = " + x[i]);
-            } else if (fn.equals("r")) {
-                System.out.println("x" + (i + 1) + " = " + convertDecimalToFraction(x[i]));
-            }
         }
         return x;
     }
 
     // solve system of linear equations Ax = b by cramer method (recursive)
-    public static float[] Cramer_Method_V2_Rec(float[][] A, float[] b, float[] x, int i, String fn) {
+    public static float[] Cramer_Method_V2_Rec(float[][] A, float[] b, float[] x, int i) {
         int n = A.length;
         if (i == n) {
             return x;
@@ -551,14 +533,7 @@ public class System_Linear_Equations {
                 sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
             }
             x[i] = sum / det;
-            if (x[i] % 1 == 0) {
-                System.out.println("x" + (i + 1) + " = " + (int) x[i]);
-            } else if (fn.equals("d")) {
-                System.out.println("x" + (i + 1) + " = " + x[i]);
-            } else if (fn.equals("r")) {
-                System.out.println("x" + (i + 1) + " = " + convertDecimalToFraction(x[i]));
-            }
-            return Cramer_Method_V2_Rec(A,b,x,i + 1,fn);
+            return Cramer_Method_V2_Rec(A,b,x,i + 1);
         }
     }
 
@@ -566,7 +541,7 @@ public class System_Linear_Equations {
     public static float[] Forward_Backward_Method(float[][] A, float[] b, String fn) {
         int n = b.length;
         System.out.println("first, we will calculate upper ranking of A:");
-        float[][] U = Ranking_Matrix(A,fn);
+        float[][] U = Ranking_Matrix(A);
         Print_Matrix(U,fn);
         System.out.println("second, we will calculate lower ranking of A:");
         float[][] L = Mul_Mats(A,Invertible(U));
@@ -854,22 +829,22 @@ public class System_Linear_Equations {
         float[] x;
         switch (op) {
             case 1:
-                x = Invertible_Method(A,b,fn);
+                x = Invertible_Method(A,b);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
             case 2:
-                x = Cramer_Method_V1(A,b,fn);
+                x = Cramer_Method_V1(A,b);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
             case 3:
-                x = Cramer_Method_V2(A,b,fn);
+                x = Cramer_Method_V2(A,b);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
             case 4:
-                x = Cramer_Method_V2_Rec(A,b,new float[A.length],0,fn);
+                x = Cramer_Method_V2_Rec(A,b,new float[A.length],0);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
@@ -993,7 +968,7 @@ public class System_Linear_Equations {
         float[][] B7 = {{2,3,1,-4,0,-3,0},{-3,1,1,1,0,-4,-1},{0,1,0,-2,1,-1,1},{-4,1,-3,1,0,-2,1},{1,-3,0,-2,-4,1,0},{1,-2,3,0,-4,-2,-4},{0,4,-4,-2,-3,-2,3}};
         float[] b7 = {0,0,0,0,0,0,0};
         try {
-            Check_User_Input(A4,a4);
+            Check_User_Input(A6,a6);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
