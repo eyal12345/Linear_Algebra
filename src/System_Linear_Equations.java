@@ -579,8 +579,8 @@ public class System_Linear_Equations {
                 }
             }
         }
-        float[] y = new float[n];
         System.out.println("third, we will solve forward system Ly = b:");
+        float[] y = new float[n];
         Print_Status_System(L,b,fn);
         for (int i = 0; i < n; i++) {
             y[i] = b[i];
@@ -589,8 +589,8 @@ public class System_Linear_Equations {
             }
             y[i] /= L[i][i];
         }
-        float[] x = new float[n];
         System.out.println("finally, we will solve backward system Ux = y:");
+        float[] x = new float[n];
         Print_Status_System(U,y,fn);
         for (int i = n - 1; i >= 0; i--) {
             x[i] = y[i];
