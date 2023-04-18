@@ -425,7 +425,7 @@ public class System_Linear_Equations_Extended {
         return -1;
     }
 
-    //////////////////////////////////////////////// Retreat Rows ////////////////////////////////////////////////
+    ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
     // replace between two rows in a system Ax = b
     public static void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
         int n = A[0].length, m = b[0].length;
@@ -441,6 +441,16 @@ public class System_Linear_Equations_Extended {
                 b[r2][j] = k;
             }
         }
+    }
+
+    // import the specific row from the matrix
+    public static float[] Get_Row_from_Matrix(float[][] A, int r) {
+        int n = A[0].length;
+        float[] v = new float[n];
+        for (int j = 0; j < n; j++) {
+            v[j] = A[r][j];
+        }
+        return v;
     }
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
@@ -476,17 +486,6 @@ public class System_Linear_Equations_Extended {
             }
         }
         return nb;
-    }
-
-    /////////////////////////////////////////////// Derivative Rows //////////////////////////////////////////////
-    // import the specific row from the matrix
-    public static float[] Get_Row_from_Matrix(float[][] A, int r) {
-        int n = A[0].length;
-        float[] v = new float[n];
-        for (int j = 0; j < n; j++) {
-            v[j] = A[r][j];
-        }
-        return v;
     }
 
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
