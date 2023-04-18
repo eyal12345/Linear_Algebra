@@ -546,7 +546,7 @@ public class System_Linear_Equations {
         if (i == n) {
             return x;
         } else {
-            float sum = 0, det = Determinant(A);;
+            float sum = 0, det = Determinant(A);
             for (int j = 0; j < n; j++) {
                 sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
             }
