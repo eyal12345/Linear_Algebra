@@ -515,6 +515,16 @@ public class System_Linear_Equations_Extended {
     }
 
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
+    // show elementary actions for replace between rows in the system
+    public static void Retreat_Elementary_Action(int i, int j) {
+        int r1 = i + 1, r2 = j + 1;
+        if (r1 <= r2) {
+            System.out.println("R" + r1 + " <--> R" + r2 + "\n");
+        } else {
+            System.out.println("R" + r2 + " <--> R" + r1 + "\n");
+        }
+    }
+
     // show elementary actions for sum between rows in the system
     public static void Sum_Elementary_Action(float k, int j, int i, String fn) {
         if (k != 0) {
@@ -592,16 +602,6 @@ public class System_Linear_Equations_Extended {
                     System.out.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r + "\n");
                 }
             }
-        }
-    }
-
-    // show elementary actions for replace between rows in the system
-    public static void Retreat_Elementary_Action(int i, int j) {
-        int r1 = i + 1, r2 = j + 1;
-        if (r1 <= r2) {
-            System.out.println("R" + r1 + " <--> R" + r2 + "\n");
-        } else {
-            System.out.println("R" + r2 + " <--> R" + r1 + "\n");
         }
     }
 
