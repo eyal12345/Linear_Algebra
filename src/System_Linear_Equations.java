@@ -567,7 +567,7 @@ public class System_Linear_Equations {
         int n = b.length;
         System.out.println("first, we will calculate upper ranking of A:");
         float[][] U = Ranking_Matrix(A,fn);
-		Print_Matrix(A,fn);
+        Print_Matrix(A,fn);
         System.out.println("second, we will calculate lower ranking of A:");
         float[][] L = Mul_Mats(A,Invertible(U));
         Print_Matrix(L,fn);
