@@ -425,7 +425,7 @@ public class System_Linear_Equations_Extended {
         return -1;
     }
 
-    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
+    //////////////////////////////////////////////// Retreat Rows ////////////////////////////////////////////////
     // replace between two rows in a system Ax = b
     public static void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
         int n = A[0].length, m = b[0].length;
