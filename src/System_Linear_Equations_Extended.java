@@ -108,41 +108,6 @@ public class System_Linear_Equations_Extended {
         System.out.println();
     }
 
-    // display user interface by selection method for solution
-    public static void User_Menu_System() {
-        System.out.println("choose the number of method to solution:");
-        System.out.println("1. upper --> lower ranking method");
-        System.out.println("2. lower --> upper ranking method");
-        System.out.println("3. parallel ranking method");
-        System.out.println("4. parallel ranking method (recursive)");
-    }
-
-    // display user interface by selection format for solution
-    public static void User_Menu_Solution() {
-        System.out.println("choose the character of format to representation of solution:");
-        System.out.println("d. decimal");
-        System.out.println("r. rational");
-    }
-
-    // display the coordinates as a vector representation
-    public static String Display_Vector(float[][] x, int c, String fn) {
-        int m = x.length;
-        String s = "(";
-        for (int i = 0; i < m; i++) {
-            if ((Math.round(x[i][c] * 1000.0) / 1000.0) % 1 == 0) {
-                s += (int) (Math.round(x[i][c] * 1000.0) / 1000.0);
-            } else if (fn.equals("d")) {
-                s += Math.round(x[i][c] * 1000.0) / 1000.0;
-            } else if (fn.equals("r")) {
-                s += convertDecimalToFraction(x[i][c]);
-            } if (i != m - 1) {
-                s += " ,";
-            }
-        }
-        s += ")";
-        return s;
-    }
-
     // show the resulting solution as a vector representation
     public static void Print_Solution(float[][] x, String fn) {
         int m = x.length, n = x[0].length;
@@ -190,41 +155,44 @@ public class System_Linear_Equations_Extended {
         System.out.println(s + st);
     }
 
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
-    // add more zero rows in the matrix by needed
-    public static float[][] Increase_Rows_in_Matrix(float[][] A, int m) {
-        int n = A[0].length;
-        float[][] nA = new float[n][n];
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    // display user interface by selection method for solution
+    public static void User_Menu_System() {
+        System.out.println("choose the number of method to solution:");
+        System.out.println("1. upper --> lower ranking method");
+        System.out.println("2. lower --> upper ranking method");
+        System.out.println("3. parallel ranking method");
+        System.out.println("4. parallel ranking method (recursive)");
+    }
+
+    // display user interface by selection format for solution
+    public static void User_Menu_Solution() {
+        System.out.println("choose the character of format to representation of solution:");
+        System.out.println("d. decimal");
+        System.out.println("r. rational");
+    }
+
+    /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
+    // display the coordinates as a vector representation
+    public static String Display_Vector(float[][] x, int c, String fn) {
+        int m = x.length;
+        String s = "(";
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                nA[i][j] = A[i][j];
+            if ((Math.round(x[i][c] * 1000.0) / 1000.0) % 1 == 0) {
+                s += (int) (Math.round(x[i][c] * 1000.0) / 1000.0);
+            } else if (fn.equals("d")) {
+                s += Math.round(x[i][c] * 1000.0) / 1000.0;
+            } else if (fn.equals("r")) {
+                s += convertDecimalToFraction(x[i][c]);
+            } if (i != m - 1) {
+                s += " ,";
             }
         }
-        return nA;
+        s += ")";
+        return s;
     }
 
-    // add more zero rows in the vector by needed
-    public static float[][] Increase_Rows_in_Vector(float[] b, int m) {
-        int n = b.length;
-        float[][] nb = new float[m][1];
-        for (int i = 0; i < n; i++) {
-            nb[i][0] = (i < m) ? b[i] : 0;
-        }
-        return nb;
-    }
-
-    // add a new column to the vector
-    public static float[][] Increase_Cols_in_Vector(float[][] b) {
-        int m = b.length, n = b[0].length;
-        float[][] nb = new float[m][n + 1];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                nb[i][j] = b[i][j];
-            }
-        }
-        return nb;
-    }
-
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if the vector is a zero vector
     public static boolean Is_Zero_Vector(float[] b) {
         int n = b.length;
@@ -284,23 +252,56 @@ public class System_Linear_Equations_Extended {
         return true;
     }
 
-    // find two columns in the matrix which are linearly dependent
-    public static int Get_Linear_Dependent_Columns(float[][] A) {
-        int m = A.length, n = A[0].length;
-        for (int c1 = 0; c1 < n - 1; c1++) {
-            for (int c2 = c1 + 1; c2 < n; c2++) {
-                Vector<Float> C  = new Vector<Float>();
-                for (int r = 0; r < m; r++) {
-                    if (A[r][c1] != 0 || A[r][c2] != 0) {
-                        C.add(A[r][c1] / A[r][c2]);
-                    }
-                }
-                if (Is_Equals_Values(C) && C.size() > 1) {
-                    return c1;
+    // check if all vector values is equal to each other
+    public static boolean Is_Equals_Values(Vector<Float> R) {
+        int n = R.size();
+        for (int i = 0; i < n - 1; i++) {
+            if (!R.get(i).equals(R.get(i + 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if a matrix is a unit matrix
+    public static boolean Is_Unit_Matrix(float[][] A) {
+        int n = A.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (A[i][i] != 1 || (i != j && A[i][j] != 0)) {
+                    return false;
                 }
             }
         }
-        return -1;
+        return true;
+    }
+
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Unit_Vector(float[][] A, int i) {
+        int n = A[0].length, c = 0;
+        for (int j = 0; j < n; j++) {
+            if (A[i][j] != 0) {
+                c++;
+            }
+        }
+        return (c <= 1);
+    }
+
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Exist_Vector(float[][] A, int r) {
+        int n = A[0].length;
+        float[] v = Get_Row_from_Matrix(A,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Get_Index_for_Unit_Vector(v);
+        for (int i = 0; i < n; i++) {
+            if (i != r && Is_Unit_Vector(A,r) && Is_Unit_Vector(A,i)) {
+                int c2 = Get_Index_for_Unit_Vector(Get_Row_from_Matrix(A,i));
+                if (c1 == c2 && c1 != -1) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     // check if exists two vectors in the matrix which are linearly dependent
@@ -348,25 +349,24 @@ public class System_Linear_Equations_Extended {
         return false;
     }
 
-    // check if all vector values is equal to each other
-    public static boolean Is_Equals_Values(Vector<Float> R) {
-        int n = R.size();
-        for (int i = 0; i < n - 1; i++) {
-            if (!R.get(i).equals(R.get(i + 1))) {
-                return false;
+    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // find two columns in the matrix which are linearly dependent
+    public static int Get_Linear_Dependent_Columns(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int c1 = 0; c1 < n - 1; c1++) {
+            for (int c2 = c1 + 1; c2 < n; c2++) {
+                Vector<Float> C  = new Vector<Float>();
+                for (int r = 0; r < m; r++) {
+                    if (A[r][c1] != 0 || A[r][c2] != 0) {
+                        C.add(A[r][c1] / A[r][c2]);
+                    }
+                }
+                if (Is_Equals_Values(C) && C.size() > 1) {
+                    return c1;
+                }
             }
         }
-        return true;
-    }
-
-    // import the specific row from the matrix
-    public static float[] Get_Row_from_Matrix(float[][] A, int r) {
-        int n = A[0].length;
-        float[] v = new float[n];
-        for (int j = 0; j < n; j++) {
-            v[j] = A[r][j];
-        }
-        return v;
+        return -1;
     }
 
     // get the specific column index of the row requested from the matrix which are indicating a unit vector
@@ -384,47 +384,6 @@ public class System_Linear_Equations_Extended {
         return -1;
     }
 
-    // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Exist_Vector(float[][] A, int r) {
-        int n = A[0].length;
-        float[] v = Get_Row_from_Matrix(A,r);
-        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
-        int c1 = Get_Index_for_Unit_Vector(v);
-        for (int i = 0; i < n; i++) {
-            if (i != r && Is_Unit_Vector(A,r) && Is_Unit_Vector(A,i)) {
-                int c2 = Get_Index_for_Unit_Vector(Get_Row_from_Matrix(A,i));
-                if (c1 == c2 && c1 != -1) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // check if a matrix is a unit matrix
-    public static boolean Is_Unit_Matrix(float[][] A) {
-        int n = A.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][i] != 1 || (i != j && A[i][j] != 0)) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
-    // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Unit_Vector(float[][] A, int i) {
-        int n = A[0].length, c = 0;
-        for (int j = 0; j < n; j++) {
-            if (A[i][j] != 0) {
-                c++;
-            }
-        }
-        return (c <= 1);
-    }
-
     // get the index from the vector that is indicating a unit vector
     public static int Get_Index_for_Unit_Vector(float[] v) {
         int n = v.length;
@@ -434,23 +393,6 @@ public class System_Linear_Equations_Extended {
             }
         }
         return -1;
-    }
-
-    // replace between two rows in a system Ax = b
-    public static void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
-        int n = A[0].length, m = b[0].length;
-        for (int j = 0; j < n; j++) {
-            float k = A[r1][j];
-            A[r1][j] = A[r2][j];
-            A[r2][j] = k;
-        }
-        for (int j = 0; j < m; j++) {
-            if (!Is_Zero_Col(b,j)) {
-                float k = b[r1][j];
-                b[r1][j] = b[r2][j];
-                b[r2][j] = k;
-            }
-        }
     }
 
     // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
@@ -473,7 +415,7 @@ public class System_Linear_Equations_Extended {
     }
 
     // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
-    public static int Intersection_Zero_Row_Col(float[][] A, int r) {
+    public static int Get_Intersection_Zero_Row_Col(float[][] A, int r) {
         int n = A[0].length;
         for (int c = 0; c < n; c++) {
             if (Is_Zero_Col(A,c) && Is_Zero_Row(A,r)) {
@@ -483,6 +425,71 @@ public class System_Linear_Equations_Extended {
         return -1;
     }
 
+    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
+    // replace between two rows in a system Ax = b
+    public static void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
+        int n = A[0].length, m = b[0].length;
+        for (int j = 0; j < n; j++) {
+            float k = A[r1][j];
+            A[r1][j] = A[r2][j];
+            A[r2][j] = k;
+        }
+        for (int j = 0; j < m; j++) {
+            if (!Is_Zero_Col(b,j)) {
+                float k = b[r1][j];
+                b[r1][j] = b[r2][j];
+                b[r2][j] = k;
+            }
+        }
+    }
+
+    ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
+    // add more zero rows in the matrix by needed
+    public static float[][] Increase_Rows_in_Matrix(float[][] A, int m) {
+        int n = A[0].length;
+        float[][] nA = new float[n][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                nA[i][j] = A[i][j];
+            }
+        }
+        return nA;
+    }
+
+    // add more zero rows in the vector by needed
+    public static float[][] Increase_Rows_in_Vector(float[] b, int m) {
+        int n = b.length;
+        float[][] nb = new float[m][1];
+        for (int i = 0; i < n; i++) {
+            nb[i][0] = (i < m) ? b[i] : 0;
+        }
+        return nb;
+    }
+
+    // add a new column to the vector
+    public static float[][] Increase_Cols_in_Vector(float[][] b) {
+        int m = b.length, n = b[0].length;
+        float[][] nb = new float[m][n + 1];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                nb[i][j] = b[i][j];
+            }
+        }
+        return nb;
+    }
+
+    /////////////////////////////////////////////// Derivative Rows //////////////////////////////////////////////
+    // import the specific row from the matrix
+    public static float[] Get_Row_from_Matrix(float[][] A, int r) {
+        int n = A[0].length;
+        float[] v = new float[n];
+        for (int j = 0; j < n; j++) {
+            v[j] = A[r][j];
+        }
+        return v;
+    }
+
+    ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
     public static String convertDecimalToFraction(float x){
         if (x < 0) {
@@ -615,7 +622,7 @@ public class System_Linear_Equations_Extended {
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Intersection_Zero_Row_Col(A,i);
+                int d1 = Get_Intersection_Zero_Row_Col(A,i);
                 int d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
                     System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
@@ -703,7 +710,7 @@ public class System_Linear_Equations_Extended {
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Intersection_Zero_Row_Col(A,i);
+                int d1 = Get_Intersection_Zero_Row_Col(A,i);
                 int d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
                     System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
@@ -783,7 +790,7 @@ public class System_Linear_Equations_Extended {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                    int d1 = Intersection_Zero_Row_Col(A,i);
+                    int d1 = Get_Intersection_Zero_Row_Col(A,i);
                     int d2 = Get_Linear_Dependent_Columns(A);
                     if (d1 != -1) {
                         System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
@@ -852,7 +859,7 @@ public class System_Linear_Equations_Extended {
             int n = A.length, t = b[0].length - 1;
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Intersection_Zero_Row_Col(A,i);
+                int d1 = Get_Intersection_Zero_Row_Col(A,i);
                 int d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
                     System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
