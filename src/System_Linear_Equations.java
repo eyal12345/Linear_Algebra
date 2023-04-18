@@ -523,17 +523,18 @@ public class System_Linear_Equations {
     }
 
     // solve system of linear equations Ax = b by cramer method (recursive)
-    public static float[] Cramer_Method_V2_Rec(float[][] A, float[] b, float[] x, int i) {
+    public static float[] Cramer_Method_V2_Rec(float[][] A, float[] b, float[] x, int i, int j) {
         int n = A.length;
         if (i == n) {
             return x;
         } else {
-            float sum = 0, det = Determinant(A);
-            for (int j = 0; j < n; j++) {
-                sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
+            x[i] += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
+            if (j == n - 1) {
+                float det = Determinant(A);
+                x[i] = x[i] / det;
+                return Cramer_Method_V2_Rec(A,b,x,i + 1,0);
             }
-            x[i] = sum / det;
-            return Cramer_Method_V2_Rec(A,b,x,i + 1);
+            return Cramer_Method_V2_Rec(A,b,x,i,j + 1);
         }
     }
 
@@ -844,7 +845,7 @@ public class System_Linear_Equations {
                 Print_Solution(x,fn);
                 break;
             case 4:
-                x = Cramer_Method_V2_Rec(A,b,new float[A.length],0);
+                x = Cramer_Method_V2_Rec(A,b,new float[A.length],0,0);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
