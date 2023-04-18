@@ -157,31 +157,7 @@ public class Invertible_Matrices {
         return -1;
     }
 
-    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
-    // replace between two rows in a matrix
-    public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
-        int n = M.length;
-        for (int j = 0; j < n; j++) {
-            float t = M[r1][j];
-            M[r1][j] = M[r2][j];
-            M[r2][j] = t;
-        }
-    }
-
-    // replace between two rows in a matrices
-    public static void Retreat_Rows_Matrices(float[][] M, float[][] invM, int r1, int r2) {
-        int n = M.length;
-        for (int j = 0; j < n; j++) {
-            float t = M[r1][j];
-            M[r1][j] = M[r2][j];
-            M[r2][j] = t;
-            float inv_t = invM[r1][j];
-            invM[r1][j] = invM[r2][j];
-            invM[r2][j] = inv_t;
-        }
-    }
-
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
+    ////////////////////////////////////////////// Matrices Creation /////////////////////////////////////////////
     // create a unit matrix with "n*n" size
     public static float[][] Unit_Matrix(int n) {
         float[][] I = new float[n][n];
@@ -191,6 +167,7 @@ public class Invertible_Matrices {
         return I;
     }
 
+    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate determinant of a matrix
     public static float Determinant(float[][] M) {
         int n = M.length;
@@ -245,6 +222,29 @@ public class Invertible_Matrices {
             }
         }
         return M;
+    }
+
+    // replace between two rows in a matrix
+    public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
+        int n = M.length;
+        for (int j = 0; j < n; j++) {
+            float t = M[r1][j];
+            M[r1][j] = M[r2][j];
+            M[r2][j] = t;
+        }
+    }
+
+    // replace between two rows in a matrices
+    public static void Retreat_Rows_Matrices(float[][] M, float[][] invM, int r1, int r2) {
+        int n = M.length;
+        for (int j = 0; j < n; j++) {
+            float t = M[r1][j];
+            M[r1][j] = M[r2][j];
+            M[r2][j] = t;
+            float inv_t = invM[r1][j];
+            invM[r1][j] = invM[r2][j];
+            invM[r2][j] = inv_t;
+        }
     }
 
     // calculate multiplication between two matrices

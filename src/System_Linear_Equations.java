@@ -269,21 +269,7 @@ public class System_Linear_Equations {
         return -1;
     }
 
-    ///////////////////////////////////////////////// Change Rows ////////////////////////////////////////////////
-    // replace between two rows in a system Ax = b
-    public static void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
-        int n = A.length;
-        for (int j = 0; j < n; j++) {
-            float t = A[r1][j];
-            A[r1][j] = A[r2][j];
-            A[r2][j] = t;
-        }
-        float t = b[r1];
-        b[r1] = b[r2];
-        b[r2] = t;
-    }
-
-    /////////////////////////////////////////// Auxiliary Operations /////////////////////////////////////////////
+    ////////////////////////////////////////////// Matrices Creation /////////////////////////////////////////////
     // create a unit matrix with "n*n" size
     public static float[][] Unit_Matrix(int n) {
         float[][] I = new float[n][n];
@@ -293,6 +279,7 @@ public class System_Linear_Equations {
         return I;
     }
 
+    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate determinant of a matrix
     public static float Determinant(float[][] A) {
         int n = A.length;
@@ -350,6 +337,19 @@ public class System_Linear_Equations {
         return invA;
     }
 
+    // replace between two rows in a system Ax = b
+    public static void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
+        int n = A.length;
+        for (int j = 0; j < n; j++) {
+            float t = A[r1][j];
+            A[r1][j] = A[r2][j];
+            A[r2][j] = t;
+        }
+        float t = b[r1];
+        b[r1] = b[r2];
+        b[r2] = t;
+    }
+
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
     public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
         int n = M1.length;
@@ -392,6 +392,7 @@ public class System_Linear_Equations {
         return rA;
     }
 
+    ////////////////////////////////////////////////// Duplicate /////////////////////////////////////////////////
     // duplicate the matrix values into a new matrix
     public static float[][] Copy_Matrix(float[][] A) {
         int n = A.length;
