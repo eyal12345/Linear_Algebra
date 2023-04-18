@@ -264,6 +264,18 @@ public class System_Linear_Equations {
         return I;
     }
 
+    // duplicate the matrix values into a new matrix
+    public static float[][] Copy_Matrix(float[][] A) {
+        int n = A.length;
+        float[][] cA = new float[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                cA[i][j] = A[i][j];
+            }
+        }
+        return cA;
+    }
+
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate determinant of a matrix
     public static float Determinant(float[][] A) {
@@ -371,19 +383,6 @@ public class System_Linear_Equations {
             }
         }
         return rA;
-    }
-
-    ////////////////////////////////////////////////// Duplicate /////////////////////////////////////////////////
-    // duplicate the matrix values into a new matrix
-    public static float[][] Copy_Matrix(float[][] A) {
-        int n = A.length;
-        float[][] copyA = new float[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                copyA[i][j] = A[i][j];
-            }
-        }
-        return copyA;
     }
 
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
