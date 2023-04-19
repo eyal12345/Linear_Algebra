@@ -278,6 +278,7 @@ public class Invertible_Matrices {
     public static void Sum_Elementary_Action(float k, int j, int i, String fn) {
         if (k != 0) {
             int r = j + 1, c = i + 1;
+            k = (float) (Math.round(k * 1000.0) / 1000.0);
             if (k > 0) {
                 if (k % 1 == 0) {
                     if (k == 1) {
@@ -310,6 +311,7 @@ public class Invertible_Matrices {
     public static void Mul_Elementary_Action(float k, int j, String fn) {
         if (k != 1) {
             int r = j + 1;
+            k = (float) (Math.round(k * 1000.0) / 1000.0);
             if (k % 1 == 0) {
                 if (k == -1) {
                     System.out.println("R" + r + " --> - R" + r + "\n");

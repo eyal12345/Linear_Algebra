@@ -527,6 +527,7 @@ public class System_Linear_Equations_Extended {
     public static void Sum_Elementary_Action(float k, int j, int i, String fn) {
         if (k != 0) {
             int r = j + 1, c = i + 1;
+            k = (float) (Math.round(k * 1000.0) / 1000.0);
             if (k > 0) {
                 if (k % 1 == 0) {
                     if (k == 1) {
@@ -535,7 +536,6 @@ public class System_Linear_Equations_Extended {
                         System.out.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c + "\n");
                     }
                 } else if (fn.equals("d")) {
-                    k = (float) (Math.round(k * 1000.0) / 1000.0);
                     if (k % 1 == 0) {
                         System.out.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c + "\n");
                     } else {
@@ -557,7 +557,6 @@ public class System_Linear_Equations_Extended {
                         System.out.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c + "\n");
                     }
                 } else if (fn.equals("d")) {
-                    k = (float) (Math.round(k * 1000.0) / 1000.0);
                     if (k % 1 == 0) {
                         System.out.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c + "\n");
                     } else {
