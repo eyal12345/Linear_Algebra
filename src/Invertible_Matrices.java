@@ -78,11 +78,9 @@ public class Invertible_Matrices {
         System.out.println("choose number method to solution:");
         System.out.println("1. invert a matrix by lower ranking");
         System.out.println("2. invert a matrix by upper ranking");
-        System.out.println("3. invert a matrix by parallel ranking");
-        System.out.println("4. invert a matrix by parallel ranking with elementary matrices");
-        System.out.println("5. invert a matrix by parallel ranking with elementary matrices (recursive)");
-        System.out.println("6. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
-        System.out.println("7. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M) with fast performance");
+        System.out.println("3. invert a matrix by parallel ranking (first method)");
+        System.out.println("4. invert a matrix by parallel ranking (second method)");
+        System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
     // display user interface by selection format for solution
@@ -432,7 +430,7 @@ public class Invertible_Matrices {
     }
 
     // invert the M matrix by parallel ranking
-    public static float[][] Invertible(float[][] M, String fn) {
+    public static float[][] Invertible_Ranking_Method_V1(float[][] M, String fn) {
         System.out.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = Unit_Matrix(n);
@@ -468,7 +466,7 @@ public class Invertible_Matrices {
     }
 
     // invert the M matrix in parallel ranking by a multiplication of M in elementary matrix each iteration
-    public static float[][] Invertible_Elementary(float[][] M, String fn) {
+    public static float[][] Invertible_Ranking_Method_V2(float[][] M, String fn) {
         System.out.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0 ,j = 0;
         float[][] InvM = Unit_Matrix(n);
@@ -505,47 +503,10 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix in parallel ranking by a multiplication of M in elementary matrix each iteration (recursive)
-    public static float[][] Invertible_Elementary_Rec(float[][] M, float[][] InvM, int i, int j, String fn) {
-        int n = M.length;
-        if (Is_Unit_Matrix(M)) {
-            return InvM;
-        } else {
-            float[][] E = Unit_Matrix(n);
-            if (M[i][i] == 0) {
-                int r = Get_Index_UnZero_Value(M,i);
-                System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
-                Retreat_Rows_Matrix(E,i,r);
-                M = Mul_Mats(E,M);
-                InvM = Mul_Mats(E,InvM);
-                Print_Status_Matrices(M,InvM,fn);
-            } else {
-                if (i != j && M[j][i] != 0) {
-                    E[j][i] -= (M[j][i] / M[i][i]);
-                    Sum_Elementary_Action(-E[j][i],j,i,fn);
-                    M = Mul_Mats(E,M);
-                    InvM = Mul_Mats(E,InvM);
-                    M[j][i] = 0;
-                    Print_Status_Matrices(M,InvM,fn);
-                } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
-                    E[j][j] = 1 / M[j][j];
-                    Mul_Elementary_Action(E[j][j],j,fn);
-                    M = Mul_Mats(E,M);
-                    InvM = Mul_Mats(E,InvM);
-                    M[j][j] = 1;
-                    Print_Status_Matrices(M,InvM,fn);
-                } if (j == n - 1)
-                    i = (i + 1) % n;
-                j = (j + 1) % n;
-            }
-            return Invertible_Elementary_Rec(M,InvM,i,j,fn);
-        }
-    }
-
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
     public static float[][] Invertible_Direct(float[][] M) {
-        float det = Determinant(M);
         int n = M.length;
+        float det = Determinant(M);
         float[][] InvM = new float[n][n];
         float[][] adj = Adjoint(M);
         for (int i = 0; i < n; i++) {
@@ -575,21 +536,16 @@ public class Invertible_Matrices {
                 Print_Solution(M,fn);
                 break;
             case 3:
-                M = Invertible(M,fn);
+                M = Invertible_Ranking_Method_V1(M,fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
             case 4:
-                M = Invertible_Elementary(M,fn);
+                M = Invertible_Ranking_Method_V2(M,fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
             case 5:
-                M = Invertible_Elementary_Rec(M,Unit_Matrix(M.length),0,0,fn);
-                System.out.println("the invertible of this matrix is:");
-                Print_Solution(M,fn);
-                break;
-            case 6:
                 M = Invertible_Direct(M);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);

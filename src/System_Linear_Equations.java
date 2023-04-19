@@ -321,11 +321,12 @@ public class System_Linear_Equations {
     // calculate invertible matrix of a matrix
     public static float[][] Invertible(float[][] A) {
         int n = A.length;
+        float det = Determinant(A);
         float[][] invA = new float[n][n];
         float[][] adj = Adjoint(A);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                invA[i][j] = (1 / Determinant(A)) * adj[i][j];
+                invA[i][j] = (1 / det) * adj[i][j];
             }
         }
         return invA;
@@ -422,6 +423,7 @@ public class System_Linear_Equations {
     public static void Sum_Elementary_Action(float k, int j, int i, String fn) {
         if (k != 0) {
             int r = j + 1, c = i + 1;
+            k = (float) (Math.round(k * 1000.0) / 1000.0);
             if (k > 0) {
                 if (k % 1 == 0) {
                     if (k == 1) {
@@ -454,6 +456,7 @@ public class System_Linear_Equations {
     public static void Mul_Elementary_Action(float k, int j, String fn) {
         if (k != 1) {
             int r = j + 1;
+            k = (float) (Math.round(k * 1000.0) / 1000.0);
             if (k % 1 == 0) {
                 if (k == -1) {
                     System.out.println("R" + r + " --> - R" + r + "\n");
@@ -825,7 +828,7 @@ public class System_Linear_Equations {
         }
     }
 
-    ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
+    /////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
         float[][] A1 = {{3}};
         float[] a1 = {4};

@@ -162,7 +162,6 @@ public class System_Linear_Equations_Extended {
         System.out.println("1. upper --> lower ranking method");
         System.out.println("2. lower --> upper ranking method");
         System.out.println("3. parallel ranking method");
-        System.out.println("4. parallel ranking method (recursive)");
     }
 
     // display user interface by selection format for solution
@@ -850,75 +849,6 @@ public class System_Linear_Equations_Extended {
         return b;
     }
 
-    // solve system of linear equations Ax = b by a parallel ranking (recursive)
-    public static float[][] Parallel_Ranking_Method_Rec(float[][] A, float[][] b, int i, int j, String fn) {
-        if (Is_Unit_Matrix(A)) {
-            return b;
-        } else {
-            int n = A.length, t = b[0].length - 1;
-            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Get_Intersection_Zero_Row_Col(A,i);
-                int d2 = Get_Linear_Dependent_Columns(A);
-                if (d1 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
-                    A[i][d1] = 1;
-                    b[i][++t] = 1;
-                } else if (d2 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
-                    A[i][d2] = 1;
-                    b[i][++t] = 1;
-                } else if (!Is_Exist_Vector(A,i)) {
-                    System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
-                    A[i][i] = 1;
-                    b[i][++t] = 1;
-                }
-                Print_Status_System(A,b,fn);
-            } if (A[i][i] == 0) {
-                int r = Get_Index_UnZero_Value(A,i,true);
-                if (r >= 0 && r < n && r != i) {
-                    A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
-                    Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(A,b,i,r);
-                    Print_Status_System(A,b,fn);
-                }
-            }
-            if (i != j && A[i][i] != 0 && A[j][i] != 0) {
-                float c = A[j][i] / A[i][i];
-                Sum_Elementary_Action(c,j,i,fn);
-                for (int k = 0; k < n; k++) {
-                    A[j][k] -= A[i][k] * c;
-                    if (k <= t) {
-                        b[j][k] -= b[i][k] * c;
-                    }
-                }
-                A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                Print_Status_System(A,b,fn);
-            }
-            A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-            if (Is_Unit_Vector(A,j)) {
-                int d = Get_Index_for_Unit_Vector(Get_Row_from_Matrix(A,j));
-                if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                    float c = 1 / A[j][d];
-                    Mul_Elementary_Action(c,j,fn);
-                    for (int k = 0; k <= t; k++) {
-                        b[j][k] /= A[j][d];
-                    }
-                    b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
-                    A[j][d] = 1;
-                    Print_Status_System(A,b,fn);
-                }
-            } if (j == n - 1) {
-                i = (i + 1) % n;
-            }
-            j = (j + 1) % n;
-            return Parallel_Ranking_Method_Rec(A,b,i,j,fn);
-        }
-    }
-
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
     public static void Solve_System(float[][] A, float[][] b, String fn) throws Exception {
@@ -938,10 +868,6 @@ public class System_Linear_Equations_Extended {
                 break;
             case 3:
                 x = Parallel_Ranking_Method(A,b,fn);
-                Print_Solution(x,fn);
-                break;
-            case 4:
-                x = Parallel_Ranking_Method_Rec(A,b,0,0,fn);
                 Print_Solution(x,fn);
                 break;
             default:
