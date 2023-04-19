@@ -213,17 +213,6 @@ public class Invertible_Matrices {
         return Adj;
     }
 
-    // multiplication of a matrix by a constant
-    public static float[][] Mul_Const_Matrix(float k, float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                M[i][j] = k * M[i][j];
-            }
-        }
-        return M;
-    }
-
     // replace between two rows in a matrix
     public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
         int n = M.length;
@@ -567,12 +556,6 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix by the multiplication of const in Adj(M)
-    public static float[][] Invertible_Direct_Plus(float[][] M) {
-        float det = Determinant(M);
-        return Mul_Const_Matrix(1 / det,Adjoint(M));
-    }
-
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
     public static void Invert_Matrix(float[][] M, String fn) throws Exception {
@@ -608,11 +591,6 @@ public class Invertible_Matrices {
                 break;
             case 6:
                 M = Invertible_Direct(M);
-                System.out.println("the invertible of this matrix is:");
-                Print_Solution(M,fn);
-                break;
-            case 7:
-                M = Invertible_Direct_Plus(M);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
