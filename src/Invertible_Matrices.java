@@ -429,7 +429,7 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix by parallel ranking
+    // invert the M matrix by parallel ranking (first algorithm)
     public static float[][] Invertible_Ranking_Method_V1(float[][] M, String fn) {
         System.out.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
@@ -465,7 +465,7 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix in parallel ranking by a multiplication of M in elementary matrix each iteration
+    // invert the M matrix by parallel ranking (second algorithm)
     public static float[][] Invertible_Ranking_Method_V2(float[][] M, String fn) {
         System.out.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0 ,j = 0;

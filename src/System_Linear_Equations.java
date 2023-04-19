@@ -662,7 +662,7 @@ public class System_Linear_Equations {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking
+    // solve system of linear equations Ax = b by parallel ranking (first algorithm)
     public static float[] Parallel_Ranking_Method_V1(float[][] A, float[] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
         int n = A.length;
@@ -697,7 +697,7 @@ public class System_Linear_Equations {
         return b;
     }
 
-    // solve system of linear equations Ax = b by multiplication elementary matrix each iteration
+    // solve system of linear equations Ax = b by parallel ranking (second algorithm)
     public static float[] Parallel_Ranking_Method_V2(float[][] A, float[] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, i = 0, j = 0;
