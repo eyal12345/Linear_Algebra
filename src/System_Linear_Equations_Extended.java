@@ -161,7 +161,8 @@ public class System_Linear_Equations_Extended {
         System.out.println("choose the number of method to solution:");
         System.out.println("1. upper --> lower ranking method");
         System.out.println("2. lower --> upper ranking method");
-        System.out.println("3. parallel ranking method");
+        System.out.println("3. parallel ranking method (first method)");
+        System.out.println("4. parallel ranking method (second method)");
     }
 
     // display user interface by selection format for solution
@@ -422,6 +423,27 @@ public class System_Linear_Equations_Extended {
             }
         }
         return -1;
+    }
+
+    ////////////////////////////////////////////// Matrices Creation /////////////////////////////////////////////
+    // create a unit matrix with "n*n" size
+    public static float[][] Unit_Matrix(int n) {
+        float[][] I = new float[n][n];
+        for (int i = 0; i < n; i++) {
+            I[i][i] = 1;
+        }
+        return I;
+    }
+
+    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
+    // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
+    public static float[][] Mul_Mats(float[][] M1 ,float[][] M2) {
+        float[][] M = new float[M1.length][M2[0].length];
+        for (int i = 0 ;i < M1.length ;i++)
+            for (int j = 0 ;j < M2[0].length ;j++)
+                for (int k = 0 ;k < M2.length ;k++)
+                    M[i][j] += M1[i][k] * M2[k][j];
+        return M;
     }
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
@@ -779,8 +801,8 @@ public class System_Linear_Equations_Extended {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking
-    public static float[][] Parallel_Ranking_Method(float[][] A, float[][] b, String fn) {
+    // solve system of linear equations Ax = b by parallel ranking (first algorithm)
+    public static float[][] Parallel_Ranking_Method_V1(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
         while (!Is_Unit_Matrix(A)) {
             int n = A.length, t = b[0].length - 1;
@@ -848,6 +870,51 @@ public class System_Linear_Equations_Extended {
         return b;
     }
 
+    // solve system of linear equations Ax = b by parallel ranking (second algorithm)
+    public static float[][] Parallel_Ranking_Method_V2(float[][] A, float[][] b, String fn) {
+        System.out.println("transform A matrix to I by an elementary matrices:");
+        int i = 0, j = 0;
+        while (!Is_Unit_Matrix(A)) {
+            int n = A.length, t = b[0].length - 1;
+            float[][] E = Unit_Matrix(n);
+            if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
+                int d1 = Get_Intersection_Zero_Row_Col(A,i);
+                int d2 = Get_Linear_Dependent_Columns(A);
+                if (d1 != -1) {
+                    System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
+                    A[i][d1] = 1;
+                    b[i][++t] = 1;
+                } else if (d2 != -1) {
+                    System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
+                    A[i][d2] = 1;
+                    b[i][++t] = 1;
+                } else if (!Is_Exist_Vector(A,i)) {
+                    System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
+                    A[i][i] = 1;
+                    b[i][++t] = 1;
+                }
+                Print_Status_System(A,b,fn);
+            } if (A[i][i] == 0) {
+                int r = Get_Index_UnZero_Value(A,i,true);
+                if (r >= 0 && r < n && r != i) {
+                    A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
+                    Retreat_Elementary_Action(i,r);
+                    Retreat_Rows_System(E,b,i,r);
+                    A = Mul_Mats(E,A);
+                    Print_Status_System(A,b,fn);
+                }
+            } if (i != j && A[i][i] != 0 && A[j][i] != 0) {
+                E[j][i] -= (A[j][i] / A[i][i]);
+                Sum_Elementary_Action(-E[j][i],j,i,fn);
+                A = Mul_Mats(E,A);
+            }
+        }
+        return b;
+    }
+
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
     public static void Solve_System(float[][] A, float[][] b, String fn) throws Exception {
@@ -866,7 +933,11 @@ public class System_Linear_Equations_Extended {
                 Print_Solution(x,fn);
                 break;
             case 3:
-                x = Parallel_Ranking_Method(A,b,fn);
+                x = Parallel_Ranking_Method_V1(A,b,fn);
+                Print_Solution(x,fn);
+                break;
+            case 4:
+                x = Parallel_Ranking_Method_V2(A,b,fn);
                 Print_Solution(x,fn);
                 break;
             default:
