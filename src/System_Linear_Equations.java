@@ -120,6 +120,25 @@ public class System_Linear_Equations {
         System.out.println();
     }
 
+    // determine what kind of matrix
+    public static void Which_Type_Triangular(float[][] A, boolean flag) {
+        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
+            System.out.println("A is already parallel triangular so now will be change directly to I:");
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
+            System.out.println("A is already upper triangular so now we'll go directly to the lower ranking:");
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
+            System.out.println("A is already lower triangular so now we'll go directly to the upper ranking:");
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
+            System.out.println("transform L matrix to I by an upper ranking:");
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
+            System.out.println("transform U matrix to I by a lower ranking:");
+        } else if (flag) {
+            System.out.println("transform A matrix to U by an upper ranking:");
+        } else {
+            System.out.println("transform A matrix to L by a lower ranking:");
+        }
+    }
+
     // show the resulting solution as a vector representation
     public static void Print_Solution(float[] x, String fn) {
         int n = x.length;
@@ -381,25 +400,6 @@ public class System_Linear_Equations {
             }
         }
         return rA;
-    }
-
-    // determine what kind of matrix
-    public static void Which_Type_Triangular(float[][] A, boolean flag) {
-        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            System.out.println("A is already parallel triangular so now will be change directly to I:");
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
-            System.out.println("A is already upper triangular so now we'll go directly to the lower ranking:");
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
-            System.out.println("A is already lower triangular so now we'll go directly to the upper ranking:");
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
-            System.out.println("transform L matrix to I by an upper ranking:");
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
-            System.out.println("transform U matrix to I by a lower ranking:");
-        } else if (flag) {
-            System.out.println("transform A matrix to U by an upper ranking:");
-        } else {
-            System.out.println("transform A matrix to L by a lower ranking:");
-        }
     }
 
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
