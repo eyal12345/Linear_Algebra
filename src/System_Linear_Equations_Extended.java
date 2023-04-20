@@ -438,11 +438,15 @@ public class System_Linear_Equations_Extended {
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
     public static float[][] Mul_Mats(float[][] M1 ,float[][] M2) {
-        float[][] M = new float[M1.length][M2[0].length];
-        for (int i = 0 ;i < M1.length ;i++)
-            for (int j = 0 ;j < M2[0].length ;j++)
-                for (int k = 0 ;k < M2.length ;k++)
+        int n = M1.length;
+        float[][] M = new float[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
                     M[i][j] += M1[i][k] * M2[k][j];
+                }
+            }
+        }
         return M;
     }
 
@@ -804,8 +808,9 @@ public class System_Linear_Equations_Extended {
     // solve system of linear equations Ax = b by parallel ranking (first algorithm)
     public static float[][] Parallel_Ranking_Method_V1(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
+        int n = A.length;
         while (!Is_Unit_Matrix(A)) {
-            int n = A.length, t = b[0].length - 1;
+            int t = b[0].length - 1;
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
@@ -873,10 +878,10 @@ public class System_Linear_Equations_Extended {
     // solve system of linear equations Ax = b by parallel ranking (second algorithm)
     public static float[][] Parallel_Ranking_Method_V2(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
-        int i = 0, j = 0;
+        int n = A.length, i = 0, j = 0;
+        float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
-            int n = A.length, t = b[0].length - 1;
-            float[][] E = Unit_Matrix(n);
+            int t = b[0].length - 1;
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
                 int d1 = Get_Intersection_Zero_Row_Col(A,i);
                 int d2 = Get_Linear_Dependent_Columns(A);
@@ -916,6 +921,7 @@ public class System_Linear_Equations_Extended {
                     b[j][k] += b[i][k] * E[j][i];
                     k++;
                 }
+                E = Unit_Matrix(n);
                 A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
                 Print_Status_System(A,b,fn);
             }
@@ -923,19 +929,19 @@ public class System_Linear_Equations_Extended {
             if (Is_Unit_Vector(A,j)) {
                 int d = Get_Index_for_Unit_Vector(Get_Row_from_Matrix(A,j));
                 if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                    E[j][d] = 1 / A[j][d];
-                    Mul_Elementary_Action(E[j][d],j,fn);
+                    E[j][j] = 1 / A[j][d];
+                    Mul_Elementary_Action(E[j][j],j,fn);
+                    A = Mul_Mats(E,A);
                     int k = 0;
                     while (k <= t) {
-                        b[j][k] *= E[j][d];
+                        b[j][k] *= E[j][j];
                         k++;
                     }
-                    b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
+                    E = Unit_Matrix(n);
                     A[j][d] = 1;
                     Print_Status_System(A,b,fn);
                 }
-            }
-            if (j == n - 1) {
+            } if (j == n - 1) {
                 i = (i + 1) % n;
             }
             j = (j + 1) % n;
@@ -1116,7 +1122,7 @@ public class System_Linear_Equations_Extended {
         float[] b83 = {0,0,0,0,0,0,0,0};
         // x = λ*(0 ,1 ,0 ,0 ,1 ,1 ,1 ,1)
         try {
-            Check_User_Input(A52,b52);
+            Check_User_Input(A83,b83);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
