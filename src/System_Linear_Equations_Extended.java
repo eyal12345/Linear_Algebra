@@ -655,25 +655,22 @@ public class System_Linear_Equations_Extended {
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Get_Intersection_Zero_Row_Col(A,i);
-                int d2 = Get_Linear_Dependent_Columns(A);
+                int d = n, d1 = Get_Intersection_Zero_Row_Col(A,i), d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d1] = 1;
-                    b[i][++t] = 1;
+                    d = d1;
                 } else if (d2 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d2] = 1;
-                    b[i][++t] = 1;
+                    d = d2;
                 } else if (!Is_Exist_Vector(A,i)) {
-                    System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][i] = 1;
+                    d = i;
+                } if (d < n) {
+                    System.out.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
                     b[i][++t] = 1;
+                    Print_Status_System(A,b,fn);
                 }
-                Print_Status_System(A,b,fn);
             } if (A[i][i] == 0) {
                 int r = Get_Index_UnZero_Value(A,i,true);
                 int l = Get_Index_Row_from_Matrix(A,i);
@@ -734,25 +731,22 @@ public class System_Linear_Equations_Extended {
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Get_Intersection_Zero_Row_Col(A,i);
-                int d2 = Get_Linear_Dependent_Columns(A);
+                int d = n, d1 = Get_Intersection_Zero_Row_Col(A,i), d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d1] = 1;
-                    b[i][++t] = 1;
+                    d = d1;
                 } else if (d2 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d2] = 1;
-                    b[i][++t] = 1;
+                    d = d2;
                 } else if (!Is_Exist_Vector(A,i)) {
-                    System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][i] = 1;
+                    d = i;
+                } if (d < n) {
+                    System.out.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
                     b[i][++t] = 1;
+                    Print_Status_System(A,b,fn);
                 }
-                Print_Status_System(A,b,fn);
             } if (A[i][i] == 0) {
                 int r = Get_Index_UnZero_Value(A,i,false);
                 int l = Get_Index_Row_from_Matrix(A,i);
@@ -815,25 +809,22 @@ public class System_Linear_Equations_Extended {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                    int d1 = Get_Intersection_Zero_Row_Col(A,i);
-                    int d2 = Get_Linear_Dependent_Columns(A);
+                    int d = n, d1 = Get_Intersection_Zero_Row_Col(A,i), d2 = Get_Linear_Dependent_Columns(A);
                     if (d1 != -1) {
-                        System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
-                        b = Increase_Cols_in_Vector(b);
                         A[i][d1] = 1;
-                        b[i][++t] = 1;
+                        d = d1;
                     } else if (d2 != -1) {
-                        System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
-                        b = Increase_Cols_in_Vector(b);
                         A[i][d2] = 1;
-                        b[i][++t] = 1;
+                        d = d2;
                     } else if (!Is_Exist_Vector(A,i)) {
-                        System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
-                        b = Increase_Cols_in_Vector(b);
                         A[i][i] = 1;
+                        d = i;
+                    } if (d < n) {
+                        System.out.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
+                        b = Increase_Cols_in_Vector(b);
                         b[i][++t] = 1;
+                        Print_Status_System(A,b,fn);
                     }
-                    Print_Status_System(A,b,fn);
                 } if (A[i][i] == 0) {
                     int r = Get_Index_UnZero_Value(A,i,true);
                     if (r >= 0 && r < n && r != i) {
@@ -883,25 +874,22 @@ public class System_Linear_Equations_Extended {
         while (!Is_Unit_Matrix(A)) {
             int t = b[0].length - 1;
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
-                int d1 = Get_Intersection_Zero_Row_Col(A,i);
-                int d2 = Get_Linear_Dependent_Columns(A);
+                int d = n, d1 = Get_Intersection_Zero_Row_Col(A,i), d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d1 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d1] = 1;
-                    b[i][++t] = 1;
+                    d = d1;
                 } else if (d2 != -1) {
-                    System.out.println("define a new column in the vector b when x" + (d2 + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][d2] = 1;
-                    b[i][++t] = 1;
+                    d = d2;
                 } else if (!Is_Exist_Vector(A,i)) {
-                    System.out.println("define a new column in the vector b when x" + (i + 1) + " is a free variable in R" + n + " space:");
-                    b = Increase_Cols_in_Vector(b);
                     A[i][i] = 1;
+                    d = i;
+                } if (d < n) {
+                    System.out.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
+                    b = Increase_Cols_in_Vector(b);
                     b[i][++t] = 1;
+                    Print_Status_System(A,b,fn);
                 }
-                Print_Status_System(A,b,fn);
             } if (A[i][i] == 0) {
                 int r = Get_Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < n && r != i) {
