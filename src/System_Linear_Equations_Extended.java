@@ -513,6 +513,25 @@ public class System_Linear_Equations_Extended {
         return nb;
     }
 
+    // determine what kind of matrix
+    public static void Which_Type_Triangular(float[][] A, boolean flag) {
+        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
+            System.out.println("A is already parallel triangular so now will be change directly to I:");
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
+            System.out.println("A is already upper triangular so now we'll go directly to the lower ranking:");
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
+            System.out.println("A is already lower triangular so now we'll go directly to the upper ranking:");
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
+            System.out.println("transform L matrix to I by an upper ranking:");
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
+            System.out.println("transform U matrix to I by a lower ranking:");
+        } else if (flag) {
+            System.out.println("transform A matrix to U by an upper ranking:");
+        } else {
+            System.out.println("transform A matrix to L by a lower ranking:");
+        }
+    }
+
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
     public static String convertDecimalToFraction(float x){
@@ -631,16 +650,7 @@ public class System_Linear_Equations_Extended {
     /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
     // solve system of linear equations Ax = b by an upper ranking and then a lower ranking
     public static float[][] Upper_Ranking_Method(float[][] A, float[][] b, String fn) {
-        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            System.out.println("A is already parallel triangular so now will be change directly to I:");
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
-            System.out.println("A is already upper triangular so now we'll go directly to the lower ranking:");
-            return Lower_Ranking_Method(A,b,fn);
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            System.out.println("transform L matrix to I by an upper ranking:");
-        } else {
-            System.out.println("transform A matrix to U by an upper ranking:");
-        }
+        Which_Type_Triangular(A,true);
         int n = A.length, t = b[0].length - 1;
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
@@ -719,16 +729,7 @@ public class System_Linear_Equations_Extended {
 
     // solve system of linear equations Ax = b by a lower ranking and then an upper ranking
     public static float[][] Lower_Ranking_Method(float[][] A, float[][] b, String fn) {
-        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            System.out.println("A is already parallel triangular so now will be change directly to I:");
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            System.out.println("A is already lower triangular so now we'll go directly to the upper ranking:");
-            return Upper_Ranking_Method(A,b,fn);
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
-            System.out.println("transform U matrix to I by an lower ranking:");
-        } else {
-            System.out.println("transform A matrix to L by an lower ranking:");
-        }
+        Which_Type_Triangular(A,false);
         int n = A.length, t = b[0].length - 1;
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
