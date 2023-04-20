@@ -799,9 +799,8 @@ public class System_Linear_Equations_Extended {
     // solve system of linear equations Ax = b by parallel ranking (first algorithm)
     public static float[][] Parallel_Ranking_Method_V1(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
-        int n = A.length;
+        int n = A.length, t = b[0].length - 1;
         while (!Is_Unit_Matrix(A)) {
-            int t = b[0].length - 1;
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
@@ -863,10 +862,9 @@ public class System_Linear_Equations_Extended {
     // solve system of linear equations Ax = b by parallel ranking (second algorithm)
     public static float[][] Parallel_Ranking_Method_V2(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
-        int n = A.length, i = 0, j = 0;
+        int n = A.length, t = b[0].length - 1, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
-            int t = b[0].length - 1;
             if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows(A)) {
                 int d = n, d1 = Get_Intersection_Zero_Row_Col(A,i), d2 = Get_Linear_Dependent_Columns(A);
                 if (d1 != -1) {
@@ -1102,7 +1100,7 @@ public class System_Linear_Equations_Extended {
         float[] b83 = {0,0,0,0,0,0,0,0};
         // x = λ*(0 ,1 ,0 ,0 ,1 ,1 ,1 ,1)
         try {
-            Check_User_Input(A61,b61);
+            Check_User_Input(A62,b62);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
