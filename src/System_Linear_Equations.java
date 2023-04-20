@@ -701,34 +701,35 @@ public class System_Linear_Equations {
     public static float[] Parallel_Ranking_Method_V2(float[][] A, float[] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, i = 0, j = 0;
+        float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
-            float[][] E = Unit_Matrix(n);
             if (A[i][i] == 0) {
                 int r = Get_Index_UnZero_Value(A,i);
                 System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                 Retreat_Rows_System(E,b,i,r);
                 A = Mul_Mats(E,A);
+                E = Unit_Matrix(n);
                 Print_Status_System(A,b,fn);
-            } else {
-                if (i != j && A[j][i] != 0) {
-                    E[j][i] -= (A[j][i] / A[i][i]);
-                    Sum_Elementary_Action(-E[j][i],j,i,fn);
-                    b[j] += b[i] * E[j][i];
-                    A = Mul_Mats(E,A);
-                    A[j][i] = 0;
-                    Print_Status_System(A,b,fn);
-                } else if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
-                    E[j][j] = 1 / A[j][j];
-                    Mul_Elementary_Action(E[j][j],j,fn);
-                    b[j] *= E[j][j];
-                    A = Mul_Mats(E,A);
-                    A[j][j] = 1;
-                    Print_Status_System(A,b,fn);
-                } if (j == n - 1) {
-                    i = (i + 1) % n;
-                }
-                j = (j + 1) % n;
+            } if (i != j && A[j][i] != 0) {
+                E[j][i] -= (A[j][i] / A[i][i]);
+                Sum_Elementary_Action(-E[j][i],j,i,fn);
+                b[j] += b[i] * E[j][i];
+                A = Mul_Mats(E,A);
+                E = Unit_Matrix(n);
+                A[j][i] = 0;
+                Print_Status_System(A,b,fn);
+            } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
+                E[j][j] = 1 / A[j][j];
+                Mul_Elementary_Action(E[j][j],j,fn);
+                b[j] *= E[j][j];
+                A = Mul_Mats(E,A);
+                E = Unit_Matrix(n);
+                A[j][j] = 1;
+                Print_Status_System(A,b,fn);
+            } if (j == n - 1) {
+                i = (i + 1) % n;
             }
+            j = (j + 1) % n;
         }
         return b;
     }
@@ -853,7 +854,7 @@ public class System_Linear_Equations {
         float[][] G3 = {{2,1,-1},{-3,-1,2},{-2,1,2}};
         float[] g3 = {0,0,0};
         float[][] H3 = {{0,0,0},{0,0,0},{0,0,0}};
-        float[] h3 = {0,0,0};
+        float[] h3 = {0,0,1};
         float[][] A4 = {{-2,3,3,-2},{-1,4,2,-2},{1,3,1,3},{-3,-2,4,-5}};
         float[] a4 = {8,5,19,-19};
         float[][] A5 = {{-2,2,2,-1,1},{-4,4,4,4,3},{2,3,2,3,2},{-3,-1,1,2,2},{5,5,3,5,5}};
@@ -867,7 +868,7 @@ public class System_Linear_Equations {
         float[][] B7 = {{2,3,1,-4,0,-3,0},{-3,1,1,1,0,-4,-1},{0,1,0,-2,1,-1,1},{-4,1,-3,1,0,-2,1},{1,-3,0,-2,-4,1,0},{1,-2,3,0,-4,-2,-4},{0,4,-4,-2,-3,-2,3}};
         float[] b7 = {0,0,0,0,0,0,0};
         try {
-            Check_User_Input(A6,a6);
+            Check_User_Input(A4,a4);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
