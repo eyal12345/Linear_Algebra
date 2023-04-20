@@ -864,7 +864,6 @@ public class System_Linear_Equations_Extended {
                             for (int k = 0; k <= t; k++) {
                                 b[j][k] /= A[j][d];
                             }
-                            b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
                             A[j][d] = 1;
                             Print_Status_System(A,b,fn);
                         }
