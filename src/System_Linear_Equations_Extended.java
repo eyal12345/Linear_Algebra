@@ -904,13 +904,41 @@ public class System_Linear_Equations_Extended {
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_System(E,b,i,r);
                     A = Mul_Mats(E,A);
+                    E = Unit_Matrix(n);
                     Print_Status_System(A,b,fn);
                 }
             } if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i,fn);
                 A = Mul_Mats(E,A);
+                int k = 0;
+                while (k <= t) {
+                    b[j][k] += b[i][k] * E[j][i];
+                    k++;
+                }
+                A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                Print_Status_System(A,b,fn);
             }
+            A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
+            if (Is_Unit_Vector(A,j)) {
+                int d = Get_Index_for_Unit_Vector(Get_Row_from_Matrix(A,j));
+                if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
+                    E[j][d] = 1 / A[j][d];
+                    Mul_Elementary_Action(E[j][d],j,fn);
+                    int k = 0;
+                    while (k <= t) {
+                        b[j][k] *= E[j][d];
+                        k++;
+                    }
+                    b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
+                    A[j][d] = 1;
+                    Print_Status_System(A,b,fn);
+                }
+            }
+            if (j == n - 1) {
+                i = (i + 1) % n;
+            }
+            j = (j + 1) % n;
         }
         return b;
     }
