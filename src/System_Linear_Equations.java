@@ -713,16 +713,16 @@ public class System_Linear_Equations {
             } if (i != j && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i,fn);
-                b[j] += b[i] * E[j][i];
                 A = Mul_Mats(E,A);
+                b[j] += b[i] * E[j][i];
                 E = Unit_Matrix(n);
                 A[j][i] = 0;
                 Print_Status_System(A,b,fn);
             } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
                 E[j][j] = 1 / A[j][j];
                 Mul_Elementary_Action(E[j][j],j,fn);
-                b[j] *= E[j][j];
                 A = Mul_Mats(E,A);
+                b[j] *= E[j][j];
                 E = Unit_Matrix(n);
                 A[j][j] = 1;
                 Print_Status_System(A,b,fn);
@@ -868,7 +868,7 @@ public class System_Linear_Equations {
         float[][] B7 = {{2,3,1,-4,0,-3,0},{-3,1,1,1,0,-4,-1},{0,1,0,-2,1,-1,1},{-4,1,-3,1,0,-2,1},{1,-3,0,-2,-4,1,0},{1,-2,3,0,-4,-2,-4},{0,4,-4,-2,-3,-2,3}};
         float[] b7 = {0,0,0,0,0,0,0};
         try {
-            Check_User_Input(A4,a4);
+            Check_User_Input(A6,a6);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
