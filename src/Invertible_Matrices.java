@@ -437,31 +437,33 @@ public class Invertible_Matrices {
         System.out.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = Unit_Matrix(n);
-        for (int i = 0; i < n; i++) {
-            if (M[i][i] == 0) {
-                int r = Get_Index_UnZero_Value(M,i);
-                System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
-                Retreat_Rows_Matrices(M,InvM,i,r);
-                Print_Status_Matrices(M,InvM,fn);
-            }
-            for (int j = 0; j < n; j++) {
-                if (i != j && M[j][i] != 0) {
-                    float c = M[j][i] / M[i][i];
-                    Sum_Elementary_Action(c,j,i,fn);
-                    for (int k = 0; k < n; k++) {
-                        M[j][k] -= M[i][k] * c;
-                        InvM[j][k] -= InvM[i][k] * c;
-                    }
-                    M[j][i] = 0;
+        while (!Is_Unit_Matrix(M)) {
+            for (int i = 0; i < n; i++) {
+                if (M[i][i] == 0) {
+                    int r = Get_Index_UnZero_Value(M,i);
+                    System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
+                    Retreat_Rows_Matrices(M,InvM,i,r);
                     Print_Status_Matrices(M,InvM,fn);
-                } if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
-                    float c = 1 / M[j][j];
-                    Mul_Elementary_Action(c,j,fn);
-                    for (int k = 0; k < n; k++) {
-                        InvM[j][k] /= M[j][j];
+                }
+                for (int j = 0; j < n; j++) {
+                    if (i != j && M[j][i] != 0) {
+                        float c = M[j][i] / M[i][i];
+                        Sum_Elementary_Action(c,j,i,fn);
+                        for (int k = 0; k < n; k++) {
+                            M[j][k] -= M[i][k] * c;
+                            InvM[j][k] -= InvM[i][k] * c;
+                        }
+                        M[j][i] = 0;
+                        Print_Status_Matrices(M,InvM,fn);
+                    } if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+                        float c = 1 / M[j][j];
+                        Mul_Elementary_Action(c,j,fn);
+                        for (int k = 0; k < n; k++) {
+                            InvM[j][k] /= M[j][j];
+                        }
+                        M[j][j] = 1;
+                        Print_Status_Matrices(M,InvM,fn);
                     }
-                    M[j][j] = 1;
-                    Print_Status_Matrices(M,InvM,fn);
                 }
             }
         }
@@ -621,7 +623,7 @@ public class Invertible_Matrices {
         float[][] M71 = {{-1,0,4,-1,-2,5,-1},{6,-7,7,1,-7,-6,5},{0,2,6,1,-7,6,1},{2,2,0,-2,-6,6,-5},{3,3,-3,1,7,-1,-2},{1,-5,1,-4,3,1,-4},{7,-5,5,0,-4,-4,1}};
         // InvM =
         try {
-            Check_User_Input(M71);
+            Check_User_Input(M51);
         } catch (Exception e) {
             e.printStackTrace();
         }
