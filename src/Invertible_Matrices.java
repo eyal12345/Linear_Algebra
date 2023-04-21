@@ -254,7 +254,7 @@ public class Invertible_Matrices {
         if (x < 0) {
             return "-" + convertDecimalToFraction(-x);
         } else {
-            float tolerance = (float) 1.0E-5, h1 = 1, h2 = 0, k1 = 0, k2 = 1, b = x;
+            float tolerance = (float) 1.0E-3, h1 = 1, h2 = 0, k1 = 0, k2 = 1, b = x;
             do {
                 float a = (float) Math.floor(b);
                 float aux = h1;
@@ -471,36 +471,37 @@ public class Invertible_Matrices {
     public static float[][] Invertible_Ranking_Method_V2(float[][] M, String fn) {
         System.out.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0 ,j = 0;
+        float[][] E = Unit_Matrix(n);
         float[][] InvM = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
-            float[][] E = Unit_Matrix(n);
             if (M[i][i] == 0) {
                 int r = Get_Index_UnZero_Value(M,i);
                 System.out.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                 Retreat_Rows_Matrix(E,i,r);
                 M = Mul_Mats(E,M);
                 InvM = Mul_Mats(E,InvM);
+                E = Unit_Matrix(n);
                 Print_Status_Matrices(M,InvM,fn);
-            } else {
-                if (i != j && M[j][i] != 0) {
-                    E[j][i] -= (M[j][i] / M[i][i]);
-                    Sum_Elementary_Action(-E[j][i],j,i,fn);
-                    M = Mul_Mats(E,M);
-                    InvM = Mul_Mats(E,InvM);
-                    M[j][i] = 0;
-                    Print_Status_Matrices(M,InvM,fn);
-                } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
-                    E[j][j] = 1 / M[j][j];
-                    Mul_Elementary_Action(E[j][j],j,fn);
-                    M = Mul_Mats(E,M);
-                    InvM = Mul_Mats(E,InvM);
-                    M[j][j] = 1;
-                    Print_Status_Matrices(M,InvM,fn);
-                } if (j == n - 1) {
-                    i = (i + 1) % n;
-                }
-                j = (j + 1) % n;
+            } if (i != j && M[j][i] != 0) {
+                E[j][i] -= (M[j][i] / M[i][i]);
+                Sum_Elementary_Action(-E[j][i],j,i,fn);
+                M = Mul_Mats(E,M);
+                InvM = Mul_Mats(E,InvM);
+                E = Unit_Matrix(n);
+                M[j][i] = 0;
+                Print_Status_Matrices(M,InvM,fn);
+            } if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+                E[j][j] = 1 / M[j][j];
+                Mul_Elementary_Action(E[j][j],j,fn);
+                M = Mul_Mats(E,M);
+                InvM = Mul_Mats(E,InvM);
+                E = Unit_Matrix(n);
+                M[j][j] = 1;
+                Print_Status_Matrices(M,InvM,fn);
+            } if (j == n - 1) {
+                i = (i + 1) % n;
             }
+            j = (j + 1) % n;
         }
         return InvM;
     }
@@ -594,20 +595,20 @@ public class Invertible_Matrices {
 
     ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
-        float[][] A1 = {{2,1,-1},{-3,-1,2},{-2,1,2}};
-        float[][] A2 = {{1,-1,-2},{2,-3,-5},{-1,3,5}};
-        float[][] A3 = {{1,1,5},{1,2,7},{2,-1,4}};
-        float[][] A4 = {{1,2,-1},{2,4,-3},{-1,-2,0}};
-        float[][] A5 = {{1,1,5},{-2,-2,-10},{6,6,30}};
-        float[][] B = {{-2,2,2,-1,1},{-4,4,4,4,3},{2,3,2,3,2},{-3,-1,1,2,2},{5,5,3,5,5}};
-        float[][] C = {{-2,3,3,-2},{-1,4,2,-2},{1,3,1,3},{-3,-2,4,-5}};
-        float[][] D = {{2,10,7,-5,0,8},{-12,-8,-9,-1,-11,-5},{-1,8,0,-4,-9,11},{12,6,-10,5,-11,-12},{12,11,-10,-2,-4,-12},{5,-5,3,6,8,-10}};
-        float[][] E = {{1,1,-2,0,-1,-1},{0,-2,-1,2,-2,2},{0,0,-1,-1,-1,1},{0,0,-2,2,-2,0},{-2,-2,0,0,-2,2},{1,0,-1,0,0,2}};
-        float[][] F = {{-2,0,-4,-2,5,-6},{6,-1,-2,0,1,0},{6,0,0,-2,5,2},{-4,0,6,4,4,6},{-4,-2,3,-6,4,-4},{5,1,-5,-1,5,-2}};
-        float[][] G = {{-1,0,4,-1,-2,5,-1},{6,-7,7,1,-7,-6,5},{0,2,6,1,-7,6,1},{2,2,0,-2,-6,6,-5},{3,3,-3,1,7,-1,-2},{1,-5,1,-4,3,1,-4},{7,-5,5,0,-4,-4,1}};
-        float[][] Z = {{8}};
+        float[][] M11 = {{2}};
+        float[][] M31 = {{2,1,-1},{-3,-1,2},{-2,1,2}};
+        float[][] M32 = {{1,-1,-2},{2,-3,-5},{-1,3,5}};
+        float[][] M33 = {{1,1,5},{1,2,7},{2,-1,4}};
+        float[][] M34 = {{1,2,-1},{2,4,-3},{-1,-2,0}};
+        float[][] M35 = {{1,1,5},{-2,-2,-10},{6,6,30}};
+        float[][] M41 = {{-2,3,3,-2},{-1,4,2,-2},{1,3,1,3},{-3,-2,4,-5}};
+        float[][] M51 = {{-2,2,2,-1,1},{-4,4,4,4,3},{2,3,2,3,2},{-3,-1,1,2,2},{5,5,3,5,5}};
+        float[][] M61 = {{2,10,7,-5,0,8},{-12,-8,-9,-1,-11,-5},{-1,8,0,-4,-9,11},{12,6,-10,5,-11,-12},{12,11,-10,-2,-4,-12},{5,-5,3,6,8,-10}};
+        float[][] M62 = {{1,1,-2,0,-1,-1},{0,-2,-1,2,-2,2},{0,0,-1,-1,-1,1},{0,0,-2,2,-2,0},{-2,-2,0,0,-2,2},{1,0,-1,0,0,2}};
+        float[][] M63 = {{-2,0,-4,-2,5,-6},{6,-1,-2,0,1,0},{6,0,0,-2,5,2},{-4,0,6,4,4,6},{-4,-2,3,-6,4,-4},{5,1,-5,-1,5,-2}};
+        float[][] M71 = {{-1,0,4,-1,-2,5,-1},{6,-7,7,1,-7,-6,5},{0,2,6,1,-7,6,1},{2,2,0,-2,-6,6,-5},{3,3,-3,1,7,-1,-2},{1,-5,1,-4,3,1,-4},{7,-5,5,0,-4,-4,1}};
         try {
-            Check_User_Input(C);
+            Check_User_Input(M51);
         } catch (Exception e) {
             e.printStackTrace();
         }
