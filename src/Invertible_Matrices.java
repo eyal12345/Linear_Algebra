@@ -382,7 +382,7 @@ public class Invertible_Matrices {
                 return Lower_Ranking_Method(M,InvM,fn);
             }
         }
-        if (!Is_Lower_Triangular(M) || !Is_Unit_Matrix(M)) {
+        if (!Is_Unit_Matrix(M)) {
             System.out.println("still not yet received an unit matrix");
             return Lower_Ranking_Method(M,InvM,fn);
         }
@@ -425,7 +425,7 @@ public class Invertible_Matrices {
                 return Upper_Ranking_Method(M,InvM,fn);
             }
         }
-        if (!Is_Upper_Triangular(M) || !Is_Unit_Matrix(M)) {
+        if (!Is_Unit_Matrix(M)) {
             System.out.println("still not yet received an unit matrix");
             return Upper_Ranking_Method(M,InvM,fn);
         }
