@@ -52,6 +52,25 @@ public class Invertible_Matrices {
         System.out.println();
     }
 
+    // determine what kind of matrix
+    public static void Which_Type_Triangular(float[][] M, boolean flag) {
+        if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
+            System.out.println("M is already parallel triangular so now will be change directly to I:");
+        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && flag) {
+            System.out.println("M is already upper triangular so now we'll go directly to the lower ranking:");
+        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && !flag) {
+            System.out.println("M is already lower triangular so now we'll go directly to the upper ranking:");
+        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && flag) {
+            System.out.println("transform L matrix to I by an upper ranking:");
+        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && !flag) {
+            System.out.println("transform U matrix to I by a lower ranking:");
+        } else if (flag) {
+            System.out.println("transform M matrix to U by an upper ranking:");
+        } else {
+            System.out.println("transform M matrix to L by a lower ranking:");
+        }
+    }
+
     // show the resulting solution as a matrix representation
     public static void Print_Solution(float[][] M, String fn) {
         int n = M.length;
@@ -76,8 +95,8 @@ public class Invertible_Matrices {
     // display user interface by selection method for solution
     public static void User_Menu_System() {
         System.out.println("choose number method to solution:");
-        System.out.println("1. invert a matrix by lower ranking");
-        System.out.println("2. invert a matrix by upper ranking");
+        System.out.println("1. invert a matrix by upper ranking");
+        System.out.println("2. invert a matrix by lower ranking");
         System.out.println("3. invert a matrix by parallel ranking (first method)");
         System.out.println("4. invert a matrix by parallel ranking (second method)");
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
@@ -329,16 +348,7 @@ public class Invertible_Matrices {
     /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
     // invert the M matrix by an upper ranking and then a lower ranking
     public static float[][] Upper_Ranking_Method(float[][] M, float[][] InvM, String fn) {
-        if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            System.out.println("M is already parallel triangular so now will be change directly to I:");
-        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M)) {
-            System.out.println("M is already upper triangular so now we'll go directly to the lower ranking:");
-            return Lower_Ranking_Method(M,InvM,fn);
-        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            System.out.println("transform L matrix to I by an upper ranking:");
-        } else {
-            System.out.println("transform M matrix to U by an upper ranking:");
-        }
+        Which_Type_Triangular(M,true);
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] == 0) {
@@ -381,16 +391,7 @@ public class Invertible_Matrices {
 
     // invert the M matrix by a lower ranking and then an upper ranking
     public static float[][] Lower_Ranking_Method(float[][] M, float[][] InvM, String fn) {
-        if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            System.out.println("M is already parallel triangular so now will be change directly to I:");
-        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            System.out.println("M is already lower triangular so now we'll go directly to the upper ranking:");
-            return Upper_Ranking_Method(M,InvM,fn);
-        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M)) {
-            System.out.println("transform U matrix to I by a lower ranking:");
-        } else {
-            System.out.println("transform M matrix to L by a lower ranking:");
-        }
+        Which_Type_Triangular(M,false);
         int n = M.length;
         for (int i = n - 1; i >= 0; i--) {
             if (M[i][i] == 0) {
@@ -529,12 +530,12 @@ public class Invertible_Matrices {
         Print_Status_Matrices(M,Unit_Matrix(M.length),fn);
         switch (op) {
             case 1:
-                M = Lower_Ranking_Method(M,Unit_Matrix(M.length),fn);
+                M = Upper_Ranking_Method(M,Unit_Matrix(M.length),fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
             case 2:
-                M = Upper_Ranking_Method(M,Unit_Matrix(M.length),fn);
+                M = Lower_Ranking_Method(M,Unit_Matrix(M.length),fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
