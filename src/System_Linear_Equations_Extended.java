@@ -457,11 +457,11 @@ public class System_Linear_Equations_Extended {
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
     public static float[][] Mul_Mats(float[][] M1 ,float[][] M2) {
-        int n = M1.length;
-        float[][] M = new float[n][n];
-        for (int i = 0; i < n; i++) {
+        int m = M2.length, n = M2[0].length;
+        float[][] M = new float[m][n];
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
+                for (int k = 0; k < m; k++) {
                     M[i][j] += M1[i][k] * M2[k][j];
                 }
             }
@@ -894,11 +894,7 @@ public class System_Linear_Equations_Extended {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i,fn);
                 A = Mul_Mats(E,A);
-                int k = 0;
-                while (k <= t) {
-                    b[j][k] += b[i][k] * E[j][i];
-                    k++;
-                }
+                b = Mul_Mats(E,b);
                 E = Unit_Matrix(n);
                 A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
                 Print_Status_System(A,b,fn);
@@ -910,11 +906,7 @@ public class System_Linear_Equations_Extended {
                     E[j][j] = 1 / A[j][d];
                     Mul_Elementary_Action(E[j][j],j,fn);
                     A = Mul_Mats(E,A);
-                    int k = 0;
-                    while (k <= t) {
-                        b[j][k] *= E[j][j];
-                        k++;
-                    }
+                    b = Mul_Mats(E,b);
                     E = Unit_Matrix(n);
                     A[j][d] = 1;
                     Print_Status_System(A,b,fn);
