@@ -168,8 +168,8 @@ public class System_Linear_Equations {
         System.out.println("4. forward backward method");
         System.out.println("5. upper --> lower ranking method");
         System.out.println("6. lower --> upper ranking method");
-        System.out.println("7. parallel ranking method (first method)");
-        System.out.println("8. parallel ranking method (second method)");
+        System.out.println("7. parallel ranking method");
+        System.out.println("8. elementary matrices method");
     }
 
     // display user interface by selection format for solution
@@ -663,8 +663,8 @@ public class System_Linear_Equations {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking (first algorithm)
-    public static float[] Parallel_Ranking_Method_V1(float[][] A, float[] b, String fn) {
+    // solve system of linear equations Ax = b by parallel ranking
+    public static float[] Parallel_Ranking_Method(float[][] A, float[] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
         int n = A.length;
         while (!Is_Unit_Matrix(A)) {
@@ -698,8 +698,8 @@ public class System_Linear_Equations {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking (second algorithm)
-    public static float[] Parallel_Ranking_Method_V2(float[][] A, float[] b, String fn) {
+    // solve system of linear equations Ax = b by parallel elementary matrices
+    public static float[] Elementary_Matrices_Method(float[][] A, float[] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
@@ -775,12 +775,12 @@ public class System_Linear_Equations {
                 Print_Solution(x,fn);
                 break;
             case 7:
-                x = Parallel_Ranking_Method_V1(A,b,fn);
+                x = Parallel_Ranking_Method(A,b,fn);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;
             case 8:
-                x = Parallel_Ranking_Method_V2(A,b,fn);
+                x = Elementary_Matrices_Method(A,b,fn);
                 System.out.print("exist a single solution for the system which is: x = ");
                 Print_Solution(x,fn);
                 break;

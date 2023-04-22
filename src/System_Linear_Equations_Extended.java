@@ -180,8 +180,8 @@ public class System_Linear_Equations_Extended {
         System.out.println("choose the number of method to solution:");
         System.out.println("1. upper --> lower ranking method");
         System.out.println("2. lower --> upper ranking method");
-        System.out.println("3. parallel ranking method (first method)");
-        System.out.println("4. parallel ranking method (second method)");
+        System.out.println("3. parallel ranking method");
+        System.out.println("4. elementary matrices method");
     }
 
     // display user interface by selection format for solution
@@ -796,8 +796,8 @@ public class System_Linear_Equations_Extended {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking (first algorithm)
-    public static float[][] Parallel_Ranking_Method_V1(float[][] A, float[][] b, String fn) {
+    // solve system of linear equations Ax = b by parallel ranking
+    public static float[][] Parallel_Ranking_Method(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by a parallel ranking:");
         int n = A.length, t = b[0].length - 1;
         while (!Is_Unit_Matrix(A)) {
@@ -859,8 +859,8 @@ public class System_Linear_Equations_Extended {
         return b;
     }
 
-    // solve system of linear equations Ax = b by parallel ranking (second algorithm)
-    public static float[][] Parallel_Ranking_Method_V2(float[][] A, float[][] b, String fn) {
+    // solve system of linear equations Ax = b by parallel elementary matrices
+    public static float[][] Elementary_Matrices_Method(float[][] A, float[][] b, String fn) {
         System.out.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, t = b[0].length - 1, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
@@ -937,11 +937,11 @@ public class System_Linear_Equations_Extended {
                 Print_Solution(x,fn);
                 break;
             case 3:
-                x = Parallel_Ranking_Method_V1(A,b,fn);
+                x = Parallel_Ranking_Method(A,b,fn);
                 Print_Solution(x,fn);
                 break;
             case 4:
-                x = Parallel_Ranking_Method_V2(A,b,fn);
+                x = Elementary_Matrices_Method(A,b,fn);
                 Print_Solution(x,fn);
                 break;
             default:
