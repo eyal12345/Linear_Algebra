@@ -1106,7 +1106,7 @@ public class System_Linear_Equations_Extended {
         float[] b83 = {0,0,0,0,0,0,0,0};
         // x = λ*(0 ,1 ,0 ,0 ,1 ,1 ,1 ,1)
         try {
-            Check_User_Input(A13,b13);
+            Check_User_Input(A62,b62);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
