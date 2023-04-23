@@ -966,10 +966,11 @@ public class System_Linear_Equations_Extended {
         int m = A.length, n = A[0].length, k = b.length;
         if (m <= n && m == k) {
             Display_Exercise(A,b);
+            String msg = "";
             if (Is_Linear_Independent_System(A,b)) {
-                String ex = "does not an exists solutions for this";
-                ex = (n == 1) ? ex + " equation" : ex + " system";
-                throw new Exception(ex);
+                msg += "does not an exists solutions for this";
+                msg = (n == 1) ? msg + " equation" : msg + " system";
+                throw new Exception(msg);
             } else if (n == 1 && A[0][0] == 0 && b[0] == 0) {
                 System.out.println("exists an infinite number of solutions in R1 space for the equation that is: x = s when s its a free value that belongs to the R set");
             } else {
@@ -990,13 +991,15 @@ public class System_Linear_Equations_Extended {
                         Solve_System(A,bt,fn);
                     } else { // R1 space
                         float c = b[0] / A[0][0];
+                        msg += "exist a single solution in R1 space for the equation which is: x = ";
                         if (c % 1 == 0) {
-                            System.out.println("exist a single solution in R1 space for the equation which is: x = " + (int) c);
+                            msg += (int) c;
                         } else if (fn.equals("d")) {
-                            System.out.println("exist a single solution in R1 space for the equation which is: x = " + c);
+                            msg += c;
                         } else if (fn.equals("r")) {
-                            System.out.println("exist a single solution in R1 space for the equation which is: x = " + convertDecimalToFraction(c));
+                            msg += convertDecimalToFraction(c);
                         }
+                        System.out.println(msg);
                     }
                 } else {
                     throw new Exception("you entered invalid value for a representation elementary actions and solution");
@@ -1103,7 +1106,7 @@ public class System_Linear_Equations_Extended {
         float[] b83 = {0,0,0,0,0,0,0,0};
         // x = λ*(0 ,1 ,0 ,0 ,1 ,1 ,1 ,1)
         try {
-            Check_User_Input(A62,b62);
+            Check_User_Input(A13,b13);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

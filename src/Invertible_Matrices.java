@@ -579,13 +579,15 @@ public class Invertible_Matrices {
                         Invert_Matrix(M,fn);
                     } else { // 1*1 size
                         float c = 1 / M[0][0];
+                        String msg = "the invertible of this matrix is: ";
                         if (c % 1 == 0) {
-                            System.out.println("the invertible of this matrix is: " + (int) c);
+                            msg += (int) c;
                         } else if (fn.equals("d")) {
-                            System.out.println("the invertible of this matrix is: " + c);
+                            msg += c;
                         } else if (fn.equals("r")) {
-                            System.out.println("the invertible of this matrix is: " + convertDecimalToFraction(c));
+                            msg += convertDecimalToFraction(c);
                         }
+                        System.out.println(msg);
                     }
                 } else {
                     throw new Exception("you entered invalid value for a representation elementary actions and solution");
