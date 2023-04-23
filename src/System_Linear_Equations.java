@@ -890,7 +890,7 @@ public class System_Linear_Equations {
         float[] b72 = {0,0,0,0,0,0,0};
         // does not an exists solutions for this system
         try {
-            Check_User_Input(A51,b51);
+            Check_User_Input(A61,b61);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
