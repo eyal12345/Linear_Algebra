@@ -470,6 +470,16 @@ public class System_Linear_Equations_Extended {
     }
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
+    // replace between two rows in a matrix
+    public static void Retreat_Rows_Matrix(float[][] A, int r1, int r2) {
+        int n = A[0].length;
+        for (int j = 0; j < n; j++) {
+            float k = A[r1][j];
+            A[r1][j] = A[r2][j];
+            A[r2][j] = k;
+        }
+    }
+
     // replace between two rows in a system Ax = b
     public static void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
         int n = A[0].length, m = b[0].length;
@@ -885,8 +895,9 @@ public class System_Linear_Equations_Extended {
                 if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(E,b,i,r);
+                    Retreat_Rows_Matrix(E,i,r);
                     A = Mul_Mats(E,A);
+                    b = Mul_Mats(E,b);
                     E = Unit_Matrix(n);
                     Print_Status_System(A,b,fn);
                 }
