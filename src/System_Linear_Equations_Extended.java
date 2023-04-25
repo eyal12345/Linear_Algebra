@@ -699,10 +699,9 @@ public class System_Linear_Equations_Extended {
                         A[j][k] -= A[i][k] * c;
                         if (k <= t) {
                             b[j][k] -= b[i][k] * c;
-                            b[j][k] = (b[j][k] >= -0.0001 && b[j][k] <= 0.0001) ? 0 : b[j][k];
                         }
                     }
-                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                    A[j][i] = 0;
                     Print_Status_System(A,b,fn);
                 }
                 A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
@@ -714,7 +713,6 @@ public class System_Linear_Equations_Extended {
                         for (int k = 0; k <= t; k++) {
                             b[j][k] /= A[j][d];
                         }
-                        b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
                         A[j][d] = 1;
                         Print_Status_System(A,b,fn);
                     }
@@ -773,10 +771,9 @@ public class System_Linear_Equations_Extended {
                         A[j][k] -= A[i][k] * c;
                         if (k <= t) {
                             b[j][k] -= b[i][k] * c;
-                            b[j][k] = (b[j][k] >= -0.0001 && b[j][k] <= 0.0001) ? 0 : b[j][k];
                         }
                     }
-                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                    A[j][i] = 0;
                     Print_Status_System(A,b,fn);
                 }
                 A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
@@ -788,7 +785,6 @@ public class System_Linear_Equations_Extended {
                         for (int k = 0; k <= t; k++) {
                             b[j][k] /= A[j][d];
                         }
-                        b[j][0] = (float) (Math.round(b[j][0] * 1000.0) / 1000.0);
                         A[j][d] = 1;
                         Print_Status_System(A,b,fn);
                     }
@@ -847,7 +843,7 @@ public class System_Linear_Equations_Extended {
                                 b[j][k] -= b[i][k] * c;
                             }
                         }
-                        A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                        A[j][i] = 0;
                         Print_Status_System(A,b,fn);
                     }
                     A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
@@ -907,7 +903,7 @@ public class System_Linear_Equations_Extended {
                 A = Mul_Mats(E,A);
                 b = Mul_Mats(E,b);
                 E = Unit_Matrix(n);
-                A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                A[j][i] = 0;
                 Print_Status_System(A,b,fn);
             }
             A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
@@ -1106,7 +1102,7 @@ public class System_Linear_Equations_Extended {
         float[] b83 = {0,0,0,0,0,0,0,0};
         // x = λ*(0 ,1 ,0 ,0 ,1 ,1 ,1 ,1)
         try {
-            Check_User_Input(A62,b62);
+            Check_User_Input(A73,b73);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
