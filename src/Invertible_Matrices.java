@@ -97,8 +97,8 @@ public class Invertible_Matrices {
         System.out.println("choose number method to solution:");
         System.out.println("1. invert a matrix by upper ranking");
         System.out.println("2. invert a matrix by lower ranking");
-        System.out.println("3. invert a matrix by parallel ranking (first method)");
-        System.out.println("4. invert a matrix by parallel ranking (second method)");
+        System.out.println("3. invert a matrix by parallel ranking");
+        System.out.println("4. invert a matrix by elementary ranking");
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
@@ -432,8 +432,8 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix by parallel ranking (first algorithm)
-    public static float[][] Invertible_Ranking_Method_V1(float[][] M, String fn) {
+    // invert the M matrix by parallel ranking
+    public static float[][] Parallel_Ranking_Method(float[][] M, String fn) {
         System.out.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = Unit_Matrix(n);
@@ -470,8 +470,8 @@ public class Invertible_Matrices {
         return InvM;
     }
 
-    // invert the M matrix by parallel ranking (second algorithm)
-    public static float[][] Invertible_Ranking_Method_V2(float[][] M, String fn) {
+    // invert the M matrix by parallel elementary matrices
+    public static float[][] Elementary_Matrices_Method(float[][] M, String fn) {
         System.out.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0 ,j = 0;
         float[][] E = Unit_Matrix(n);
@@ -542,12 +542,12 @@ public class Invertible_Matrices {
                 Print_Solution(M,fn);
                 break;
             case 3:
-                M = Invertible_Ranking_Method_V1(M,fn);
+                M = Parallel_Ranking_Method(M,fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
             case 4:
-                M = Invertible_Ranking_Method_V2(M,fn);
+                M = Elementary_Matrices_Method(M,fn);
                 System.out.println("the invertible of this matrix is:");
                 Print_Solution(M,fn);
                 break;
