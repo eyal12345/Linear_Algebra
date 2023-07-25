@@ -301,7 +301,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
-    public static String convertDecimalToFraction(float x){
+    public static String convertDecimalToFraction(float x) {
         if (x < 0) {
             return "-" + convertDecimalToFraction(-x);
         } else {
