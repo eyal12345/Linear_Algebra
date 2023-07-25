@@ -47,7 +47,7 @@ public class Main {
                     }
                     break;
                 case 5:
-                    M = cr.Read_Exercise("System_Linear_Equations/Ex38.txt");
+                    M = cr.Read_Exercise("System_Linear_Equations/Ex45.txt");
                     if (M != null) {
                         float[][] A = cr.Matrix_Values(M);
                         float[] b = cr.Vector_Values(M);
