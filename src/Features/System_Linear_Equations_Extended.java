@@ -548,7 +548,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
         int n = A.length;
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            define_free_variable(i);
+            Define_Free_Variable(i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(i,true);
                 int l = Index_Row_from_Matrix(i);
@@ -607,7 +607,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
         int n = A.length;
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            define_free_variable(i);
+            Define_Free_Variable(i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(i,false);
                 int l = Index_Row_from_Matrix(i);
@@ -667,7 +667,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-                define_free_variable(i);
+                Define_Free_Variable(i);
                 if (A[i][i] == 0) {
                     int r = Index_UnZero_Value(i,true);
                     if (r >= 0 && r < n && r != i) {
@@ -716,7 +716,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
         int n = A.length, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
-            define_free_variable(i);
+            Define_Free_Variable(i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(i,true);
                 if (r >= 0 && r < n && r != i) {
@@ -759,7 +759,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
 
     ////////////////////////////////////////////// Free Variable ///////////////////////////////////////////////
     // fill rows to full square system
-    private void fill_square_system() {
+    private void Fill_Square_System() {
         int m = A.length, n = A[0].length;
         if (m < n) {
             if (n - m == 1) {
@@ -772,33 +772,39 @@ public class System_Linear_Equations_Extended extends ShareTools {
         b = Increase_Rows_in_Vector(n);
     }
 
-    // define free variable in row "i" where exist zero rows in the matrix
-    private void define_free_variable(int i) {
-        if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows()) {
-            int n = A.length, t = b[0].length - 1;
-            if (t == 1 && !Is_Zero_Row(b,i)) {
-                float c = - b[i][0] / b[i][1];
-                if (c % 1 == 0) {
-                    fr.println("exist certainly const for scalar (λ = " + (int) c + ") so we simplify the vector b");
-                } else {
-                    fr.println("exist certainly const for scalar (λ = " + c + ") so we simplify the vector b");
-                }
-                b = Decrease_Col_in_Vector(c);
-                t--;
-                Write_Status_System();
+    // counter free variables in the system
+    private int Count_Free_Variables(int r) {
+        int t = b[0].length - 1;
+        if (t == 1 && !Is_Zero_Row(b,r)) {
+            float c = - b[r][0] / b[r][1];
+            if (c % 1 == 0) {
+                fr.println("exist certainly const for scalar (λ = " + (int) c + ") so we simplify the vector b");
+            } else {
+                fr.println("exist certainly const for scalar (λ = " + c + ") so we simplify the vector b");
             }
-            int d = n, d1 = Intersection_Zero_Row_Col(i), d2 = Linear_Dependent_Columns();
+            b = Decrease_Col_in_Vector(c);
+            t--;
+            Write_Status_System();
+        }
+        return t;
+    }
+
+    // define free variable in row "r" where exist zero rows in the matrix
+    private void Define_Free_Variable(int r) {
+        if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows()) {
+            int n = A.length, t = Count_Free_Variables(r);
+            int d = n, d1 = Intersection_Zero_Row_Col(r), d2 = Linear_Dependent_Columns();
             if (d1 != -1) {
                 d = d1;
             } else if (d2 != -1) {
                 d = d2;
-            } else if (!Is_Exist_Vector(i)) {
-                d = i;
+            } else if (!Is_Exist_Vector(r)) {
+                d = r;
             } if (d < n) {
-                A[i][d] = 1;
+                A[r][d] = 1;
                 fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
                 b = Increase_Cols_in_Vector();
-                b[i][++t] = 1;
+                b[r][++t] = 1;
                 Write_Status_System();
             }
         }
@@ -810,7 +816,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
         if (Is_Linear_Independent_System()) {
             fr.println("does not an exists solutions for this system");
         } else {
-            fill_square_system();
+            Fill_Square_System();
             Scanner sc = new Scanner(System.in);
             User_Menu_System();
             int op = sc.nextInt();
