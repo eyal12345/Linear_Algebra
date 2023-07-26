@@ -758,6 +758,20 @@ public class System_Linear_Equations_Extended extends ShareTools {
     }
 
     ////////////////////////////////////////////// Free Variable ///////////////////////////////////////////////
+    // fill rows to full square system
+    private void fill_square_system() {
+        int m = A.length, n = A[0].length;
+        if (m < n) {
+            if (n - m == 1) {
+                fr.println("added one more row of zeros in order to get a square completion");
+            } else {
+                fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
+            }
+            A = Increase_Rows_in_Matrix(m);
+        }
+        b = Increase_Rows_in_Vector(n);
+    }
+
     // define free variable in row "i" where exist zero rows in the matrix
     private void define_free_variable(int i) {
         if (Is_Zero_Row(A,i) && !Is_Linear_Dependent_Rows()) {
@@ -792,36 +806,41 @@ public class System_Linear_Equations_Extended extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Solve_System() throws Exception {
-        Scanner sc = new Scanner(System.in);
-        User_Menu_System();
-        int op = sc.nextInt();
-        Write_Status_System();
-        switch (op) {
-            case 1:
-                fr.println("implement the solution by upper --> lower ranking method:");
-                x = Upper_Ranking_Method();
-                break;
-            case 2:
-                fr.println("implement the solution by lower --> upper ranking method:");
-                x = Lower_Ranking_Method();
-                break;
-            case 3:
-                fr.println("implement the solution by parallel ranking method:");
-                x = Parallel_Ranking_Method();
-                break;
-            case 4:
-                fr.println("implement the solution by elementary ranking method:");
-                x = Elementary_Matrices_Method();
-                break;
-            default:
-                throw new Exception("you entered an invalid value for an option number to solution");
+    private void Many_Variables_System() throws Exception {
+        if (Is_Linear_Independent_System()) {
+            fr.println("does not an exists solutions for this system");
+        } else {
+            fill_square_system();
+            Scanner sc = new Scanner(System.in);
+            User_Menu_System();
+            int op = sc.nextInt();
+            Write_Status_System();
+            switch (op) {
+                case 1:
+                    fr.println("implement the solution by upper --> lower ranking method:");
+                    x = Upper_Ranking_Method();
+                    break;
+                case 2:
+                    fr.println("implement the solution by lower --> upper ranking method:");
+                    x = Lower_Ranking_Method();
+                    break;
+                case 3:
+                    fr.println("implement the solution by parallel ranking method:");
+                    x = Parallel_Ranking_Method();
+                    break;
+                case 4:
+                    fr.println("implement the solution by elementary ranking method:");
+                    x = Elementary_Matrices_Method();
+                    break;
+                default:
+                    throw new Exception("you entered an invalid value for an option number to solution");
+            }
+            Write_Solution();
         }
-        Write_Solution();
     }
 
     ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
-    private void Single_Value_Solution() {
+    private void Single_Variable_Equation() {
         if (A[0][0] == 0 && b[0][0] == 0) {
             fr.println("exists an infinite number of solutions in R1 space for the equation that is:");
             fr.println("x = λ when λ it's a free value that belongs to the R set");
@@ -852,22 +871,9 @@ public class System_Linear_Equations_Extended extends ShareTools {
             Write_Exercise();
             if (m <= n && m == k) {
                 if (n > 1) { // R2 space or higher
-                    if (Is_Linear_Independent_System()) {
-                        fr.println("does not an exists solutions for this system");
-                    } else {
-                        if (m < n) {
-                            if (n - m == 1) {
-                                fr.println("added one more row of zeros in order to get a square completion");
-                            } else {
-                                fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
-                            }
-                            A = Increase_Rows_in_Matrix(m);
-                        }
-                        b = Increase_Rows_in_Vector(n);
-                        Solve_System();
-                    }
+                    Many_Variables_System();
                 } else { // R1 space
-                    Single_Value_Solution();
+                    Single_Variable_Equation();
                 }
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");

@@ -564,7 +564,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Solve_System() throws Exception {
+    private void Many_Variables_System() throws Exception {
         int n = A.length;
         float det = Determinant(A);
         if (Is_Zero_Matrix(A) && Is_Zero_Vector(b)) {
@@ -619,7 +619,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
-    private void Single_Value_Solution() {
+    private void Single_Variable_Equation() {
         if (A[0][0] == 0 && b[0] == 0) {
             fr.println("exists an infinite number of solutions to the equation in R1 space:");
             fr.println("x = λ when λ it's a free value that belongs to the R set");
@@ -650,9 +650,9 @@ public class System_Linear_Equations extends ShareTools {
             Write_Exercise();
             if (m == n && m == k) {
                 if (n > 1) { // R2 space or higher
-                    Solve_System();
+                    Many_Variables_System();
                 } else { // R1 space
-                    Single_Value_Solution();
+                    Single_Variable_Equation();
                 }
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
