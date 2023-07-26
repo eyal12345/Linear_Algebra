@@ -9,17 +9,21 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Invertible_Matrices extends ShareTools {
+    private float[][] M;
+    private float[][] InvM;
     private String fn;
     private PrintWriter fr;
 
-    public Invertible_Matrices(String rep) {
+    public Invertible_Matrices(float[][] nM, String rep) {
+        M = nM;
+        InvM = ShareTools.Unit_Matrix(M.length);
         fn = rep;
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
-    private void Write_Exercise(float[][] M) {
+    private void Write_Exercise() {
         int n = M.length;
         fr.println("invert the next matrix (" + n + "*" + n + " size):");
         for (int i = 0; i < n; i++) {
@@ -36,7 +40,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // display current status of the matrices M and InvM each time of iteration on an element
-    private void Write_Status_Matrices(float[][] M, float[][] InvM) {
+    private void Write_Status_Matrices() {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -87,7 +91,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // show the resulting solution as a matrix representation
-    private void Write_Solution(float[][] M) {
+    private void Write_Solution() {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -200,7 +204,7 @@ public class Invertible_Matrices extends ShareTools {
 
     /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
     // invert the M matrix by an upper ranking and then a lower ranking
-    private float[][] Upper_Ranking_Method(float[][] M, float[][] InvM) {
+    private float[][] Upper_Ranking_Method() {
         fr.println(Which_Type_Triangular(M,true));
         int n = M.length;
         for (int i = 0; i < n; i++) {
@@ -208,7 +212,7 @@ public class Invertible_Matrices extends ShareTools {
                 int r = Index_UnZero_Value(M,i);
                 fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                 Retreat_Rows_Matrices(M,InvM,i,r);
-                Write_Status_Matrices(M,InvM);
+                Write_Status_Matrices();
             }
             for (int j = i + 1; j < n; j++) {
                 if (M[j][i] != 0) {
@@ -219,7 +223,7 @@ public class Invertible_Matrices extends ShareTools {
                         InvM[j][k] -= InvM[i][k] * c;
                     }
                     M[j][i] = 0;
-                    Write_Status_Matrices(M,InvM);
+                    Write_Status_Matrices();
                 } if (ShareTools.Is_Unit_Vector(M,j) && M[j][j] != 1) {
                     float c = 1 / M[j][j];
                     Mul_Elementary_Action(c,j);
@@ -227,23 +231,23 @@ public class Invertible_Matrices extends ShareTools {
                         InvM[j][k] /= M[j][j];
                     }
                     M[j][j] = 1;
-                    Write_Status_Matrices(M,InvM);
+                    Write_Status_Matrices();
                 }
             }
             if (ShareTools.Is_Upper_Triangular(M) && !ShareTools.Is_Lower_Triangular(M)) {
                 fr.print("and now ");
-                return Lower_Ranking_Method(M,InvM);
+                return Lower_Ranking_Method();
             }
         }
         if (!ShareTools.Is_Unit_Matrix(M)) {
             fr.println("still not yet received an unit matrix");
-            return Lower_Ranking_Method(M,InvM);
+            return Lower_Ranking_Method();
         }
         return InvM;
     }
 
     // invert the M matrix by a lower ranking and then an upper ranking
-    private float[][] Lower_Ranking_Method(float[][] M, float[][] InvM) {
+    private float[][] Lower_Ranking_Method() {
         fr.println(Which_Type_Triangular(M,false));
         int n = M.length;
         for (int i = n - 1; i >= 0; i--) {
@@ -251,7 +255,7 @@ public class Invertible_Matrices extends ShareTools {
                 int r = n - 1 - Index_UnZero_Value(M,i);
                 fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                 Retreat_Rows_Matrices(M,InvM,i,r);
-                Write_Status_Matrices(M,InvM);
+                Write_Status_Matrices();
             }
             for (int j = i - 1; j >= 0; j--) {
                 if (M[j][i] != 0) {
@@ -262,7 +266,7 @@ public class Invertible_Matrices extends ShareTools {
                         InvM[j][k] -= InvM[i][k] * c;
                     }
                     M[j][i] = 0;
-                    Write_Status_Matrices(M,InvM);
+                    Write_Status_Matrices();
                 } if (ShareTools.Is_Unit_Vector(M,j) && M[j][j] != 1) {
                     float c = 1 / M[j][j];
                     Mul_Elementary_Action(c,j);
@@ -270,23 +274,23 @@ public class Invertible_Matrices extends ShareTools {
                         InvM[j][k] /= M[j][j];
                     }
                     M[j][j] = 1;
-                    Write_Status_Matrices(M,InvM);
+                    Write_Status_Matrices();
                 }
             }
             if (!ShareTools.Is_Upper_Triangular(M) && ShareTools.Is_Lower_Triangular(M)) {
                 fr.print("and now ");
-                return Upper_Ranking_Method(M,InvM);
+                return Upper_Ranking_Method();
             }
         }
         if (!ShareTools.Is_Unit_Matrix(M)) {
             fr.println("still not yet received an unit matrix");
-            return Upper_Ranking_Method(M,InvM);
+            return Upper_Ranking_Method();
         }
         return InvM;
     }
 
     // invert the M matrix by parallel ranking
-    private float[][] Parallel_Ranking_Method(float[][] M) {
+    private float[][] Parallel_Ranking_Method() {
         fr.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = ShareTools.Unit_Matrix(n);
@@ -296,7 +300,7 @@ public class Invertible_Matrices extends ShareTools {
                     int r = Index_UnZero_Value(M,i);
                     fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
                     Retreat_Rows_Matrices(M,InvM,i,r);
-                    Write_Status_Matrices(M,InvM);
+                    Write_Status_Matrices();
                 }
                 for (int j = 0; j < n; j++) {
                     if (i != j && M[j][i] != 0) {
@@ -307,7 +311,7 @@ public class Invertible_Matrices extends ShareTools {
                             InvM[j][k] -= InvM[i][k] * c;
                         }
                         M[j][i] = 0;
-                        Write_Status_Matrices(M,InvM);
+                        Write_Status_Matrices();
                     } if (ShareTools.Is_Unit_Vector(M,j) && M[j][j] != 1) {
                         float c = 1 / M[j][j];
                         Mul_Elementary_Action(c,j);
@@ -315,7 +319,7 @@ public class Invertible_Matrices extends ShareTools {
                             InvM[j][k] /= M[j][j];
                         }
                         M[j][j] = 1;
-                        Write_Status_Matrices(M,InvM);
+                        Write_Status_Matrices();
                     }
                 }
             }
@@ -324,7 +328,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // invert the M matrix by parallel elementary matrices
-    private float[][] Elementary_Matrices_Method(float[][] M) {
+    private float[][] Elementary_Matrices_Method() {
         fr.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0, j = 0;
         float[][] E = ShareTools.Unit_Matrix(n);
@@ -337,7 +341,7 @@ public class Invertible_Matrices extends ShareTools {
                 M = ShareTools.Mul_Mats(E,M);
                 InvM = ShareTools.Mul_Mats(E,InvM);
                 E = ShareTools.Unit_Matrix(n);
-                Write_Status_Matrices(M,InvM);
+                Write_Status_Matrices();
             } if (i != j && M[j][i] != 0) {
                 E[j][i] -= (M[j][i] / M[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
@@ -345,7 +349,7 @@ public class Invertible_Matrices extends ShareTools {
                 InvM = ShareTools.Mul_Mats(E,InvM);
                 E = ShareTools.Unit_Matrix(n);
                 M[j][i] = 0;
-                Write_Status_Matrices(M,InvM);
+                Write_Status_Matrices();
             } if (ShareTools.Is_Unit_Vector(M,j) && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
                 Mul_Elementary_Action(E[j][j],j);
@@ -353,7 +357,7 @@ public class Invertible_Matrices extends ShareTools {
                 InvM = ShareTools.Mul_Mats(E,InvM);
                 E = ShareTools.Unit_Matrix(n);
                 M[j][j] = 1;
-                Write_Status_Matrices(M,InvM);
+                Write_Status_Matrices();
             } if (j == n - 1) {
                 i = (i + 1) % n;
             }
@@ -363,7 +367,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
-    private float[][] Invertible_Direct(float[][] M) {
+    private float[][] Invertible_Direct() {
         int n = M.length;
         float det = ShareTools.Determinant(M);
         float[][] InvM = new float[n][n];
@@ -378,73 +382,78 @@ public class Invertible_Matrices extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
-    private void Invert_Matrix(float[][] M) throws Exception {
+    private void Invert_Matrix() throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
-        Write_Status_Matrices(M, ShareTools.Unit_Matrix(M.length));
+        Write_Status_Matrices();
         switch (op) {
             case 1:
                 fr.println("implement the solution by upper ranking method:");
-                M = Upper_Ranking_Method(M, ShareTools.Unit_Matrix(M.length));
+                M = Upper_Ranking_Method();
                 break;
             case 2:
                 fr.println("implement the solution by lower ranking method:");
-                M = Lower_Ranking_Method(M, ShareTools.Unit_Matrix(M.length));
+                M = Lower_Ranking_Method();
                 break;
             case 3:
                 fr.println("implement the solution by parallel ranking method:");
-                M = Parallel_Ranking_Method(M);
+                M = Parallel_Ranking_Method();
                 break;
             case 4:
                 fr.println("implement the solution by elementary ranking method:");
-                M = Elementary_Matrices_Method(M);
+                M = Elementary_Matrices_Method();
                 break;
             case 5:
                 fr.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
-                M = Invertible_Direct(M);
+                M = Invertible_Direct();
                 break;
             default:
                 throw new Exception("you entered an invalid number");
         }
         fr.println("the invertible of this matrix is:");
-        Write_Solution(M);
+        Write_Solution();
+    }
+
+    //////////////////////////////////////////////// 1*1 Matrix ///////////////////////////////////////////////
+    private void Single_Value_Matrix() {
+        float c = 1 / M[0][0];
+        String msg = "the invertible of this matrix is: ";
+        if (c % 1 == 0) {
+            msg += (int) c;
+        } else if (fn.equals("decimal")) {
+            msg += c;
+        } else if (fn.equals("rational")) {
+            msg += ShareTools.convertDecimalToFraction(c);
+        }
+        fr.println(msg);
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input(float[][] M) throws Exception {
-        int m = M.length, n = M[0].length;
-        if (m == n) {
-            if (fn.equals("decimal") || fn.equals("rational")) {
-                LocalDateTime cur = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-                File file = new File("Results/Invertible_Matrices_(" + n + "x" + n + " size)_" + cur.format(formatter) + ".txt");
-                fr = new PrintWriter(new FileWriter(file, true));
-                Write_Exercise(M);
+    public void Check_User_Input() throws Exception {
+        if (fn.equals("decimal") || fn.equals("rational")) {
+            int m = M.length, n = M[0].length;
+            LocalDateTime cur = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+            File file = new File("Results/Invertible_Matrices/Invertible_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            fr = new PrintWriter(new FileWriter(file, true));
+            Write_Exercise();
+            if (m != n) {
+                fr.println("this is a matrix which is not a square matrix");
+            } else {
                 float det = ShareTools.Determinant(M);
                 if (det == 0) {
                     fr.println("this is a singular matrix");
                 } else if (n > 1) { // 2*2 size or higher
-                    Invert_Matrix(M);
+                    Invert_Matrix();
                 } else { // 1*1 size
-                    float c = 1 / M[0][0];
-                    String msg = "the invertible of this matrix is: ";
-                    if (c % 1 == 0) {
-                        msg += (int) c;
-                    } else if (fn.equals("decimal")) {
-                        msg += c;
-                    } else if (fn.equals("rational")) {
-                        msg += ShareTools.convertDecimalToFraction(c);
-                    }
-                    fr.println(msg);
+                    Single_Value_Matrix();
                 }
-                fr.close();
-            } else {
-                throw new Exception("you entered invalid value for a representation elementary actions and solution");
             }
+            fr.close();
         } else {
-            throw new Exception("your input does not meet the conditions for invertible matrices");
+            throw new Exception("you entered invalid value for a representation elementary actions and solution");
         }
     }
 }

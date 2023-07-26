@@ -230,14 +230,14 @@ public class ShareTools {
     public static float[][] Invertible(float[][] M) {
         int n = M.length;
         float det = Determinant(M);
-        float[][] invA = new float[n][n];
+        float[][] invM = new float[n][n];
         float[][] adj = Adjoint(M);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                invA[i][j] = (1 / det) * adj[i][j];
+                invM[i][j] = (1 / det) * adj[i][j];
             }
         }
-        return invA;
+        return invM;
     }
 
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row

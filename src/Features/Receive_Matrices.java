@@ -9,22 +9,24 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Receive_Matrices extends ShareTools {
+    private float[][] L;
     private String fn;
     private PrintWriter fr;
 
-    public Receive_Matrices(String rep) {
+    public Receive_Matrices(float[][] nL, String rep) {
+        L = nL;
         fn = rep;
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
-    private void Write_Exercise(float[][] M) {
-        int n = M.length;
+    private void Write_Exercise() {
+        int n = L.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
+                if ((Math.round(L[i][j] * 1000.0) / 1000.0) % 1 == 0) {
+                    fr.print((int) (Math.round(L[i][j] * 1000.0) / 1000.0));
                 } if (j != n - 1) {
                     fr.print(" ,");
                 }
@@ -95,7 +97,7 @@ public class Receive_Matrices extends ShareTools {
 
     /////////////////////////////////////// Methods to Solution (Receive M) /////////////////////////////////////////
     // get the LU decomposition by multiplication of L and U (first algorithm)
-    private float[][] From_LU_To_M_V1(float[][] L, float[][] U) {
+    private float[][] From_LU_To_M_V1(float[][] U) {
         fr.println("U = ");
         Write_Matrix(U);
         if (ShareTools.Is_One_Slant(L)) {
@@ -107,7 +109,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // get the LL' decomposition by multiplication of L and L' (first algorithm)
-    private float[][] From_LLT_To_M_V1(float[][] L) {
+    private float[][] From_LLT_To_M_V1() {
         float[][] LT = ShareTools.Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
@@ -115,7 +117,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // get the LDL' decomposition by multiplication of L, D and L' (first algorithm)
-    private float[][] From_LDLT_To_M_V1(float[][] L, float[][] D) {
+    private float[][] From_LDLT_To_M_V1(float[][] D) {
         fr.println("D = ");
         Write_Matrix(D);
         float[][] LT = ShareTools.Transpose(L);
@@ -130,7 +132,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // get the LU decomposition by multiplication of L and U (second algorithm)
-    private float[][] From_LU_To_M_V2(float[][] L, float[][] U) {
+    private float[][] From_LU_To_M_V2(float[][] U) {
         fr.println("U = ");
         Write_Matrix(U);
         if (ShareTools.Is_One_Slant(L)) {
@@ -152,7 +154,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // get the LL' decomposition by multiplication of L and L' (second algorithm)
-    private float[][] From_LLT_To_M_V2(float[][] L) {
+    private float[][] From_LLT_To_M_V2() {
         float[][] LT = ShareTools.Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
@@ -170,7 +172,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // get the LDL' decomposition by multiplication of L, D and L' (second algorithm)
-    private float[][] From_LDLT_To_M_V2(float[][] L, float[][] D) {
+    private float[][] From_LDLT_To_M_V2(float[][] D) {
         fr.println("D = ");
         Write_Matrix(D);
         float[][] LT = ShareTools.Transpose(L);
@@ -196,87 +198,87 @@ public class Receive_Matrices extends ShareTools {
 
     /////////////////////////////////////// User Interface (Receive M) ///////////////////////////////////////
     // get the matrix by a multiplication components
-    public void Receive_Matrix(float[][] L) throws Exception {
+    public void Receive_Matrix() throws Exception {
         int n = L.length;
-        if (fn.equals("decimal") || fn.equals("rational")) {
-            LocalDateTime cur = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Receive_Matrices_(" + n + "x" + n + " size)_" + cur.format(formatter) + ".txt");
-            fr = new PrintWriter(new FileWriter(file, true));
-            fr.println("receive the M matrix from the L and another matrices (" + n + "*" + n + " size):");
-            Write_Exercise(L);
-            User_Menu_System_Receive();
-            Scanner sc = new Scanner(System.in);
-            int op = sc.nextInt();
-            fr.println("L = ");
-            Write_Matrix(L);
-            if (!ShareTools.Is_Lower_Triangular(L)) {
-                fr.println("this is a matrix which is not a lower triangular");
-            } else {
-                float[][] M;
-                switch (op) {
-                    case 1:
-                        fr.println("find the matrix by L and U multiplication:");
-                        M = From_LU_To_M_V1(L,Create_Upper_Matrix(n));
-                        if (M != null) {
-                            fr.println("M = ");
-                            Write_Matrix(M);
-                        }
-                        break;
-                    case 2:
-                        fr.println("find the matrix by L and L' multiplication:");
-                        M = From_LLT_To_M_V1(L);
-                        fr.println("M = ");
-                        Write_Matrix(M);
-                        break;
-                    case 3:
-                        fr.println("find the matrix by L, D and L' multiplication:");
-                        M = From_LDLT_To_M_V1(L,Create_Diagonal_Matrix(n));
-                        if (M != null) {
-                            fr.println("M = ");
-                            Write_Matrix(M);
-                        }
-                        break;
-                    case 4:
-                        fr.println("find the matrix by L and U multiplication:");
-                        M = From_LU_To_M_V2(L,Create_Upper_Matrix(n));
-                        if (M != null) {
-                            fr.println("M = ");
-                            Write_Matrix(M);
-                        }
-                        break;
-                    case 5:
-                        fr.println("find the matrix by L and L' multiplication:");
-                        M = From_LLT_To_M_V2(L);
-                        fr.println("M = ");
-                        Write_Matrix(M);
-                        break;
-                    case 6:
-                        fr.println("find the matrix by L, D and L' multiplication:");
-                        M = From_LDLT_To_M_V2(L,Create_Diagonal_Matrix(n));
-                        if (M != null) {
-                            fr.println("M = ");
-                            Write_Matrix(M);
-                        }
-                        break;
-                    default:
-                        throw new Exception("you entered an invalid number");
+        Scanner sc = new Scanner(System.in);
+        User_Menu_System_Receive();
+        int op = sc.nextInt();
+        float[][] M;
+        switch (op) {
+            case 1:
+                fr.println("find the matrix by L and U multiplication:");
+                M = From_LU_To_M_V1(Create_Upper_Matrix(n));
+                if (M != null) {
+                    fr.println("M = ");
+                    Write_Matrix(M);
                 }
-            }
-            fr.close();
-        } else {
-            throw new Exception("you entered invalid values for the L matrix");
+                break;
+            case 2:
+                fr.println("find the matrix by L and L' multiplication:");
+                M = From_LLT_To_M_V1();
+                fr.println("M = ");
+                Write_Matrix(M);
+                break;
+            case 3:
+                fr.println("find the matrix by L, D and L' multiplication:");
+                M = From_LDLT_To_M_V1(Create_Diagonal_Matrix(n));
+                if (M != null) {
+                    fr.println("M = ");
+                    Write_Matrix(M);
+                }
+                break;
+            case 4:
+                fr.println("find the matrix by L and U multiplication:");
+                M = From_LU_To_M_V2(Create_Upper_Matrix(n));
+                if (M != null) {
+                    fr.println("M = ");
+                    Write_Matrix(M);
+                }
+                break;
+            case 5:
+                fr.println("find the matrix by L and L' multiplication:");
+                M = From_LLT_To_M_V2();
+                fr.println("M = ");
+                Write_Matrix(M);
+                break;
+            case 6:
+                fr.println("find the matrix by L, D and L' multiplication:");
+                M = From_LDLT_To_M_V2(Create_Diagonal_Matrix(n));
+                if (M != null) {
+                    fr.println("M = ");
+                    Write_Matrix(M);
+                }
+                break;
+            default:
+                throw new Exception("you entered an invalid number");
         }
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input(float[][] L) throws Exception {
-        int m = L.length, n = L[0].length;
-        if (m == n) {
-            Receive_Matrix(L);
+    public void Check_User_Input() throws Exception {
+        if (fn.equals("decimal") || fn.equals("rational")) {
+            int m = L.length, n = L[0].length;
+            LocalDateTime cur = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+            File file = new File("Results/Receive_Matrices/Receive_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            fr = new PrintWriter(new FileWriter(file, true));
+            fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
+            Write_Exercise();
+            if (m != n) {
+                fr.println("this is a matrix which is not a square matrix");
+            } else {
+                fr.println("L = ");
+                Write_Matrix(L);
+                if (!ShareTools.Is_Lower_Triangular(L)) {
+                    fr.println("this is a matrix which is not a lower triangular");
+                } else {
+                    Receive_Matrix();
+                }
+            }
+            fr.close();
         } else {
-            throw new Exception("you entered matrix which is not a square matrix");
+            throw new Exception("you entered invalid values for the L matrix");
         }
     }
 }

@@ -9,17 +9,19 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Decompose_Matrices extends ShareTools {
+    private float[][] M;
     private String fn;
     private PrintWriter fr;
 
-    public Decompose_Matrices(String rep) {
+    public Decompose_Matrices(float[][] nM, String rep) {
+        M = nM;
         fn = rep;
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
-    private void Write_Exercise(float[][] M) {
+    private void Write_Exercise() {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -123,7 +125,7 @@ public class Decompose_Matrices extends ShareTools {
 
     ////////////////////////////////////// Methods to Solution (Decompose M) ////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
-    private float[][] From_M_To_LU_V1(float[][] M) {
+    private float[][] From_M_To_LU_V1() {
         int n = M.length;
         float[][] L = new float[n][n];
         float[][] U = new float[n][n];
@@ -151,7 +153,7 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     // get the LL' decomposition of M (first algorithm)
-    private float[][] From_M_To_LLT_V1(float[][] M) {
+    private float[][] From_M_To_LLT_V1() {
         if (ShareTools.Is_Symmetrical_Matrix(M) && ShareTools.Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -190,7 +192,7 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     // get the LDL' decomposition of M (first algorithm)
-    private float[][] From_M_To_LDLT_V1(float[][] M) {
+    private float[][] From_M_To_LDLT_V1() {
         if (ShareTools.Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -237,7 +239,7 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     // get the LU decomposition of M (second algorithm)
-    private float[][] From_M_To_LU_V2(float[][] M) {
+    private float[][] From_M_To_LU_V2() {
         int n = M.length;
         float[][] L = new float[n][n];
         float[][] U = new float[n][n];
@@ -261,7 +263,7 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     // get the LL' decomposition of M (second algorithm)
-    private float[][] From_M_To_LLT_V2(float[][] M) {
+    private float[][] From_M_To_LLT_V2() {
         if (ShareTools.Is_Symmetrical_Matrix(M) && ShareTools.Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -285,7 +287,7 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     // get the LDL' decomposition of M (second algorithm)
-    private float[][] From_M_To_LDLT_V2(float[][] M) {
+    private float[][] From_M_To_LDLT_V2() {
         if (ShareTools.Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -319,83 +321,82 @@ public class Decompose_Matrices extends ShareTools {
 
     ////////////////////////////////////// User Interface (Decompose M) //////////////////////////////////////
     // get the matrix components
-    private void Decompose_Matrix(float[][] M) throws Exception {
-        int n = M.length;
-        if (fn.equals("decimal") || fn.equals("rational")) {
-            LocalDateTime cur = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Decompose_Matrices_(" + n + "x" + n + " size)_" + cur.format(formatter) + ".txt");
-            fr = new PrintWriter(new FileWriter(file, true));
-            fr.println("decompose the next matrix (" + n + "*" + n + " size):");
-            Write_Exercise(M);
-            User_Menu_System_Decompose();
-            Scanner sc = new Scanner(System.in);
-            int op = sc.nextInt();
-            fr.println("M = ");
-            Write_Matrix(M);
-            float[][] M2;
-            switch (op) {
-                case 1:
-                    fr.println("find L and U by decomposition of M:");
-                    M2 = From_M_To_LU_V1(M);
-                    fr.println("U = ");
+    private void Decompose_Matrix() throws Exception {
+        Scanner sc = new Scanner(System.in);
+        User_Menu_System_Decompose();
+        int op = sc.nextInt();
+        fr.println("M = ");
+        Write_Matrix(M);
+        float[][] M2;
+        switch (op) {
+            case 1:
+                fr.println("find L and U by decomposition of M:");
+                M2 = From_M_To_LU_V1();
+                fr.println("U = ");
+                Write_Matrix(M2);
+                break;
+            case 2:
+                fr.println("find L and L' by decomposition of M:");
+                M2 = From_M_To_LLT_V1();
+                if (M2 != null) {
+                    fr.println("L' = ");
                     Write_Matrix(M2);
-                    break;
-                case 2:
-                    fr.println("find L and L' by decomposition of M:");
-                    M2 = From_M_To_LLT_V1(M);
-                    if (M2 != null) {
-                        fr.println("L' = ");
-                        Write_Matrix(M2);
-                    }
-                    break;
-                case 3:
-                    fr.println("find L, D and L' by decomposition of M:");
-                    M2 = From_M_To_LDLT_V1(M);
-                    if (M2 != null) {
-                        fr.println("L' = ");
-                        Write_Matrix(M2);
-                    }
-                    break;
-                case 4:
-                    fr.println("find L and U by decomposition of M:");
-                    M2 = From_M_To_LU_V2(M);
-                    fr.println("U = ");
+                }
+                break;
+            case 3:
+                fr.println("find L, D and L' by decomposition of M:");
+                M2 = From_M_To_LDLT_V1();
+                if (M2 != null) {
+                    fr.println("L' = ");
                     Write_Matrix(M2);
-                    break;
-                case 5:
-                    fr.println("find L and L' by decomposition of M:");
-                    M2 = From_M_To_LLT_V2(M);
-                    if (M2 != null) {
-                        fr.println("L' = ");
-                        Write_Matrix(M2);
-                    }
-                    break;
-                case 6:
-                    fr.println("find L, D and L' by decomposition of M:");
-                    M2 = From_M_To_LDLT_V2(M);
-                    if (M2 != null) {
-                        fr.println("L' = ");
-                        Write_Matrix(M2);
-                    }
-                    break;
-                default:
-                    throw new Exception("you entered an invalid number");
-            }
-            fr.close();
-        } else {
-            throw new Exception("you entered invalid value for a representation elementary actions and solution");
+                }
+                break;
+            case 4:
+                fr.println("find L and U by decomposition of M:");
+                M2 = From_M_To_LU_V2();
+                fr.println("U = ");
+                Write_Matrix(M2);
+                break;
+            case 5:
+                fr.println("find L and L' by decomposition of M:");
+                M2 = From_M_To_LLT_V2();
+                if (M2 != null) {
+                    fr.println("L' = ");
+                    Write_Matrix(M2);
+                }
+                break;
+            case 6:
+                fr.println("find L, D and L' by decomposition of M:");
+                M2 = From_M_To_LDLT_V2();
+                if (M2 != null) {
+                    fr.println("L' = ");
+                    Write_Matrix(M2);
+                }
+                break;
+            default:
+                throw new Exception("you entered an invalid number");
         }
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input(float[][] M) throws Exception {
-        int m = M.length, n = M[0].length;
-        if (m == n) {
-            Decompose_Matrix(M);
+    public void Check_User_Input() throws Exception {
+        if (fn.equals("decimal") || fn.equals("rational")) {
+            int m = M.length, n = M[0].length;
+            LocalDateTime cur = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+            File file = new File("Results/Decompose_Matrices/Decompose_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            fr = new PrintWriter(new FileWriter(file, true));
+            fr.println("decompose the next matrix (" + m + "*" + n + " size):");
+            Write_Exercise();
+            if (m != n) {
+                fr.println("this is a matrix which is not a square matrix");
+            } else {
+                Decompose_Matrix();
+            }
+            fr.close();
         } else {
-            throw new Exception("you entered matrix which is not a square matrix");
+            throw new Exception("you entered invalid value for a representation elementary actions and solution");
         }
     }
 }

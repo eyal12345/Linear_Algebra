@@ -879,17 +879,39 @@ public class System_Linear_Equations_Extended extends ShareTools {
         Write_Solution(x);
     }
 
+    ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
+    private void Single_Value_Solution(float[][] A, float[] b) {
+        if (A[0][0] == 0 && b[0] == 0) {
+            fr.println("exists an infinite number of solutions in R1 space for the equation that is:");
+            fr.println("x = λ when λ it's a free value that belongs to the R set");
+        } else if (A[0][0] == 0 && b[0] != 0) {
+            fr.println("does not an exists solutions for this equation");
+        } else {
+            fr.println("exist a single solution in R1 space for the equation which is:");
+            float c = b[0] / A[0][0];
+            if (c % 1 == 0) {
+                fr.println("x = " + (int) c);
+            } else if (fn.equals("decimal")) {
+                fr.println("x = " + c);
+            } else if (fn.equals("rational")) {
+                fr.println("x = " + ShareTools.convertDecimalToFraction(c));
+            }
+        }
+    }
+
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
     public void Check_User_Input(float[][] A, float[] b) throws Exception {
-        int m = A.length, n = A[0].length, k = b.length;
-        if (m <= n && m == k) {
-            if (fn.equals("decimal") || fn.equals("rational")) {
-                LocalDateTime cur = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-                File file = new File("Results/" + Name_File(m,n) + " " + cur.format(formatter) + ".txt");
-                fr = new PrintWriter(new FileWriter(file, true));
-                Write_Exercise(A,b);
+        if (fn.equals("decimal") || fn.equals("rational")) {
+            int m = A.length, n = A[0].length, k = b.length;
+            LocalDateTime cur = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+            File file = new File("Results/System_Linear_Equations/" + Name_File(m,n) + " " + cur.format(formatter) + ".txt");
+            fr = new PrintWriter(new FileWriter(file, true));
+            Write_Exercise(A,b);
+            if (m <= n && m == k) {
+                fr.println("this is an input does not meet the conditions for system of linear equations");
+            } else {
                 if (n > 1) { // R2 space or higher
                     if (Is_Linear_Independent_System(A,b)) {
                         fr.println("does not an exists solutions for this system");
@@ -906,29 +928,12 @@ public class System_Linear_Equations_Extended extends ShareTools {
                         Solve_System(A,bt);
                     }
                 } else { // R1 space
-                    if (A[0][0] == 0 && b[0] == 0) {
-                        fr.println("exists an infinite number of solutions in R1 space for the equation that is:");
-                        fr.println("x = λ when λ it's a free value that belongs to the R set");
-                    } else if (A[0][0] == 0 && b[0] != 0) {
-                        fr.println("does not an exists solutions for this equation");
-                    } else {
-                        fr.println("exist a single solution in R1 space for the equation which is:");
-                        float c = b[0] / A[0][0];
-                        if (c % 1 == 0) {
-                            fr.println("x = " + (int) c);
-                        } else if (fn.equals("decimal")) {
-                            fr.println("x = " + c);
-                        } else if (fn.equals("rational")) {
-                            fr.println("x = " + ShareTools.convertDecimalToFraction(c));
-                        }
-                    }
+                    Single_Value_Solution(A,b);
                 }
-                fr.close();
-            } else {
-                throw new Exception("you entered invalid value for a representation elementary actions and solution");
             }
+            fr.close();
         } else {
-            throw new Exception("your input does not meet the conditions for system of linear equations");
+            throw new Exception("you entered invalid value for a representation elementary actions and solution");
         }
     }
 }
