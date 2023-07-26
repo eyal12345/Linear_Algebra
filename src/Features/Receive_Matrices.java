@@ -46,7 +46,7 @@ public class Receive_Matrices extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.print(Math.round(M[i][j] * 1000.0) / 1000.0);
                 } else if (fn.equals("rational")) {
-                    fr.print(ShareTools.convertDecimalToFraction(M[i][j]));
+                    fr.print(convertDecimalToFraction(M[i][j]));
                 } if (j != n - 1) {
                     fr.print(" ,");
                 }
@@ -100,8 +100,8 @@ public class Receive_Matrices extends ShareTools {
     private float[][] From_LU_To_M_V1(float[][] U) {
         fr.println("U = ");
         Write_Matrix(U);
-        if (ShareTools.Is_One_Slant(L)) {
-            return ShareTools.Mul_Mats(L,U);
+        if (Is_One_Slant(L)) {
+            return Mul_Mats(L,U);
         } else {
             fr.println("these are values other than 1 on the main diagonal of L matrix");
             return null;
@@ -110,21 +110,21 @@ public class Receive_Matrices extends ShareTools {
 
     // get the LL' decomposition by multiplication of L and L' (first algorithm)
     private float[][] From_LLT_To_M_V1() {
-        float[][] LT = ShareTools.Transpose(L);
+        float[][] LT = Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
-        return ShareTools.Mul_Mats(L,LT);
+        return Mul_Mats(L,LT);
     }
 
     // get the LDL' decomposition by multiplication of L, D and L' (first algorithm)
     private float[][] From_LDLT_To_M_V1(float[][] D) {
         fr.println("D = ");
         Write_Matrix(D);
-        float[][] LT = ShareTools.Transpose(L);
+        float[][] LT = Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
-        if (ShareTools.Is_One_Slant(L)) {
-            return ShareTools.Mul_Mats(ShareTools.Mul_Mats(L,D),LT);
+        if (Is_One_Slant(L)) {
+            return Mul_Mats(Mul_Mats(L,D),LT);
         } else {
             fr.println("these are values other than 1 on the main diagonal of L matrix");
             return null;
@@ -135,7 +135,7 @@ public class Receive_Matrices extends ShareTools {
     private float[][] From_LU_To_M_V2(float[][] U) {
         fr.println("U = ");
         Write_Matrix(U);
-        if (ShareTools.Is_One_Slant(L)) {
+        if (Is_One_Slant(L)) {
             int n = L.length;
             float[][] M = new float[n][n];
             for (int i = 0; i < n; i++) {
@@ -155,7 +155,7 @@ public class Receive_Matrices extends ShareTools {
 
     // get the LL' decomposition by multiplication of L and L' (second algorithm)
     private float[][] From_LLT_To_M_V2() {
-        float[][] LT = ShareTools.Transpose(L);
+        float[][] LT = Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
         int n = L.length;
@@ -175,10 +175,10 @@ public class Receive_Matrices extends ShareTools {
     private float[][] From_LDLT_To_M_V2(float[][] D) {
         fr.println("D = ");
         Write_Matrix(D);
-        float[][] LT = ShareTools.Transpose(L);
+        float[][] LT = Transpose(L);
         fr.println("L' = ");
         Write_Matrix(LT);
-        if (ShareTools.Is_One_Slant(L)) {
+        if (Is_One_Slant(L)) {
             int n = L.length;
             float[][] M = new float[n][n];
             for (int i = 0; i < n; i++) {
@@ -270,7 +270,7 @@ public class Receive_Matrices extends ShareTools {
             } else {
                 fr.println("L = ");
                 Write_Matrix(L);
-                if (!ShareTools.Is_Lower_Triangular(L)) {
+                if (!Is_Lower_Triangular(L)) {
                     fr.println("this is a matrix which is not a lower triangular");
                 } else {
                     Receive_Matrix();

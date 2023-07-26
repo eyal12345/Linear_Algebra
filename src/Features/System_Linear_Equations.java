@@ -102,7 +102,7 @@ public class System_Linear_Equations extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.print(Math.round(A[i][j] * 1000.0) / 1000.0);
                 } else if (fn.equals("rational")) {
-                    fr.print(ShareTools.convertDecimalToFraction(A[i][j]));
+                    fr.print(convertDecimalToFraction(A[i][j]));
                 } if (j != n - 1) {
                     fr.print(" ,");
                 }
@@ -113,7 +113,7 @@ public class System_Linear_Equations extends ShareTools {
             } else if (fn.equals("decimal")) {
                 fr.print(Math.round(b[i] * 1000.0) / 1000.0);
             } else if (fn.equals("rational")) {
-                fr.print(ShareTools.convertDecimalToFraction(b[i]));
+                fr.print(convertDecimalToFraction(b[i]));
             }
             fr.println();
         }
@@ -130,7 +130,7 @@ public class System_Linear_Equations extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.print(Math.round(A[i][j] * 1000.0) / 1000.0);
                 } else if (fn.equals("rational")) {
-                    fr.print(ShareTools.convertDecimalToFraction(A[i][j]));
+                    fr.print(convertDecimalToFraction(A[i][j]));
                 } if (j != n - 1) {
                     fr.print(" ,");
                 }
@@ -142,15 +142,15 @@ public class System_Linear_Equations extends ShareTools {
 
     // determine what kind of matrix
     private String Which_Type_Triangular(float[][] A, boolean flag) {
-        if (ShareTools.Is_Upper_Triangular(A) && ShareTools.Is_Lower_Triangular(A)) {
+        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
             return "A is already parallel triangular so now will be change directly to I:";
-        } else if (ShareTools.Is_Upper_Triangular(A) && !ShareTools.Is_Lower_Triangular(A) && flag) {
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
             return "A is already upper triangular so now we'll go directly to the lower ranking:";
-        } else if (!ShareTools.Is_Upper_Triangular(A) && ShareTools.Is_Lower_Triangular(A) && !flag) {
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
             return "A is already lower triangular so now we'll go directly to the upper ranking:";
-        } else if (!ShareTools.Is_Upper_Triangular(A) && ShareTools.Is_Lower_Triangular(A) && flag) {
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
             return "transform L matrix to I by an upper ranking:";
-        } else if (ShareTools.Is_Upper_Triangular(A) && !ShareTools.Is_Lower_Triangular(A) && !flag) {
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
             return "transform U matrix to I by a lower ranking:";
         } else if (flag) {
             return "transform A matrix to U by an upper ranking:";
@@ -169,7 +169,7 @@ public class System_Linear_Equations extends ShareTools {
             } else if (fn.equals("decimal")) {
                 s += Math.round(x[i] * 1000.0) / 1000.0;
             } else if (fn.equals("rational")) {
-                s += ShareTools.convertDecimalToFraction(x[i]);
+                s += convertDecimalToFraction(x[i]);
             } if (i != n - 1) {
                 s += " ,";
             }
@@ -180,7 +180,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for solution
-    private static void User_Menu_System() {
+    private void User_Menu_System() {
         System.out.println("choose number method to solution:");
         System.out.println("1. invertible method");
         System.out.println("2. cramer method (first method)");
@@ -194,7 +194,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ////////////////////////////////////////////////// Quantity //////////////////////////////////////////////////
     // invoke name of file by quantity of equations and unknowns
-    private static String Name_File(int n) {
+    private String Name_File(int n) {
         if (n == 1) {
             return "Linear_Equation_(1 Equation)(1 Unknown)";
         } else {
@@ -203,7 +203,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // invoke executive order by quantity of equations and unknowns
-    private static String Executive_Order(int n) {
+    private String Executive_Order(int n) {
         if (n == 1) {
             return "solve the next equation in R1 space:";
         } else {
@@ -213,7 +213,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index starting from the specific column in the matrix which are him value not equal to 0
-    private static int Index_UnZero_Value(float[][] A, int k) {
+    private int Index_UnZero_Value(float[][] A, int k) {
         int n = A.length;
         for (int i = k + 1; i < n + k; i++) {
             if (A[i % n][k] != 0) {
@@ -225,7 +225,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // replace between two rows in a system Ax = b
-    public static void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
+    public void Retreat_Rows_System(float[][] A, float[] b, int r1, int r2) {
         int n = A.length;
         for (int j = 0; j < n; j++) {
             float t = A[r1][j];
@@ -264,7 +264,7 @@ public class System_Linear_Equations extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.println("R" + r + " --> R" + r + " - " + k + "*R" + c);
                 } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " - " + ShareTools.convertDecimalToFraction(k) + "*R" + c);
+                    fr.println("R" + r + " --> R" + r + " - " + convertDecimalToFraction(k) + "*R" + c);
                 }
             } else {
                 if (k % 1 == 0) {
@@ -276,7 +276,7 @@ public class System_Linear_Equations extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.println("R" + r + " --> R" + r + " + " + (-k) + "*R" + c);
                 } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " + " + ShareTools.convertDecimalToFraction(-k) + "*R" + c);
+                    fr.println("R" + r + " --> R" + r + " + " + convertDecimalToFraction(-k) + "*R" + c);
                 }
             }
             fr.println();
@@ -297,7 +297,7 @@ public class System_Linear_Equations extends ShareTools {
             } else if (fn.equals("decimal")) {
                 fr.println("R" + r + " --> " + k + "*R" + r);
             } else if (fn.equals("rational")) {
-                fr.println("R" + r + " --> " + ShareTools.convertDecimalToFraction(k) + "*R" + r);
+                fr.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r);
             }
             fr.println();
         }
@@ -309,7 +309,7 @@ public class System_Linear_Equations extends ShareTools {
         fr.println("implement the solution by multiplication of b in invertible A: x = b*Inv(A)");
         int n = A.length;
         float[] x = new float[n];
-        float[][] invA = ShareTools.Invertible(A);
+        float[][] invA = Invertible(A);
         fr.println("Inv(A) = ");
         Write_Matrix(invA);
         for (int i = 0; i < n; i++) {
@@ -325,7 +325,7 @@ public class System_Linear_Equations extends ShareTools {
     private float[] Cramer_Method_V1() {
         fr.println("x(i) = |A(i)|/|A| for each 1<=i<=n");
         int n = A.length;
-        float det = ShareTools.Determinant(A);
+        float det = Determinant(A);
         fr.println("det = " + det);
         float[] x = new float[n];
         float[] h = new float[n];
@@ -334,7 +334,7 @@ public class System_Linear_Equations extends ShareTools {
                 h[i] = A[i][j];
                 A[i][j] = b[i];
             }
-            float detj = ShareTools.Determinant(A);
+            float detj = Determinant(A);
             fr.println("det" + (j + 1) + " = " + detj);
             fr.println("A" + (j + 1) + " = ");
             Write_Matrix(A);
@@ -351,12 +351,12 @@ public class System_Linear_Equations extends ShareTools {
         fr.println("x(i) = |A(i)|/|A| for each 1<=i<=n");
         int n = A.length;
         float[] x = new float[n];
-        float det = ShareTools.Determinant(A);
+        float det = Determinant(A);
         fr.println("det = " + det);
         for (int i = 0; i < n; i++) {
             float sum = 0;
             for (int j = 0; j < n; j++) {
-                sum += Math.pow(-1,i + j) * b[j] * ShareTools.Determinant(ShareTools.Sub_Matrix(A,j,i));
+                sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
             }
             fr.println("det" + (i + 1) + " = " + sum);
             x[i] = sum / det;
@@ -368,10 +368,10 @@ public class System_Linear_Equations extends ShareTools {
     private float[] Forward_Backward_Method() {
         int n = b.length;
         fr.println("first, we will calculate upper ranking of A:");
-        float[][] U = ShareTools.Ranking_Matrix(A);
+        float[][] U = Ranking_Matrix(A);
         Write_Matrix(U);
         fr.println("second, we will calculate lower ranking of A:");
-        float[][] L = ShareTools.Mul_Mats(A, ShareTools.Invertible(U));
+        float[][] L = Mul_Mats(A,Invertible(U));
         Write_Matrix(L);
         for (int i = 0; i < n - 1; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -429,7 +429,7 @@ public class System_Linear_Equations extends ShareTools {
                     A[j][i] = 0;
                     b[j] -= b[i] * c;
                     Write_Status_System();
-                } if (ShareTools.Is_Unit_Vector(A,j) && A[j][j] != 1) {
+                } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
                     float c = 1 / A[j][j];
                     Mul_Elementary_Action(c,j);
                     b[j] /= A[j][j];
@@ -437,12 +437,12 @@ public class System_Linear_Equations extends ShareTools {
                     Write_Status_System();
                 }
             }
-            if (ShareTools.Is_Upper_Triangular(A) && !ShareTools.Is_Lower_Triangular(A)) {
+            if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
                 fr.print("and now ");
                 return Lower_Ranking_Method();
             }
         }
-        if (!ShareTools.Is_Unit_Matrix(A)) {
+        if (!Is_Unit_Matrix(A)) {
             fr.println("still not yet received an unit matrix");
             return Lower_Ranking_Method();
         }
@@ -470,7 +470,7 @@ public class System_Linear_Equations extends ShareTools {
                     A[j][i] = 0;
                     b[j] -= b[i] * c;
                     Write_Status_System();
-                } if (ShareTools.Is_Unit_Vector(A,j) && A[j][j] != 1) {
+                } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
                     float c = 1 / A[j][j];
                     Mul_Elementary_Action(c,j);
                     b[j] /= A[j][j];
@@ -478,12 +478,12 @@ public class System_Linear_Equations extends ShareTools {
                     Write_Status_System();
                 }
             }
-            if (!ShareTools.Is_Upper_Triangular(A) && ShareTools.Is_Lower_Triangular(A)) {
+            if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
                 fr.print("and now ");
                 return Upper_Ranking_Method();
             }
         }
-        if (!ShareTools.Is_Unit_Matrix(A)) {
+        if (!Is_Unit_Matrix(A)) {
             fr.println("still not yet received an unit matrix");
             return Upper_Ranking_Method();
         }
@@ -494,7 +494,7 @@ public class System_Linear_Equations extends ShareTools {
     private float[] Parallel_Ranking_Method() {
         fr.println("transform A matrix to I by a parallel ranking:");
         int n = A.length;
-        while (!ShareTools.Is_Unit_Matrix(A)) {
+        while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 if (A[i][i] == 0) {
                     int r = Index_UnZero_Value(A,i);
@@ -512,7 +512,7 @@ public class System_Linear_Equations extends ShareTools {
                         A[j][i] = 0;
                         b[j] -= b[i] * c;
                         Write_Status_System();
-                    } if (ShareTools.Is_Unit_Vector(A,j) && A[j][j] != 1) {
+                    } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
                         float c = 1 / A[j][j];
                         Mul_Elementary_Action(c,j);
                         b[j] /= A[j][j];
@@ -529,29 +529,29 @@ public class System_Linear_Equations extends ShareTools {
     private float[] Elementary_Matrices_Method() {
         fr.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, i = 0, j = 0;
-        float[][] E = ShareTools.Unit_Matrix(n);
-        while (!ShareTools.Is_Unit_Matrix(A)) {
+        float[][] E = Unit_Matrix(n);
+        while (!Is_Unit_Matrix(A)) {
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i);
                 Retreat_Elementary_Action(i,r);
                 Retreat_Rows_System(E,b,i,r);
-                A = ShareTools.Mul_Mats(E,A);
-                E = ShareTools.Unit_Matrix(n);
+                A = Mul_Mats(E,A);
+                E = Unit_Matrix(n);
                 Write_Status_System();
             } if (i != j && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
-                A = ShareTools.Mul_Mats(E,A);
+                A = Mul_Mats(E,A);
                 b[j] += b[i] * E[j][i];
-                E = ShareTools.Unit_Matrix(n);
+                E = Unit_Matrix(n);
                 A[j][i] = 0;
                 Write_Status_System();
-            } if (ShareTools.Is_Unit_Vector(A,j) && A[j][j] != 1) {
+            } if (Is_Unit_Vector(A,j) && A[j][j] != 1) {
                 E[j][j] = 1 / A[j][j];
                 Mul_Elementary_Action(E[j][j],j);
-                A = ShareTools.Mul_Mats(E,A);
+                A = Mul_Mats(E,A);
                 b[j] *= E[j][j];
-                E = ShareTools.Unit_Matrix(n);
+                E = Unit_Matrix(n);
                 A[j][j] = 1;
                 Write_Status_System();
             } if (j == n - 1) {
@@ -566,10 +566,10 @@ public class System_Linear_Equations extends ShareTools {
     // choose action in order to solve a system Ax = b
     private void Solve_System() throws Exception {
         int n = A.length;
-        float det = ShareTools.Determinant(A);
-        if (ShareTools.Is_Zero_Matrix(A) && ShareTools.Is_Zero_Vector(b)) {
+        float det = Determinant(A);
+        if (Is_Zero_Matrix(A) && Is_Zero_Vector(b)) {
             fr.println("exists an infinite number of solutions to the system in the space R" + (n));
-        } else if ((ShareTools.Is_Zero_Matrix(A) && !ShareTools.Is_Zero_Vector(b)) || det == 0) {
+        } else if ((Is_Zero_Matrix(A) && !Is_Zero_Vector(b)) || det == 0) {
             fr.println("does not an exists solutions for this system");
         } else {
             Scanner sc = new Scanner(System.in);
@@ -633,7 +633,7 @@ public class System_Linear_Equations extends ShareTools {
             } else if (fn.equals("decimal")) {
                 fr.println("x = " + c);
             } else if (fn.equals("rational")) {
-                fr.println("x = " + ShareTools.convertDecimalToFraction(c));
+                fr.println("x = " + convertDecimalToFraction(c));
             }
         }
     }

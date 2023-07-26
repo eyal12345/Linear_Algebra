@@ -50,9 +50,13 @@ public class Main {
                     M = cr.Read_Exercise("System_Linear_Equations/" + args[0]);
                     if (M != null) {
                         float[][] A = cr.Matrix_Values(M);
-                        float[] b = cr.Vector_Values(M);
-                        System_Linear_Equations_Extended sle = new System_Linear_Equations_Extended("decimal");
-                        sle.Check_User_Input(A,b);
+                        float[] vals = cr.Vector_Values(M);
+                        float[][] b = new float[vals.length][1];
+                        for (int i = 0; i < vals.length; i++) {
+                            b[i][0] = vals[i];
+                        }
+                        System_Linear_Equations_Extended sle = new System_Linear_Equations_Extended(A,b,"decimal");
+                        sle.Check_User_Input();
                     }
                     break;
             }

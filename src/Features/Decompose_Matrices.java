@@ -46,7 +46,7 @@ public class Decompose_Matrices extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.print(Math.round(M[i][j] * 1000.0) / 1000.0);
                 } else if (fn.equals("rational")) {
-                    fr.print(ShareTools.convertDecimalToFraction(M[i][j]));
+                    fr.print(convertDecimalToFraction(M[i][j]));
                 } if (j != n - 1) {
                     fr.print(" ,");
                 }
@@ -84,7 +84,7 @@ public class Decompose_Matrices extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.println("R" + r + " --> R" + r + " - " + k + "*R" + c);
                 } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " - " + ShareTools.convertDecimalToFraction(k) + "*R" + c);
+                    fr.println("R" + r + " --> R" + r + " - " + convertDecimalToFraction(k) + "*R" + c);
                 }
             } else {
                 if (k % 1 == 0) {
@@ -96,7 +96,7 @@ public class Decompose_Matrices extends ShareTools {
                 } else if (fn.equals("decimal")) {
                     fr.println("R" + r + " --> R" + r + " + " + (-k) + "*R" + c);
                 } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " + " + ShareTools.convertDecimalToFraction(-k) + "*R" + c);
+                    fr.println("R" + r + " --> R" + r + " + " + convertDecimalToFraction(-k) + "*R" + c);
                 }
             }
             fr.println();
@@ -117,7 +117,7 @@ public class Decompose_Matrices extends ShareTools {
             } else if (fn.equals("decimal")) {
                 fr.println("R" + r + " --> " + k + "*R" + r);
             } else if (fn.equals("rational")) {
-                fr.println("R" + r + " --> " + ShareTools.convertDecimalToFraction(k) + "*R" + r);
+                fr.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r);
             }
             fr.println();
         }
@@ -154,7 +154,7 @@ public class Decompose_Matrices extends ShareTools {
 
     // get the LL' decomposition of M (first algorithm)
     private float[][] From_M_To_LLT_V1() {
-        if (ShareTools.Is_Symmetrical_Matrix(M) && ShareTools.Is_Values_Positives(M)) {
+        if (Is_Symmetrical_Matrix(M) && Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
             float[][] LT = new float[n][n];
@@ -193,7 +193,7 @@ public class Decompose_Matrices extends ShareTools {
 
     // get the LDL' decomposition of M (first algorithm)
     private float[][] From_M_To_LDLT_V1() {
-        if (ShareTools.Is_Symmetrical_Matrix(M)) {
+        if (Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
             float[][] D = new float[n][n];
@@ -264,7 +264,7 @@ public class Decompose_Matrices extends ShareTools {
 
     // get the LL' decomposition of M (second algorithm)
     private float[][] From_M_To_LLT_V2() {
-        if (ShareTools.Is_Symmetrical_Matrix(M) && ShareTools.Is_Values_Positives(M)) {
+        if (Is_Symmetrical_Matrix(M) && Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
             float[][] LT = new float[n][n];
@@ -288,7 +288,7 @@ public class Decompose_Matrices extends ShareTools {
 
     // get the LDL' decomposition of M (second algorithm)
     private float[][] From_M_To_LDLT_V2() {
-        if (ShareTools.Is_Symmetrical_Matrix(M)) {
+        if (Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
             float[][] D = new float[n][n];
