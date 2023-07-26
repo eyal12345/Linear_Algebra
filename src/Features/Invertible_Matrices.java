@@ -10,8 +10,8 @@ import java.io.File;
 
 public class Invertible_Matrices extends ShareTools {
     private float[][] M;
-    private float[][] InvM;
-    private String fn;
+    private final float[][] InvM;
+    private final String fn;
     private PrintWriter fr;
 
     public Invertible_Matrices(float[][] nM, String rep) {

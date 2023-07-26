@@ -9,8 +9,8 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Receive_Matrices extends ShareTools {
-    private float[][] L;
-    private String fn;
+    private final float[][] L;
+    private final String fn;
     private PrintWriter fr;
 
     public Receive_Matrices(float[][] nL, String rep) {

@@ -12,7 +12,7 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] A;
     private float[] b;
     private float[] x;
-    private String fn;
+    private final String fn;
     private PrintWriter fr;
 
     public System_Linear_Equations(float[][] nA, float[] nb, String rep) {

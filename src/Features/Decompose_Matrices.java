@@ -9,8 +9,8 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Decompose_Matrices extends ShareTools {
-    private float[][] M;
-    private String fn;
+    private final float[][] M;
+    private final String fn;
     private PrintWriter fr;
 
     public Decompose_Matrices(float[][] nM, String rep) {
