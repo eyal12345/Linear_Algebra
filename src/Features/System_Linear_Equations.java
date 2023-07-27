@@ -322,6 +322,7 @@ public class System_Linear_Equations extends ShareTools {
         int n = A.length;
         float det = Determinant(A);
         fr.println("det = " + det);
+        fr.println();
         float[] x = new float[n];
         float[] h = new float[n];
         for (int j = 0; j < n; j++) {
@@ -330,13 +331,15 @@ public class System_Linear_Equations extends ShareTools {
                 A[i][j] = b[i];
             }
             float detj = Determinant(A);
-            fr.println("det" + (j + 1) + " = " + detj);
             fr.println("A" + (j + 1) + " = ");
             Write_Matrix(A);
             for (int i = 0; i < n; i++) {
                 A[i][j] = h[i];
             }
             x[j] = detj / det;
+            fr.println("det" + (j + 1) + " = " + detj);
+            fr.println("x" + (j + 1) + " = " + x[j]);
+            fr.println();
         }
         return x;
     }
@@ -348,6 +351,7 @@ public class System_Linear_Equations extends ShareTools {
         float[] x = new float[n];
         float det = Determinant(A);
         fr.println("det = " + det);
+        fr.println();
         for (int i = 0; i < n; i++) {
             float sum = 0;
             for (int j = 0; j < n; j++) {
@@ -355,6 +359,8 @@ public class System_Linear_Equations extends ShareTools {
             }
             fr.println("det" + (i + 1) + " = " + sum);
             x[i] = sum / det;
+            fr.println("x" + (i + 1) + " = " + x[i]);
+            fr.println();
         }
         return x;
     }
