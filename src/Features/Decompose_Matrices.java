@@ -380,7 +380,7 @@ public class Decompose_Matrices extends ShareTools {
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input() throws Exception {
+    public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();

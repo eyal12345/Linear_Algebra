@@ -640,7 +640,7 @@ public class System_Linear_Equations extends ShareTools {
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input() throws Exception {
+    public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = A.length, n = A[0].length, k = b.length;
             LocalDateTime cur = LocalDateTime.now();

@@ -382,7 +382,7 @@ public class Invertible_Matrices extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
-    private void Invert_Matrix() throws Exception {
+    private void Many_Variables_Matrix() throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
@@ -416,7 +416,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     //////////////////////////////////////////////// 1*1 Matrix ///////////////////////////////////////////////
-    private void Single_Value_Matrix() {
+    private void Single_Variable_Matrix() {
         float c = 1 / M[0][0];
         String msg = "the invertible of this matrix is: ";
         if (c % 1 == 0) {
@@ -431,7 +431,7 @@ public class Invertible_Matrices extends ShareTools {
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
-    public void Check_User_Input() throws Exception {
+    public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();
@@ -446,9 +446,9 @@ public class Invertible_Matrices extends ShareTools {
                 if (det == 0) {
                     fr.println("this is a singular matrix");
                 } else if (n > 1) { // 2*2 size or higher
-                    Invert_Matrix();
+                    Many_Variables_Matrix();
                 } else { // 1*1 size
-                    Single_Value_Matrix();
+                    Single_Variable_Matrix();
                 }
             }
             fr.close();
