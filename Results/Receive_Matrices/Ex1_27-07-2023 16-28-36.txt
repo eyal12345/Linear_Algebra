@@ -1,0 +1,21 @@
+receive the M matrix from the L and another matrices (3*3 size):
+1 ,0 ,0
+-2 ,1 ,0
+-1 ,4 ,1
+
+L = 
+1 ,0 ,0
+-2 ,1 ,0
+-1 ,4 ,1
+
+find the matrix by L and L' multiplication:
+L' = 
+1 ,-2 ,-1
+0 ,1 ,4
+0 ,0 ,1
+
+M = 
+1 ,-2 ,-1
+-2 ,5 ,6
+-1 ,6 ,18
+
