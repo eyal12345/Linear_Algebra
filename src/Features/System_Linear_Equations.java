@@ -317,7 +317,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // solve system of linear equations Ax = b by cramer method (first algorithm)
-    private float[] Cramer_Method_V1() {
+    private float[] Cramer_Method() {
         fr.println("x(i) = |A(i)|/|A| for each 1<=i<=n");
         int n = A.length;
         float det = Determinant(A);
@@ -339,27 +339,6 @@ public class System_Linear_Equations extends ShareTools {
             x[j] = detj / det;
             fr.println("det" + (j + 1) + " = " + detj);
             fr.println("x" + (j + 1) + " = " + x[j]);
-            fr.println();
-        }
-        return x;
-    }
-
-    // solve system of linear equations Ax = b by cramer method (second algorithm)
-    private float[] Cramer_Method_V2() {
-        fr.println("x(i) = |A(i)|/|A| for each 1<=i<=n");
-        int n = A.length;
-        float[] x = new float[n];
-        float det = Determinant(A);
-        fr.println("det = " + det);
-        fr.println();
-        for (int i = 0; i < n; i++) {
-            float sum = 0;
-            for (int j = 0; j < n; j++) {
-                sum += Math.pow(-1,i + j) * b[j] * Determinant(Sub_Matrix(A,j,i));
-            }
-            fr.println("det" + (i + 1) + " = " + sum);
-            x[i] = sum / det;
-            fr.println("x" + (i + 1) + " = " + x[i]);
             fr.println();
         }
         return x;
@@ -584,29 +563,25 @@ public class System_Linear_Equations extends ShareTools {
                     break;
                 case 2:
                     fr.println("implement the solution by cramer method:");
-                    x = Cramer_Method_V1();
+                    x = Cramer_Method();
                     break;
                 case 3:
-                    fr.println("implement the solution by cramer method:");
-                    x = Cramer_Method_V2();
-                    break;
-                case 4:
                     fr.println("implement the solution by forward backward method:");
                     x = Forward_Backward_Method();
                     break;
-                case 5:
+                case 4:
                     fr.println("implement the solution by upper --> lower ranking method:");
                     x = Upper_Ranking_Method();
                     break;
-                case 6:
+                case 5:
                     fr.println("implement the solution by lower --> upper ranking method:");
                     x = Lower_Ranking_Method();
                     break;
-                case 7:
+                case 6:
                     fr.println("implement the solution by parallel ranking method:");
                     x = Parallel_Ranking_Method();
                     break;
-                case 8:
+                case 7:
                     fr.println("implement the solution by elementary ranking method:");
                     x = Elementary_Matrices_Method();
                     break;
