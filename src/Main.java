@@ -3,7 +3,6 @@ import Features.Receive_Matrices;
 import Features.Decompose_Matrices;
 import Features.Invertible_Matrices;
 import Features.System_Linear_Equations;
-import Features.System_Linear_Equations_Extended;
 import java.util.Scanner;
 
 public class Main {
@@ -41,21 +40,12 @@ public class Main {
                     M = cr.Read_Exercise("System_Linear_Equations/" + args[0]);
                     if (M != null) {
                         float[][] A = cr.Matrix_Values(M);
-                        float[] b = cr.Vector_Values(M);
-                        System_Linear_Equations sle = new System_Linear_Equations(A,b,"decimal",args[0]);
-                        sle.Progress_Run();
-                    }
-                    break;
-                case 5:
-                    M = cr.Read_Exercise("System_Linear_Equations/" + args[0]);
-                    if (M != null) {
-                        float[][] A = cr.Matrix_Values(M);
                         float[] vals = cr.Vector_Values(M);
                         float[][] b = new float[vals.length][1];
                         for (int i = 0; i < vals.length; i++) {
                             b[i][0] = vals[i];
                         }
-                        System_Linear_Equations_Extended sle = new System_Linear_Equations_Extended(A,b,"decimal",args[0]);
+                        System_Linear_Equations sle = new System_Linear_Equations(A,b,"decimal",args[0]);
                         sle.Progress_Run();
                     }
                     break;
