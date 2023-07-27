@@ -19,21 +19,21 @@ public class Main {
                 case 1:
                     M = cr.Read_Exercise("Receive_Matrices/" + args[0]);
                     if (M != null) {
-                        Receive_Matrices re = new Receive_Matrices(M,"decimal");
+                        Receive_Matrices re = new Receive_Matrices(M,"decimal",args[0]);
                         re.Progress_Run();
                     }
                     break;
                 case 2:
                     M = cr.Read_Exercise("Decompose_Matrices/" + args[0]);
                     if (M != null) {
-                        Decompose_Matrices de = new Decompose_Matrices(M,"decimal");
+                        Decompose_Matrices de = new Decompose_Matrices(M,"decimal",args[0]);
                         de.Progress_Run();
                     }
                     break;
                 case 3:
                     M = cr.Read_Exercise("Invertible_Matrices/" + args[0]);
                     if (M != null) {
-                        Invertible_Matrices inv = new Invertible_Matrices(M,"decimal");
+                        Invertible_Matrices inv = new Invertible_Matrices(M,"decimal",args[0]);
                         inv.Progress_Run();
                     }
                     break;
@@ -42,7 +42,7 @@ public class Main {
                     if (M != null) {
                         float[][] A = cr.Matrix_Values(M);
                         float[] b = cr.Vector_Values(M);
-                        System_Linear_Equations sle = new System_Linear_Equations(A,b,"decimal");
+                        System_Linear_Equations sle = new System_Linear_Equations(A,b,"decimal",args[0]);
                         sle.Progress_Run();
                     }
                     break;
@@ -55,7 +55,7 @@ public class Main {
                         for (int i = 0; i < vals.length; i++) {
                             b[i][0] = vals[i];
                         }
-                        System_Linear_Equations_Extended sle = new System_Linear_Equations_Extended(A,b,"decimal");
+                        System_Linear_Equations_Extended sle = new System_Linear_Equations_Extended(A,b,"decimal",args[0]);
                         sle.Progress_Run();
                     }
                     break;

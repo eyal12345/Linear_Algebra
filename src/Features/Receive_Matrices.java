@@ -11,19 +11,22 @@ import java.io.File;
 public class Receive_Matrices extends ShareTools {
     private final float[][] L;
     private final String fn;
+    private final String ne;
     private PrintWriter fr;
 
-    public Receive_Matrices(float[][] nL, String rep) {
+    public Receive_Matrices(float[][] nL, String repr, String file) {
         L = nL;
-        fn = rep;
+        fn = repr;
+        ne = file.split("\\.")[0];
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
     private void Write_Exercise() {
-        int n = L.length;
-        for (int i = 0; i < n; i++) {
+        int m = L.length, n = L[0].length;
+        fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if ((Math.round(L[i][j] * 1000.0) / 1000.0) % 1 == 0) {
                     fr.print((int) (Math.round(L[i][j] * 1000.0) / 1000.0));
@@ -261,9 +264,8 @@ public class Receive_Matrices extends ShareTools {
             int m = L.length, n = L[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Receive_Matrices/Receive_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Receive_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
             Write_Exercise();
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");

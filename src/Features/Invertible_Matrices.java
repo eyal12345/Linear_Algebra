@@ -12,21 +12,23 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] M;
     private final float[][] InvM;
     private final String fn;
+    private final String ne;
     private PrintWriter fr;
 
-    public Invertible_Matrices(float[][] nM, String rep) {
+    public Invertible_Matrices(float[][] nM, String repr, String file) {
         M = nM;
         InvM = Unit_Matrix(M.length);
-        fn = rep;
+        fn = repr;
+        ne = file.split("\\.")[0];
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
     private void Write_Exercise() {
-        int n = M.length;
-        fr.println("invert the next matrix (" + n + "*" + n + " size):");
-        for (int i = 0; i < n; i++) {
+        int m = M.length, n = M[0].length;
+        fr.println("invert the next matrix (" + m + "*" + n + " size):");
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
                     fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
@@ -436,7 +438,7 @@ public class Invertible_Matrices extends ShareTools {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Invertible_Matrices/Invertible_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Invertible_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise();
             if (m != n) {

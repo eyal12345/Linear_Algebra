@@ -11,19 +11,22 @@ import java.io.File;
 public class Decompose_Matrices extends ShareTools {
     private final float[][] M;
     private final String fn;
+    private final String ne;
     private PrintWriter fr;
 
-    public Decompose_Matrices(float[][] nM, String rep) {
+    public Decompose_Matrices(float[][] nM, String repr, String file) {
         M = nM;
-        fn = rep;
+        fn = repr;
+        ne = file.split("\\.")[0];
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the matrix M in the matrices format
     private void Write_Exercise() {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
+        int m = M.length, n = M[0].length;
+        fr.println("decompose the next matrix (" + m + "*" + n + " size):");
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
                     fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
@@ -385,9 +388,8 @@ public class Decompose_Matrices extends ShareTools {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Decompose_Matrices/Decompose_Matrices_(" + m + "x" + n + " size)_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Decompose_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            fr.println("decompose the next matrix (" + m + "*" + n + " size):");
             Write_Exercise();
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");

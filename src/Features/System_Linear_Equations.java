@@ -13,21 +13,23 @@ public class System_Linear_Equations extends ShareTools {
     private float[] b;
     private float[] x;
     private final String fn;
+    private final String ne;
     private PrintWriter fr;
 
-    public System_Linear_Equations(float[][] nA, float[] nb, String rep) {
+    public System_Linear_Equations(float[][] nA, float[] nb, String repr, String file) {
         A = nA;
         b = nb;
         x = null;
-        fn = rep;
+        fn = repr;
+        ne = file.split("\\.")[0];
         fr = null;
     }
 
     /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
     // display the system Ax = b in the linear equations format
     private void Write_Exercise() {
-        int n = A.length;
-        fr.println(Executive_Order(n));
+        int m = A.length, n = A[0].length;
+        fr.println(Executive_Order(m,n));
         if (n == 1) {
             if (A[0][0] % 1 == 0) {
                 if (A[0][0] == 1) {
@@ -57,7 +59,7 @@ public class System_Linear_Equations extends ShareTools {
                 }
             }
         } else {
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; i < m; i++) {
                 fr.print("eq" + (i + 1) + ": ");
                 for (int j = 0; j < n; j++) {
                     if (A[i][j] > 0) {
@@ -193,21 +195,14 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Quantity //////////////////////////////////////////////////
-    // invoke name of file by quantity of equations and unknowns
-    private String Name_File(int n) {
-        if (n == 1) {
-            return "Linear_Equation_(1 Equation)(1 Unknown)";
-        } else {
-            return "System_Linear_Equations_(" + n + "_Equations)(" + n + "_Unknowns)";
-        }
-    }
-
     // invoke executive order by quantity of equations and unknowns
-    private String Executive_Order(int n) {
-        if (n == 1) {
-            return "solve the next equation in R1 space:";
+    private String Executive_Order(int m, int n) {
+        if (m == 1 && n == 1) {
+            return "solve the next equation in R1 space (1 equation)(1 unknown):";
+        } else if (m == 1 && n > 1) {
+            return "solve the next equation in R" + n + " space (1 equation)(" + n + " unknowns):";
         } else {
-            return "solve the next system in R" + n + " space:";
+            return "solve the next system in R" + n + " space (" + m + " equations)(" + n + " unknowns):";
         }
     }
 
@@ -646,7 +641,7 @@ public class System_Linear_Equations extends ShareTools {
             int m = A.length, n = A[0].length, k = b.length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/System_Linear_Equations/" + Name_File(n) + " " + cur.format(formatter) + ".txt");
+            File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise();
             if (m == n && m == k) {

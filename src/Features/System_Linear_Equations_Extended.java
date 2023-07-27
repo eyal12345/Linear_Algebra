@@ -14,13 +14,15 @@ public class System_Linear_Equations_Extended extends ShareTools {
     private float[][] b;
     private float[][] x;
     private final String fn;
+    private final String ne;
     private PrintWriter fr;
 
-    public System_Linear_Equations_Extended(float[][] nA, float[][] nb, String rep) {
+    public System_Linear_Equations_Extended(float[][] nA, float[][] nb, String repr, String file) {
         A = nA;
         b = nb;
         x = null;
-        fn = rep;
+        fn = repr;
+        ne = file.split("\\.")[0];
         fr = null;
     }
 
@@ -224,25 +226,14 @@ public class System_Linear_Equations_Extended extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Quantity //////////////////////////////////////////////////
-    // invoke name of file by quantity of equations and unknowns
-    private String Name_File(int m, int n) {
-        if (m == 1 && n == 1) {
-            return "Linear_Equation_(1_Equation)(1_Unknown)";
-        } else if (m == 1 && n > 1) {
-            return "Linear_Equation_(1_Equation)(" + n + "_Unknowns)";
-        } else {
-            return "System_Linear_Equations_(" + m + "_Equations)(" + n + "_Unknowns)";
-        }
-    }
-
     // invoke executive order by quantity of equations and unknowns
     private String Executive_Order(int m, int n) {
         if (m == 1 && n == 1) {
-            return "solve the next equation in R1 space:";
+            return "solve the next equation in R1 space (1 equation)(1 unknown):";
         } else if (m == 1 && n > 1) {
-            return "solve the next equation in R" + n + " space:";
+            return "solve the next equation in R" + n + " space (1 equation)(" + n + " unknowns):";
         } else {
-            return "solve the next system in R" + n + " space:";
+            return "solve the next system in R" + n + " space (" + m + " equations)(" + n + " unknowns):";
         }
     }
 
@@ -873,7 +864,7 @@ public class System_Linear_Equations_Extended extends ShareTools {
             int m = A.length, n = A[0].length, k = b.length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/System_Linear_Equations/" + Name_File(m,n) + " " + cur.format(formatter) + ".txt");
+            File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise();
             if (m <= n && m == k) {
