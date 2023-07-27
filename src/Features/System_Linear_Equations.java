@@ -619,6 +619,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
+    // solve an equation ax = b
     private void Single_Variable_Equation() {
         if (A[0][0] == 0 && b[0] == 0) {
             fr.println("exists an infinite number of solutions to the equation in R1 space:");
