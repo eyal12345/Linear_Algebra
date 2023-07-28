@@ -114,7 +114,7 @@ public class Invertible_Matrices extends ShareTools {
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for solution
-    private static void User_Menu_System() {
+    private static void User_Menu_Invertible() {
         System.out.println("choose number method to solution:");
         System.out.println("1. invert a matrix by upper ranking");
         System.out.println("2. invert a matrix by lower ranking");
@@ -386,7 +386,7 @@ public class Invertible_Matrices extends ShareTools {
     // choose option in order to correctness check for M matrix
     private void Many_Variables_Matrix() throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_System();
+        User_Menu_Invertible();
         int op = sc.nextInt();
         Write_Status_Matrices();
         switch (op) {

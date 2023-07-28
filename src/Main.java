@@ -7,12 +7,23 @@ import java.util.Scanner;
 
 public class Main {
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    // display user interface by selection mathematical branch
+    private static void User_Menu_Branches() {
+        System.out.println("choose the number of mathematical branch:");
+        System.out.println("1. receive matrices");
+        System.out.println("2. decompose matrices");
+        System.out.println("3. invertible matrices");
+        System.out.println("4. system linear equations");
+    }
+
     ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
         try {
             ContentReader cr = new ContentReader();
             float[][] M;
             Scanner sc = new Scanner(System.in);
+            User_Menu_Branches();
             int op = sc.nextInt();
             switch (op) {
                 case 1:

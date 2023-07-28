@@ -61,7 +61,7 @@ public class Decompose_Matrices extends ShareTools {
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for decompose matrices
-    private static void User_Menu_System_Decompose() {
+    private static void User_Menu_Decompose() {
         System.out.println("choose number method to solution:");
         System.out.println("1. get L and U matrices by decomposition of M (first method)");
         System.out.println("2. get L and L' matrices by decomposition of M (first method)");
@@ -326,7 +326,7 @@ public class Decompose_Matrices extends ShareTools {
     // get the matrix components
     private void Decompose_Matrix() throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_System_Decompose();
+        User_Menu_Decompose();
         int op = sc.nextInt();
         fr.println("M = ");
         Write_Matrix(M);

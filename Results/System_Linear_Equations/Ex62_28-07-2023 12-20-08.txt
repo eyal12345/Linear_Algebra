@@ -1,0 +1,17 @@
+solve the next system in R6 space (6 equations)(6 unknowns):
+eq1: - 2*x1        - 4*x3 - 2*x4 + 5*x5 - 6*x6  = 0
+eq2: + 6*x1 -   x2 - 2*x3        +   x5         = 0
+eq3: + 6*x1               - 2*x4 + 5*x5 + 2*x6  = 0
+eq4: - 2*x1        + 3*x3 + 2*x4 + 2*x5 + 3*x6  = 0
+eq5: - 4*x1 - 2*x2 + 3*x3 - 6*x4 + 4*x5 - 4*x6  = 0
+eq6: + 5*x1 +   x2 - 5*x3 -   x4 + 5*x5 - 2*x6  = 0
+
+-2 ,0 ,-4 ,-2 ,5 ,-6 | 0
+6 ,-1 ,-2 ,0 ,1 ,0 | 0
+6 ,0 ,0 ,-2 ,5 ,2 | 0
+-2 ,0 ,3 ,2 ,2 ,3 | 0
+-4 ,-2 ,3 ,-6 ,4 ,-4 | 0
+5 ,1 ,-5 ,-1 ,5 ,-2 | 0
+
+implement the solution by forward backward method:
+has no solution because it's impossible to reach vector solution in this method when determinant is 0

@@ -61,7 +61,7 @@ public class Receive_Matrices extends ShareTools {
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for receive matrices
-    private static void User_Menu_System_Receive() {
+    private static void User_Menu_Receive() {
         System.out.println("choose number method to solution:");
         System.out.println("1. LU decomposition by L and U multiplication (first method)");
         System.out.println("2. LL' decomposition by L and L' multiplication (first method)");
@@ -204,7 +204,7 @@ public class Receive_Matrices extends ShareTools {
     public void Receive_Matrix() throws Exception {
         int n = L.length;
         Scanner sc = new Scanner(System.in);
-        User_Menu_System_Receive();
+        User_Menu_Receive();
         int op = sc.nextInt();
         float[][] M;
         switch (op) {
