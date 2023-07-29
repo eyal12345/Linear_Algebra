@@ -26,7 +26,7 @@ public class System_Linear_Equations extends ShareTools {
         fr = null;
     }
 
-    /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display the system Ax = b in the linear equations format
     private void Write_Exercise() {
         int m = A.length, n = A[0].length;
@@ -118,26 +118,6 @@ public class System_Linear_Equations extends ShareTools {
                 } else if (fn.equals("rational")) {
                     fr.print(convertDecimalToFraction(b[i][j]));
                 } if (j != k - 1) {
-                    fr.print(" ,");
-                }
-            }
-            fr.println();
-        }
-        fr.println();
-    }
-
-    // display a matrix each current status
-    private void Write_Matrix(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
-                } else if (fn.equals("decimal")) {
-                    fr.print(Math.round(M[i][j] * 1000.0) / 1000.0);
-                } else if (fn.equals("rational")) {
-                    fr.print(convertDecimalToFraction(M[i][j]));
-                } if (j != n - 1) {
                     fr.print(" ,");
                 }
             }
@@ -565,7 +545,7 @@ public class System_Linear_Equations extends ShareTools {
             x = new float[n][1];
             float[][] invA = Invertible(A);
             fr.println("Inv(A) = ");
-            Write_Matrix(invA);
+            fr.println(Display_Status_Matrix(invA,fn));
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
                     x[i][0] += b[j][0] * invA[i][j];
@@ -595,7 +575,7 @@ public class System_Linear_Equations extends ShareTools {
                 }
                 float detj = Determinant(A);
                 fr.println("A" + (j + 1) + " = ");
-                Write_Matrix(A);
+                fr.println(Display_Status_Matrix(A,fn));
                 for (int i = 0; i < n; i++) {
                     A[i][j] = h[i];
                 }
@@ -617,10 +597,10 @@ public class System_Linear_Equations extends ShareTools {
             int n = b.length;
             fr.println("first, we will calculate upper ranking of A:");
             float[][] U = Ranking_Matrix(A);
-            Write_Matrix(U);
+            fr.println(Display_Status_Matrix(U,fn));
             fr.println("second, we will calculate lower ranking of A:");
             float[][] L = Mul_Mats(A,Invertible(U));
-            Write_Matrix(L);
+            fr.println(Display_Status_Matrix(L,fn));
             for (int i = 0; i < n - 1; i++) {
                 for (int j = i + 1; j < n; j++) {
                     if (L[i][i] == 0) {

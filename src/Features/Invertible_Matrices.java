@@ -23,24 +23,7 @@ public class Invertible_Matrices extends ShareTools {
         fr = null;
     }
 
-    /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
-    // display the matrix M in the matrices format
-    private void Write_Exercise() {
-        int m = M.length, n = M[0].length;
-        fr.println("invert the next matrix (" + m + "*" + n + " size):");
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
-                } if (j != n - 1) {
-                    fr.print(" ,");
-                }
-            }
-            fr.println();
-        }
-        fr.println();
-    }
-
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display current status of the matrices M and InvM each time of iteration on an element
     private void Write_Status_Matrices() {
         int n = M.length;
@@ -90,26 +73,6 @@ public class Invertible_Matrices extends ShareTools {
         } else {
             return "transform M matrix to L by a lower ranking:";
         }
-    }
-
-    // show the resulting solution as a matrix representation
-    private void Write_Solution() {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
-                } else if (fn.equals("decimal")) {
-                    fr.print(Math.round(M[i][j] * 1000.0) / 1000.0);
-                } else if (fn.equals("rational")) {
-                    fr.print(convertDecimalToFraction(M[i][j]));
-                } if (j != n - 1) {
-                    fr.print(" ,");
-                }
-            }
-            fr.println();
-        }
-        fr.println();
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
@@ -414,7 +377,7 @@ public class Invertible_Matrices extends ShareTools {
                 throw new Exception("you entered an invalid number");
         }
         fr.println("the invertible of this matrix is:");
-        Write_Solution();
+        fr.println(Display_Status_Matrix(M,fn));
     }
 
     //////////////////////////////////////////////// 1*1 Matrix ///////////////////////////////////////////////
@@ -440,7 +403,8 @@ public class Invertible_Matrices extends ShareTools {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             File file = new File("Results/Invertible_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            Write_Exercise();
+            fr.println("invert the next matrix (" + m + "*" + n + " size):");
+            fr.println(Display_Status_Matrix(M,fn));
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {

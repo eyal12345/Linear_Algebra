@@ -4,6 +4,28 @@ import java.util.Vector;
 
 public class ShareTools {
 
+    /////////////////////////////////////////////// Display Matrix ///////////////////////////////////////////////
+    // display a matrix each current status
+    public static String Display_Status_Matrix(float[][] M, String fn) {
+        int n = M.length;
+        String s = "";
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
+                    s += (int) (Math.round(M[i][j] * 1000.0) / 1000.0);
+                } else if (fn.equals("decimal")) {
+                    s += Math.round(M[i][j] * 1000.0) / 1000.0;
+                } else if (fn.equals("rational")) {
+                    s += convertDecimalToFraction(M[i][j]);
+                } if (j != n - 1) {
+                    s += " ,";
+                }
+            }
+            s += "\n";
+        }
+        return s;
+    }
+
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if a matrix is zero matrix
     public static boolean Is_Zero_Matrix(float[][] M) {

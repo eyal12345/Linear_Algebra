@@ -21,44 +21,7 @@ public class Decompose_Matrices extends ShareTools {
         fr = null;
     }
 
-    /////////////////////////////////////////////// Print Methods /////////////////////////////////////////////////
-    // display the matrix M in the matrices format
-    private void Write_Exercise() {
-        int m = M.length, n = M[0].length;
-        fr.println("decompose the next matrix (" + m + "*" + n + " size):");
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
-                } if (j != n - 1) {
-                    fr.print(" ,");
-                }
-            }
-            fr.println();
-        }
-        fr.println();
-    }
-
-    // display a matrix each current status
-    private void Write_Matrix(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
-                } else if (fn.equals("decimal")) {
-                    fr.print(Math.round(M[i][j] * 1000.0) / 1000.0);
-                } else if (fn.equals("rational")) {
-                    fr.print(convertDecimalToFraction(M[i][j]));
-                } if (j != n - 1) {
-                    fr.print(" ,");
-                }
-            }
-            fr.println();
-        }
-        fr.println();
-    }
-
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
     // display user interface by selection method for decompose matrices
     private static void User_Menu_Decompose() {
@@ -143,7 +106,7 @@ public class Decompose_Matrices extends ShareTools {
                 }
                 M[j][i] = 0;
                 if (L[j][i] != 0) {
-                    Write_Matrix(M);
+                    fr.println(Display_Status_Matrix(M,fn));
                 }
             }
             for (int k = i; k < n; k++) {
@@ -151,7 +114,7 @@ public class Decompose_Matrices extends ShareTools {
             }
         }
         fr.println("L = ");
-        Write_Matrix(L);
+        fr.println(Display_Status_Matrix(L,fn));
         return U;
     }
 
@@ -171,7 +134,7 @@ public class Decompose_Matrices extends ShareTools {
                     }
                     M[j][i] = 0;
                     if (c != 0) {
-                        Write_Matrix(M);
+                        fr.println(Display_Status_Matrix(M,fn));
                     }
                 }
                 float c = (float) Math.sqrt(M[i][i]);
@@ -182,11 +145,11 @@ public class Decompose_Matrices extends ShareTools {
                     LT[i][k] = L[k][i];
                 }
                 if (c != 1) {
-                    Write_Matrix(M);
+                    fr.println(Display_Status_Matrix(M,fn));
                 }
             }
             fr.println("L = ");
-            Write_Matrix(L);
+            fr.println(Display_Status_Matrix(L,fn));
             return LT;
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
@@ -212,7 +175,7 @@ public class Decompose_Matrices extends ShareTools {
                     }
                     M[j][i] = 0;
                     if (c != 0) {
-                        Write_Matrix(M);
+                        fr.println(Display_Status_Matrix(M,fn));
                     }
                 }
                 D[i][i] = M[i][i];
@@ -224,16 +187,16 @@ public class Decompose_Matrices extends ShareTools {
                         LT[i][k] = L[k][i];
                     }
                     if (D[i][i] != 1) {
-                        Write_Matrix(M);
+                        fr.println(Display_Status_Matrix(M,fn));
                     }
                 } else {
                     LT[i][i] = 1;
                 }
             }
             fr.println("L = ");
-            Write_Matrix(L);
+            fr.println(Display_Status_Matrix(L,fn));
             fr.println("D = ");
-            Write_Matrix(D);
+            fr.println(Display_Status_Matrix(D,fn));
             return LT;
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix");
@@ -261,7 +224,7 @@ public class Decompose_Matrices extends ShareTools {
             }
         }
         fr.println("L = ");
-        Write_Matrix(L);
+        fr.println(Display_Status_Matrix(L,fn));
         return U;
     }
 
@@ -281,7 +244,7 @@ public class Decompose_Matrices extends ShareTools {
                 }
             }
             fr.println("L = ");
-            Write_Matrix(L);
+            fr.println(Display_Status_Matrix(L,fn));
             return LT;
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
@@ -312,9 +275,9 @@ public class Decompose_Matrices extends ShareTools {
                 D[j][j] = M[j][j];
             }
             fr.println("L = ");
-            Write_Matrix(L);
+            fr.println(Display_Status_Matrix(L,fn));
             fr.println("D = ");
-            Write_Matrix(D);
+            fr.println(Display_Status_Matrix(D,fn));
             return LT;
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix");
@@ -329,21 +292,21 @@ public class Decompose_Matrices extends ShareTools {
         User_Menu_Decompose();
         int op = sc.nextInt();
         fr.println("M = ");
-        Write_Matrix(M);
+        fr.println(Display_Status_Matrix(M,fn));
         float[][] M2;
         switch (op) {
             case 1:
                 fr.println("find L and U by decomposition of M:");
                 M2 = From_M_To_LU_V1();
                 fr.println("U = ");
-                Write_Matrix(M2);
+                fr.println(Display_Status_Matrix(M2,fn));
                 break;
             case 2:
                 fr.println("find L and L' by decomposition of M:");
                 M2 = From_M_To_LLT_V1();
                 if (M2 != null) {
                     fr.println("L' = ");
-                    Write_Matrix(M2);
+                    fr.println(Display_Status_Matrix(M2,fn));
                 }
                 break;
             case 3:
@@ -351,21 +314,21 @@ public class Decompose_Matrices extends ShareTools {
                 M2 = From_M_To_LDLT_V1();
                 if (M2 != null) {
                     fr.println("L' = ");
-                    Write_Matrix(M2);
+                    fr.println(Display_Status_Matrix(M2,fn));
                 }
                 break;
             case 4:
                 fr.println("find L and U by decomposition of M:");
                 M2 = From_M_To_LU_V2();
                 fr.println("U = ");
-                Write_Matrix(M2);
+                fr.println(Display_Status_Matrix(M2,fn));
                 break;
             case 5:
                 fr.println("find L and L' by decomposition of M:");
                 M2 = From_M_To_LLT_V2();
                 if (M2 != null) {
                     fr.println("L' = ");
-                    Write_Matrix(M2);
+                    fr.println(Display_Status_Matrix(M2,fn));
                 }
                 break;
             case 6:
@@ -373,7 +336,7 @@ public class Decompose_Matrices extends ShareTools {
                 M2 = From_M_To_LDLT_V2();
                 if (M2 != null) {
                     fr.println("L' = ");
-                    Write_Matrix(M2);
+                    fr.println(Display_Status_Matrix(M2,fn));
                 }
                 break;
             default:
@@ -390,7 +353,8 @@ public class Decompose_Matrices extends ShareTools {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             File file = new File("Results/Decompose_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            Write_Exercise();
+            fr.println("decompose the next matrix (" + m + "*" + n + " size):");
+            fr.println(Display_Status_Matrix(M,fn));
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
