@@ -86,20 +86,6 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
-    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
-    // replace between two rows in a matrices
-    private void Retreat_Rows_Matrices(int r1, int r2) {
-        int n = M.length;
-        for (int j = 0; j < n; j++) {
-            float t = M[r1][j];
-            M[r1][j] = M[r2][j];
-            M[r2][j] = t;
-            float inv_t = InvM[r1][j];
-            InvM[r1][j] = InvM[r2][j];
-            InvM[r2][j] = inv_t;
-        }
-    }
-
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
     // show elementary actions for replace between rows in the system
     private void Retreat_Elementary_Action(int i, int j) {
@@ -175,7 +161,7 @@ public class Invertible_Matrices extends ShareTools {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,true);
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_Matrices(i,r);
+                Retreat_Rows_Matrices(M,InvM,i,r);
                 Write_Status_Matrices();
             }
             for (int j = i + 1; j < n; j++) {
@@ -218,7 +204,7 @@ public class Invertible_Matrices extends ShareTools {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,false);
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_Matrices(i,r);
+                Retreat_Rows_Matrices(M,InvM,i,r);
                 Write_Status_Matrices();
             }
             for (int j = i - 1; j >= 0; j--) {
@@ -263,7 +249,7 @@ public class Invertible_Matrices extends ShareTools {
                 if (M[i][i] == 0) {
                     int r = Index_UnZero_Value(M,i,true);
                     Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_Matrices(i,r);
+                    Retreat_Rows_Matrices(M,InvM,i,r);
                     Write_Status_Matrices();
                 }
                 for (int j = 0; j < n; j++) {

@@ -169,7 +169,50 @@ public class ShareTools {
         return true;
     }
 
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Exist_Vector(float[][] M, int r) {
+        int n = M[0].length;
+        float[] v = Row_from_Matrix(M,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Index_for_Unit_Vector(v);
+        for (int i = 0; i < n; i++) {
+            if (i != r && Is_Unit_Vector(M,r) && Is_Unit_Vector(M,i)) {
+                int c2 = Index_for_Unit_Vector(Row_from_Matrix(M,i));
+                if (c1 == c2 && c1 != -1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the specific column index of the row requested from the matrix which are indicating a unit vector
+    public static int Index_Row_from_Matrix(float[][] M, int r) {
+        int n = M[0].length;
+        float[] v = Row_from_Matrix(M,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Index_for_Unit_Vector(v);
+        for (int i = 0; i < n; i++) {
+            int c2 = Index_for_Unit_Vector(Row_from_Matrix(M,i));
+            if (c1 == c2 && c1 != -1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // get the index from the vector that is indicating a unit vector
+    public static int Index_for_Unit_Vector(float[] v) {
+        int n = v.length;
+        for (int c = 0; c < n; c++) {
+            if (v[c] != 0) {
+                return c;
+            }
+        }
+        return -1;
+    }
+
     // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
     public static int Index_UnZero_Value(float[][] M, int k, boolean flag) {
         int n = M.length;
@@ -184,6 +227,36 @@ public class ShareTools {
                 if (M[i % n][k] != 0) {
                     return i % n;
                 }
+            }
+        }
+        return -1;
+    }
+
+    // find two columns in the matrix which are linearly dependent
+    public static int Linear_Dependent_Columns(float[][] M) {
+        int m = M.length, n = M[0].length;
+        for (int c1 = 0; c1 < n - 1; c1++) {
+            for (int c2 = c1 + 1; c2 < n; c2++) {
+                Vector<Float> C  = new Vector<Float>();
+                for (int r = 0; r < m; r++) {
+                    if (M[r][c1] != 0 || M[r][c2] != 0) {
+                        C.add(M[r][c1] / M[r][c2]);
+                    }
+                }
+                if (Is_Equals_Values(C) && C.size() > 1) {
+                    return c1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
+    public static int Intersection_Zero_Row_Col(float[][] M, int r) {
+        int n = M[0].length;
+        for (int c = 0; c < n; c++) {
+            if (Is_Zero_Col(M,c) && Is_Zero_Row(M,r)) {
+                return c;
             }
         }
         return -1;
@@ -294,6 +367,25 @@ public class ShareTools {
             }
         }
         return M;
+    }
+
+    // replace between two rows in a system Ax = b
+    public static void Retreat_Rows_Matrices(float[][] M1, float[][] M2, int r1, int r2) {
+        int n = M1[0].length, m = M2[0].length;
+        for (int j = 0; j < n; j++) {
+            if (!Is_Zero_Col(M1,j)) {
+                float k = M1[r1][j];
+                M1[r1][j] = M1[r2][j];
+                M1[r2][j] = k;
+            }
+        }
+        for (int j = 0; j < m; j++) {
+            if (!Is_Zero_Col(M2,j)) {
+                float k = M2[r1][j];
+                M2[r1][j] = M2[r2][j];
+                M2[r2][j] = k;
+            }
+        }
     }
 
     // calculate ranking of a matrix by upper triangular
