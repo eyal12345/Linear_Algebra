@@ -10,7 +10,7 @@ import java.io.File;
 
 public class Invertible_Matrices extends ShareTools {
     private float[][] M;
-    private final float[][] InvM;
+    private float[][] InvM;
     private final String fn;
     private final String ne;
     private PrintWriter fr;
@@ -86,33 +86,32 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
-    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-    // get the index starting from the specific column in the matrix which are him value not equal to 0
-    private static int Index_UnZero_Value(float[][] M, int k) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            if (M[k][i] != 0) {
-                return i % n;
-            }
-        }
-        return -1;
-    }
-
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // replace between two rows in a matrices
-    private static void Retreat_Rows_Matrices(float[][] M, float[][] invM, int r1, int r2) {
+    private void Retreat_Rows_Matrices(int r1, int r2) {
         int n = M.length;
         for (int j = 0; j < n; j++) {
             float t = M[r1][j];
             M[r1][j] = M[r2][j];
             M[r2][j] = t;
-            float inv_t = invM[r1][j];
-            invM[r1][j] = invM[r2][j];
-            invM[r2][j] = inv_t;
+            float inv_t = InvM[r1][j];
+            InvM[r1][j] = InvM[r2][j];
+            InvM[r2][j] = inv_t;
         }
     }
 
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
+    // show elementary actions for replace between rows in the system
+    private void Retreat_Elementary_Action(int i, int j) {
+        int r1 = i + 1, r2 = j + 1;
+        if (r1 <= r2) {
+            fr.println("R" + r1 + " <--> R" + r2);
+        } else {
+            fr.println("R" + r2 + " <--> R" + r1);
+        }
+        fr.println();
+    }
+
     // show elementary actions for sum between rows in the matrices
     private void Sum_Elementary_Action(float k, int j, int i) {
         if (k != 0) {
@@ -174,9 +173,9 @@ public class Invertible_Matrices extends ShareTools {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] == 0) {
-                int r = Index_UnZero_Value(M,i);
-                fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
-                Retreat_Rows_Matrices(M,InvM,i,r);
+                int r = Index_UnZero_Value(M,i,true);
+                Retreat_Elementary_Action(i,r);
+                Retreat_Rows_Matrices(i,r);
                 Write_Status_Matrices();
             }
             for (int j = i + 1; j < n; j++) {
@@ -217,9 +216,9 @@ public class Invertible_Matrices extends ShareTools {
         int n = M.length;
         for (int i = n - 1; i >= 0; i--) {
             if (M[i][i] == 0) {
-                int r = n - 1 - Index_UnZero_Value(M,i);
-                fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
-                Retreat_Rows_Matrices(M,InvM,i,r);
+                int r = Index_UnZero_Value(M,i,false);
+                Retreat_Elementary_Action(i,r);
+                Retreat_Rows_Matrices(i,r);
                 Write_Status_Matrices();
             }
             for (int j = i - 1; j >= 0; j--) {
@@ -258,13 +257,13 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Parallel_Ranking_Method() {
         fr.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
-        float[][] InvM = Unit_Matrix(n);
+        InvM = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
             for (int i = 0; i < n; i++) {
                 if (M[i][i] == 0) {
-                    int r = Index_UnZero_Value(M,i);
-                    fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
-                    Retreat_Rows_Matrices(M,InvM,i,r);
+                    int r = Index_UnZero_Value(M,i,true);
+                    Retreat_Elementary_Action(i,r);
+                    Retreat_Rows_Matrices(i,r);
                     Write_Status_Matrices();
                 }
                 for (int j = 0; j < n; j++) {
@@ -297,11 +296,11 @@ public class Invertible_Matrices extends ShareTools {
         fr.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
-        float[][] InvM = Unit_Matrix(n);
+        InvM = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
             if (M[i][i] == 0) {
-                int r = Index_UnZero_Value(M,i);
-                fr.println("R" + (i + 1) + " <--> R" + (r + 1) + "\n");
+                int r = Index_UnZero_Value(M,i,true);
+                Retreat_Elementary_Action(i,r);
                 Retreat_Rows_Matrix(E,i,r);
                 M = Mul_Mats(E,M);
                 InvM = Mul_Mats(E,InvM);

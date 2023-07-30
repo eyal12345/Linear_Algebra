@@ -43,7 +43,7 @@ public class Main {
                 case 3:
                     M = cr.Read_Exercise("Invertible_Matrices/" + args[0]);
                     if (M != null) {
-                        Invertible_Matrices inv = new Invertible_Matrices(M,"decimal",args[0]);
+                        Invertible_Matrices inv = new Invertible_Matrices(M,"rational",args[0]);
                         inv.Progress_Run();
                     }
                     break;

@@ -349,25 +349,6 @@ public class System_Linear_Equations extends ShareTools {
         return -1;
     }
 
-    // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
-    private int Index_UnZero_Value(int k, boolean flag) {
-        int n = A.length;
-        if (flag) {
-            for (int i = k + 1; i < n + k; i++) {
-                if (A[i % n][k] != 0) {
-                    return i % n;
-                }
-            }
-        } else {
-            for (int i = n + k - 1; i > k - 1; i--) {
-                if (A[i % n][k] != 0) {
-                    return i % n;
-                }
-            }
-        }
-        return -1;
-    }
-
     // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
     private int Intersection_Zero_Row_Col(int r) {
         int n = A[0].length;
@@ -648,10 +629,10 @@ public class System_Linear_Equations extends ShareTools {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(i);
             if (A[i][i] == 0) {
-                int r = Index_UnZero_Value(i,true);
+                int r = Index_UnZero_Value(A,i,true);
                 int l = Index_Row_from_Matrix(i);
                 if (Is_Exist_Vector(i) && l < i) {
-                    r = Index_UnZero_Value(i,false);
+                    r = Index_UnZero_Value(A,i,false);
                 } if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
@@ -707,10 +688,10 @@ public class System_Linear_Equations extends ShareTools {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(i);
             if (A[i][i] == 0) {
-                int r = Index_UnZero_Value(i,false);
+                int r = Index_UnZero_Value(A,i,false);
                 int l = Index_Row_from_Matrix(i);
                 if (Is_Exist_Vector(i) && l < i) {
-                    r = Index_UnZero_Value(i,true);
+                    r = Index_UnZero_Value(A,i,true);
                 } if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
@@ -767,7 +748,7 @@ public class System_Linear_Equations extends ShareTools {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 Define_Free_Variable(i);
                 if (A[i][i] == 0) {
-                    int r = Index_UnZero_Value(i,true);
+                    int r = Index_UnZero_Value(A,i,true);
                     if (r >= 0 && r < n && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                         Retreat_Elementary_Action(i,r);
@@ -816,7 +797,7 @@ public class System_Linear_Equations extends ShareTools {
         while (!Is_Unit_Matrix(A)) {
             Define_Free_Variable(i);
             if (A[i][i] == 0) {
-                int r = Index_UnZero_Value(i,true);
+                int r = Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
