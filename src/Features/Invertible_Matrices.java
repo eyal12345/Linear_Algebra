@@ -86,8 +86,60 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if exist in the vector a zeros column
+    private boolean Is_Zero_Col(float[][] v, int c) {
+        int m = v.length, n = v[0].length;
+        for (int i = 0; i < m && c < n; i++) {
+            if (v[i][c] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
+    private int Index_UnZero_Value(float[][] M, int k, boolean flag) {
+        int n = M.length;
+        if (flag) {
+            for (int i = k + 1; i < n + k; i++) {
+                if (M[i % n][k] != 0) {
+                    return i % n;
+                }
+            }
+        } else {
+            for (int i = n + k - 1; i > k - 1; i--) {
+                if (M[i % n][k] != 0) {
+                    return i % n;
+                }
+            }
+        }
+        return -1;
+    }
+
+    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
+    // replace between two rows in the matrices
+    private void Retreat_Rows_Matrices(int r1, int r2) {
+        int n = M[0].length, m = InvM[0].length;
+        for (int j = 0; j < n; j++) {
+            if (!Is_Zero_Col(M,j)) {
+                float k = M[r1][j];
+                M[r1][j] = M[r2][j];
+                M[r2][j] = k;
+            }
+        }
+        for (int j = 0; j < m; j++) {
+            if (!Is_Zero_Col(InvM,j)) {
+                float k = InvM[r1][j];
+                InvM[r1][j] = InvM[r2][j];
+                InvM[r2][j] = k;
+            }
+        }
+    }
+
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
-    // show elementary actions for replace between rows in the system
+    // show elementary actions for replace between rows in the matrices
     private void Retreat_Elementary_Action(int i, int j) {
         int r1 = i + 1, r2 = j + 1;
         if (r1 <= r2) {
@@ -161,7 +213,7 @@ public class Invertible_Matrices extends ShareTools {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,true);
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_Matrices(M,InvM,i,r);
+                Retreat_Rows_Matrices(i,r);
                 Write_Status_Matrices();
             }
             for (int j = i + 1; j < n; j++) {
@@ -204,7 +256,7 @@ public class Invertible_Matrices extends ShareTools {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,false);
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_Matrices(M,InvM,i,r);
+                Retreat_Rows_Matrices(i,r);
                 Write_Status_Matrices();
             }
             for (int j = i - 1; j >= 0; j--) {
@@ -249,7 +301,7 @@ public class Invertible_Matrices extends ShareTools {
                 if (M[i][i] == 0) {
                     int r = Index_UnZero_Value(M,i,true);
                     Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_Matrices(M,InvM,i,r);
+                    Retreat_Rows_Matrices(i,r);
                     Write_Status_Matrices();
                 }
                 for (int j = 0; j < n; j++) {

@@ -33,6 +33,31 @@ public class Decompose_Matrices extends ShareTools {
         System.out.println("6. get L, D and L' matrices by decomposition of M (second method)");
     }
 
+    ///////////////////////////////////////////////// Questions //////////////////////////////////////////////////
+    // check if the matrix is a symmetrical matrix
+    private boolean Is_Symmetrical_Matrix(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (M[i][j] != M[j][i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // check if all the values in the main diagonal which are positive
+    private boolean Is_Values_Positives(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
     // show elementary actions for sum between rows in the matrices
     private void Sum_Elementary_Action(float k, int j, int i) {

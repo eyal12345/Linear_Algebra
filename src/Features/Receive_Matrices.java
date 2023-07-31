@@ -60,6 +60,18 @@ public class Receive_Matrices extends ShareTools {
         return U;
     }
 
+    ///////////////////////////////////////////////// Questions //////////////////////////////////////////////////
+    // check if all the values in the main diagonal which are equals to 1
+    private boolean Is_One_Slant(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /////////////////////////////////////// Methods to Solution (Receive M) /////////////////////////////////////////
     // get the LU decomposition by multiplication of L and U (first algorithm)
     private float[][] From_LU_To_M_V1(float[][] U) {
