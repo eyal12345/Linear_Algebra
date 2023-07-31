@@ -299,7 +299,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // check if exists two vectors in the matrix which are linearly independent
-    private boolean Is_Linear_Independent_System(float[][] A, float[][] b) {
+    private boolean Is_Linear_Independent_System() {
         int m = A.length, n = A[0].length;
         for (int r = 0; r < m; r++) {
             if (Is_Zero_Row(A,r) && b[r][0] != 0) {
@@ -981,7 +981,7 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
     private void Many_Variables_System() throws Exception {
-        if (Is_Linear_Independent_System(A,b)) {
+        if (Is_Linear_Independent_System()) {
             fr.println("does not an exists solutions for this system");
         } else {
             Fill_Square_System();

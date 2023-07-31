@@ -86,18 +86,6 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("5. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
     }
 
-    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if exist in the vector a zeros column
-    private boolean Is_Zero_Col(float[][] v, int c) {
-        int m = v.length, n = v[0].length;
-        for (int i = 0; i < m && c < n; i++) {
-            if (v[i][c] != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
     private int Index_UnZero_Value(float[][] M, int k, boolean flag) {
@@ -123,18 +111,14 @@ public class Invertible_Matrices extends ShareTools {
     private void Retreat_Rows_Matrices(int r1, int r2) {
         int n = M[0].length, m = InvM[0].length;
         for (int j = 0; j < n; j++) {
-            if (!Is_Zero_Col(M,j)) {
-                float k = M[r1][j];
-                M[r1][j] = M[r2][j];
-                M[r2][j] = k;
-            }
+            float k = M[r1][j];
+            M[r1][j] = M[r2][j];
+            M[r2][j] = k;
         }
         for (int j = 0; j < m; j++) {
-            if (!Is_Zero_Col(InvM,j)) {
-                float k = InvM[r1][j];
-                InvM[r1][j] = InvM[r2][j];
-                InvM[r2][j] = k;
-            }
+            float k = InvM[r1][j];
+            InvM[r1][j] = InvM[r2][j];
+            InvM[r2][j] = k;
         }
     }
 
