@@ -445,11 +445,11 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
     // import the specific row from the matrix
-    private float[] Row_from_Matrix(float[][] M, int r) {
-        int n = M[0].length;
+    private float[] Row_from_Matrix(float[][] A, int r) {
+        int n = A[0].length;
         float[] v = new float[n];
         for (int j = 0; j < n; j++) {
-            v[j] = M[r][j];
+            v[j] = A[r][j];
         }
         return v;
     }
