@@ -28,7 +28,7 @@ public class System_Linear_Equations extends ShareTools {
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display the system Ax = b in the linear equations format
-    private void Write_Exercise() {
+    private void Write_Exercise(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length;
         fr.println(Executive_Order(m,n));
         if (n == 1) {
@@ -1040,7 +1040,7 @@ public class System_Linear_Equations extends ShareTools {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            Write_Exercise();
+            Write_Exercise(A,b);
             if (m <= n && m == k) {
                 if (n > 1) { // R2 space or higher
                     Many_Variables_System();
