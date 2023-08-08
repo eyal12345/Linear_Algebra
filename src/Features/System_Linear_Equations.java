@@ -148,51 +148,34 @@ public class System_Linear_Equations extends ShareTools {
     // show the resulting solution as a vector representation
     private void Write_Solution() {
         int m = x.length, n = x[0].length;
-        String s = "", st = "";
-        if (Is_Zero_Col(x,0) && !Is_Zero_Col(x,1)) { // λu
-            fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
-            fr.print("x = ");
-            st += " when ";
-            for (int t = 1; t < n && !Is_Zero_Col(x,t); t++) {
-                s = (Is_Zero_Col(x,2)) ? s + "λ*" : s + "λ" + t + "*";
-                if (n == 2) {
-                    st += "λ it's a free scalar";
-                } else if (t == n - 1) {
-                    st += "λ" + t + " it's a free scalars";
-                } else {
-                    st += "λ" + t + ",";
-                }
-                s += Display_Vector(t);
-                if (!Is_Zero_Col(x,t + 1)) {
-                    s += " + ";
-                }
-            }
-            st += " that belongs to the R set";
-        } else if (!Is_Zero_Col(x,0) && !Is_Zero_Col(x,1)) { // x0 + λu
-            fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
-            fr.print("x = ");
-            s += Display_Vector(0);
-            st += " when ";
-            for (int t = 1; t < m; t++) {
-                if (!Is_Zero_Col(x,t)) {
-                    s = (Is_Zero_Col(x,2)) ? s + " + λ*" : s + " + λ" + t + "*";
-                    if (n == 2) {
-                        st += "λ it's a free scalar";
-                    } else if (t == n - 1) {
-                        st += "λ" + t + " it's a free scalars";
-                    } else {
-                        st += "λ" + t + ",";
-                    }
-                    s += Display_Vector(t);
-                }
-            }
-            st += " that belongs to the R set";
-        } else { // x0
+        StringBuilder sol = new StringBuilder();
+        StringBuilder suf = new StringBuilder();
+        if (Is_Zero_Col(x,1)) {
             fr.println("exist a single solution in R" + m + " space for the system which is:");
-            fr.print("x = ");
-            s += Display_Vector(0);
+            sol.append(Display_Vector(0));
+        } else {
+            fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
+            suf.append(" when ");
+            if (!Is_Zero_Col(x,0)) {
+                sol.append(Display_Vector(0));
+            }
+            for (int t = 1; t < n && !Is_Zero_Col(x,t); t++) {
+                if (sol.length() > 0) {
+                    sol.append(" + ");
+                }
+                sol = new StringBuilder((Is_Zero_Col(x, 2)) ? sol + "λ*" : sol + "λ" + t + "*");
+                if (n == 2) {
+                    suf.append("λ it's a free scalar");
+                } else if (t == n - 1) {
+                    suf.append("λ").append(t).append(" it's a free scalars");
+                } else {
+                    suf.append("λ").append(t).append(",");
+                }
+                sol.append(Display_Vector(t));
+            }
+            suf.append(" that belongs to the R set");
         }
-        fr.println(s + st);
+        fr.print("x = " + sol.append(suf));
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
