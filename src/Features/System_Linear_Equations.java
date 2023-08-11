@@ -941,16 +941,14 @@ public class System_Linear_Equations extends ShareTools {
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_Matrix(E,i,r);
                     Mul_Mats_System(E,A,b);
-                    A = this.A; b = this.b;
-                    E = Unit_Matrix(n);
+                    A = this.A; b = this.b; E = Unit_Matrix(n);
                     Write_Status_System(A,b);
                 }
             } if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
                 Mul_Mats_System(E,A,b);
-                A = this.A; b = this.b;
-                E = Unit_Matrix(n);
+                A = this.A; b = this.b; E = Unit_Matrix(n);
                 A[j][i] = 0;
                 Write_Status_System(A,b);
             }
@@ -961,8 +959,7 @@ public class System_Linear_Equations extends ShareTools {
                     E[j][j] = 1 / A[j][d];
                     Mul_Elementary_Action(E[j][j],j);
                     Mul_Mats_System(E,A,b);
-                    A = this.A; b = this.b;
-                    E = Unit_Matrix(n);
+                    A = this.A; b = this.b; E = Unit_Matrix(n);
                     A[j][d] = 1;
                     Write_Status_System(A,b);
                 }
