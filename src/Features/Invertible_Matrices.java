@@ -16,11 +16,11 @@ public class Invertible_Matrices extends ShareTools {
     private PrintWriter fr;
 
     public Invertible_Matrices(float[][] nM, String repr, String file) {
-        M = nM;
-        InvM = Unit_Matrix(M.length);
-        fn = repr;
-        ne = file.split("\\.")[0];
-        fr = null;
+        this.M = nM;
+        this.InvM = Unit_Matrix(M.length);
+        this.fn = repr;
+        this.ne = file.split("\\.")[0];
+        this.fr = null;
     }
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
@@ -120,6 +120,23 @@ public class Invertible_Matrices extends ShareTools {
             InvM[r1][j] = InvM[r2][j];
             InvM[r2][j] = k;
         }
+    }
+
+    // multiplication of two matrices in same matrix
+    private void Mul_Mats_Matrices(float[][] E, float[][] M, float[][] InvM) {
+        int m = M.length, n = InvM[0].length;
+        float[][] EM = new float[m][n];
+        float[][] EInvM = new float[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < m; k++) {
+                    EM[i][j] += E[i][k] * M[k][j];
+                    EInvM[i][j] += E[i][k] * InvM[k][j];
+                }
+            }
+        }
+        this.M = EM;
+        this.InvM = EInvM;
     }
 
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
@@ -322,23 +339,20 @@ public class Invertible_Matrices extends ShareTools {
                 int r = Index_UnZero_Value(M,i,true);
                 Retreat_Elementary_Action(i,r);
                 Retreat_Rows_Matrix(E,i,r);
-                M = Mul_Mats(E,M);
-                InvM = Mul_Mats(E,InvM);
+                Mul_Mats_Matrices(E,M,InvM);
                 E = Unit_Matrix(n);
                 Write_Status_Matrices();
             } if (i != j && M[j][i] != 0) {
                 E[j][i] -= (M[j][i] / M[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
-                M = Mul_Mats(E,M);
-                InvM = Mul_Mats(E,InvM);
+                Mul_Mats_Matrices(E,M,InvM);
                 E = Unit_Matrix(n);
                 M[j][i] = 0;
                 Write_Status_Matrices();
             } if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
                 Mul_Elementary_Action(E[j][j],j);
-                M = Mul_Mats(E,M);
-                InvM = Mul_Mats(E,InvM);
+                Mul_Mats_Matrices(E,M,InvM);
                 E = Unit_Matrix(n);
                 M[j][j] = 1;
                 Write_Status_Matrices();

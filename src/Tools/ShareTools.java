@@ -170,7 +170,7 @@ public class ShareTools {
 
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
     public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
-        int m = M2.length, n = M2[0].length;
+        int m = M1.length, n = M2[0].length;
         float[][] M = new float[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {

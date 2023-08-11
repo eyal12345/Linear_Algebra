@@ -18,12 +18,12 @@ public class System_Linear_Equations extends ShareTools {
     private PrintWriter fr;
 
     public System_Linear_Equations(float[][] nA, float[][] nb, String repr, String file) {
-        A = nA;
-        b = nb;
-        x = null;
-        fn = repr;
-        ne = file.split("\\.")[0];
-        fr = null;
+        this.A = nA;
+        this.b = nb;
+        this.x = null;
+        this.fn = repr;
+        this.ne = file.split("\\.")[0];
+        this.fr = null;
     }
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
@@ -419,7 +419,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // replace between two rows in a system Ax = b
-    private void Retreat_Rows_System(int r1, int r2) {
+    private void Retreat_Rows_System(float[][] A, float[][] b, int r1, int r2) {
         int n = A[0].length, m = b[0].length;
         for (int j = 0; j < n; j++) {
             if (!Is_Zero_Col(A,j)) {
@@ -428,6 +428,7 @@ public class System_Linear_Equations extends ShareTools {
                 A[r2][j] = k;
             }
         }
+        this.A = A;
         for (int j = 0; j < m; j++) {
             if (!Is_Zero_Col(b,j)) {
                 float k = b[r1][j];
@@ -435,6 +436,28 @@ public class System_Linear_Equations extends ShareTools {
                 b[r2][j] = k;
             }
         }
+        this.b = b;
+    }
+
+    // multiplication of matrix and vector in same matrix
+    private void Mul_Mats_System(float[][] E, float[][] A, float[][] b) {
+        int m = E.length, nA = A[0].length, nb = b[0].length;
+        float[][] EA = new float[m][nA];
+        float[][] Eb = new float[m][nb];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < nA; j++) {
+                for (int k = 0; k < m; k++) {
+                    EA[i][j] += E[i][k] * A[k][j];
+                }
+            }
+            for (int j = 0; j < nb; j++) {
+                for (int k = 0; k < m; k++) {
+                    Eb[i][j] += E[i][k] * b[k][j];
+                }
+            }
+        }
+        this.A = EA;
+        this.b = Eb;
     }
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
@@ -697,8 +720,7 @@ public class System_Linear_Equations extends ShareTools {
             for (int i = 0; i < n - 1; i++) {
                 for (int j = i + 1; j < n; j++) {
                     if (L[i][i] == 0) {
-                        A = L;
-                        Retreat_Rows_System(i,j);
+                        Retreat_Rows_System(L,b,i,j);
                         break;
                     }
                 }
@@ -748,7 +770,7 @@ public class System_Linear_Equations extends ShareTools {
                 } if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(i,r);
+                    Retreat_Rows_System(A,b,i,r);
                     Write_Status_System();
                 }
             }
@@ -807,7 +829,7 @@ public class System_Linear_Equations extends ShareTools {
                 } if (r >= 0 && r < n && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(i,r);
+                    Retreat_Rows_System(A,b,i,r);
                     Write_Status_System();
                 }
             }
@@ -864,7 +886,7 @@ public class System_Linear_Equations extends ShareTools {
                     if (r >= 0 && r < n && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                         Retreat_Elementary_Action(i,r);
-                        Retreat_Rows_System(i,r);
+                        Retreat_Rows_System(A,b,i,r);
                         Write_Status_System();
                     }
                 }
@@ -914,16 +936,14 @@ public class System_Linear_Equations extends ShareTools {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_Matrix(E,i,r);
-                    A = Mul_Mats(E,A);
-                    b = Mul_Mats(E,b);
+                    Mul_Mats_System(E,A,b);
                     E = Unit_Matrix(n);
                     Write_Status_System();
                 }
             } if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
-                A = Mul_Mats(E,A);
-                b = Mul_Mats(E,b);
+                Mul_Mats_System(E,A,b);
                 E = Unit_Matrix(n);
                 A[j][i] = 0;
                 Write_Status_System();
@@ -934,8 +954,7 @@ public class System_Linear_Equations extends ShareTools {
                 if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
                     E[j][j] = 1 / A[j][d];
                     Mul_Elementary_Action(E[j][j],j);
-                    A = Mul_Mats(E,A);
-                    b = Mul_Mats(E,b);
+                    Mul_Mats_System(E,A,b);
                     E = Unit_Matrix(n);
                     A[j][d] = 1;
                     Write_Status_System();

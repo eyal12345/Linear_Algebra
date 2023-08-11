@@ -15,10 +15,10 @@ public class Decompose_Matrices extends ShareTools {
     private PrintWriter fr;
 
     public Decompose_Matrices(float[][] nM, String repr, String file) {
-        M = nM;
-        fn = repr;
-        ne = file.split("\\.")[0];
-        fr = null;
+        this.M = nM;
+        this.fn = repr;
+        this.ne = file.split("\\.")[0];
+        this.fr = null;
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////

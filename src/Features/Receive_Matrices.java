@@ -15,10 +15,10 @@ public class Receive_Matrices extends ShareTools {
     private PrintWriter fr;
 
     public Receive_Matrices(float[][] nL, String repr, String file) {
-        L = nL;
-        fn = repr;
-        ne = file.split("\\.")[0];
-        fr = null;
+        this.L = nL;
+        this.fn = repr;
+        this.ne = file.split("\\.")[0];
+        this.fr = null;
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
