@@ -124,8 +124,7 @@ public class System_Linear_Equations extends ShareTools {
             fr.println();
         }
         fr.println();
-        this.A = A;
-        this.b = b;
+        this.A = A; this.b = b;
     }
 
     // determine what kind of matrix
@@ -458,8 +457,7 @@ public class System_Linear_Equations extends ShareTools {
                 }
             }
         }
-        this.A = EA;
-        this.b = Eb;
+        this.A = EA; this.b = Eb;
     }
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
@@ -558,8 +556,7 @@ public class System_Linear_Equations extends ShareTools {
                 b[r][++t] = 1;
                 Write_Status_System(A,b);
             }
-            this.A = A;
-            this.b = b;
+            this.A = A; this.b = b;
         }
     }
 
@@ -759,12 +756,13 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
     // solve system of linear equations Ax = b by an upper ranking and then a lower ranking
-    private float[][] Upper_Ranking_Method() {
+    private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,true));
         int n = A.length;
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
+            A = this.A; b = this.b;
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,true);
                 int l = Index_Row_from_Matrix(A,i);
@@ -807,23 +805,24 @@ public class System_Linear_Equations extends ShareTools {
             }
             if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
                 fr.print("and now ");
-                return Lower_Ranking_Method();
+                return Lower_Ranking_Method(A,b);
             }
         }
         if (!Is_Unit_Matrix(A)) {
             fr.println("still not yet received an unit matrix");
-            return Lower_Ranking_Method();
+            return Lower_Ranking_Method(A,b);
         }
         return b;
     }
 
     // solve system of linear equations Ax = b by a lower ranking and then an upper ranking
-    private float[][] Lower_Ranking_Method() {
+    private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,false));
         int n = A.length;
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
+            A = this.A; b = this.b;
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,false);
                 int l = Index_Row_from_Matrix(A,i);
@@ -866,24 +865,25 @@ public class System_Linear_Equations extends ShareTools {
             }
             if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
                 fr.print("and now ");
-                return Upper_Ranking_Method();
+                return Upper_Ranking_Method(A,b);
             }
         }
         if (!Is_Unit_Matrix(A)) {
             fr.println("still not yet received an unit matrix");
-            return Upper_Ranking_Method();
+            return Upper_Ranking_Method(A,b);
         }
         return b;
     }
 
     // solve system of linear equations Ax = b by parallel ranking
-    private float[][] Parallel_Ranking_Method() {
+    private float[][] Parallel_Ranking_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by a parallel ranking:");
         int n = A.length;
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 Define_Free_Variable(A,b,i);
+                A = this.A; b = this.b;
                 if (A[i][i] == 0) {
                     int r = Index_UnZero_Value(A,i,true);
                     if (r >= 0 && r < n && r != i) {
@@ -927,12 +927,13 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // solve system of linear equations Ax = b by parallel elementary matrices
-    private float[][] Elementary_Matrices_Method() {
+    private float[][] Elementary_Matrices_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by an elementary matrices:");
         int n = A.length, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
             Define_Free_Variable(A,b,i);
+            A = this.A; b = this.b;
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < n && r != i) {
@@ -940,6 +941,7 @@ public class System_Linear_Equations extends ShareTools {
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_Matrix(E,i,r);
                     Mul_Mats_System(E,A,b);
+                    A = this.A; b = this.b;
                     E = Unit_Matrix(n);
                     Write_Status_System(A,b);
                 }
@@ -947,6 +949,7 @@ public class System_Linear_Equations extends ShareTools {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
                 Mul_Mats_System(E,A,b);
+                A = this.A; b = this.b;
                 E = Unit_Matrix(n);
                 A[j][i] = 0;
                 Write_Status_System(A,b);
@@ -958,6 +961,7 @@ public class System_Linear_Equations extends ShareTools {
                     E[j][j] = 1 / A[j][d];
                     Mul_Elementary_Action(E[j][j],j);
                     Mul_Mats_System(E,A,b);
+                    A = this.A; b = this.b;
                     E = Unit_Matrix(n);
                     A[j][d] = 1;
                     Write_Status_System(A,b);
@@ -974,6 +978,7 @@ public class System_Linear_Equations extends ShareTools {
     // choose action in order to solve a system Ax = b
     private void Many_Variables_System(float[][] A, float[][] b) throws Exception {
         Fill_Square_System(A,b);
+        A = this.A; b = this.b;
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
@@ -993,19 +998,19 @@ public class System_Linear_Equations extends ShareTools {
                 break;
             case 4:
                 fr.println("implement the solution by upper --> lower ranking method:");
-                x = Upper_Ranking_Method();
+                x = Upper_Ranking_Method(A,b);
                 break;
             case 5:
                 fr.println("implement the solution by lower --> upper ranking method:");
-                x = Lower_Ranking_Method();
+                x = Lower_Ranking_Method(A,b);
                 break;
             case 6:
                 fr.println("implement the solution by parallel ranking method:");
-                x = Parallel_Ranking_Method();
+                x = Parallel_Ranking_Method(A,b);
                 break;
             case 7:
                 fr.println("implement the solution by elementary ranking method:");
-                x = Elementary_Matrices_Method();
+                x = Elementary_Matrices_Method(A,b);
                 break;
             default:
                 throw new Exception("you entered an invalid value for an option number to solution");
