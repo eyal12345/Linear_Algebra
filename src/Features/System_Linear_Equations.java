@@ -28,7 +28,7 @@ public class System_Linear_Equations extends ShareTools {
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display the system Ax = b in the linear equations format
-    private void Write_Exercise() {
+    private void Write_Exercise(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length;
         fr.println(Executive_Order(m,n));
         if (n == 1) {
@@ -95,7 +95,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // display current status of the system Ax = b each time of iteration on an element
-    private void Write_Status_System() {
+    private void Write_Status_System(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length, k = b[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -124,6 +124,8 @@ public class System_Linear_Equations extends ShareTools {
             fr.println();
         }
         fr.println();
+        this.A = A;
+        this.b = b;
     }
 
     // determine what kind of matrix
@@ -146,18 +148,18 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // show the resulting solution as a vector representation
-    private void Write_Solution() {
+    private void Write_Solution(float[][] x) {
         int m = x.length, n = x[0].length;
         StringBuilder sol = new StringBuilder();
         StringBuilder suf = new StringBuilder();
         if (Is_Zero_Col(x,1)) {
             fr.println("exist a single solution in R" + m + " space for the system which is:");
-            sol.append(Display_Vector(0));
+            sol.append(Display_Vector(x,0));
         } else {
             fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
             suf.append(" when ");
             if (!Is_Zero_Col(x,0)) {
-                sol.append(Display_Vector(0));
+                sol.append(Display_Vector(x,0));
             }
             for (int t = 1; t < n && !Is_Zero_Col(x,t); t++) {
                 if (sol.length() > 0) {
@@ -171,7 +173,7 @@ public class System_Linear_Equations extends ShareTools {
                 } else {
                     suf.append("λ").append(t).append(",");
                 }
-                sol.append(Display_Vector(t));
+                sol.append(Display_Vector(x,t));
             }
             suf.append(" that belongs to the R set");
         }
@@ -193,7 +195,7 @@ public class System_Linear_Equations extends ShareTools {
 
     /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
     // display the coordinates as a vector representation
-    private String Display_Vector(int c) {
+    private String Display_Vector(float[][] x, int c) {
         int m = x.length;
         String s = "(";
         for (int i = 0; i < m; i++) {
@@ -269,7 +271,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // check if exists two vectors in the matrix which are linearly independent
-    private boolean Is_Linear_Independent() {
+    private boolean Is_Linear_Independent(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length;
         for (int r = 0; r < m; r++) {
             if (Is_Zero_Row(A,r) && b[r][0] != 0) {
@@ -462,7 +464,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
     // add more zero rows in the matrix by needed
-    private float[][] Increase_Rows_in_Matrix(int m) {
+    private float[][] Increase_Rows_in_Matrix(float[][] A, int m) {
         int n = A[0].length;
         float[][] nA = new float[n][n];
         for (int i = 0; i < m; i++) {
@@ -474,7 +476,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // add more zero rows in the vector by needed
-    private float[][] Increase_Rows_in_Vector(int m) {
+    private float[][] Increase_Rows_in_Vector(float[][] b, int m) {
         int n = b.length;
         float[][] nb = new float[m][1];
         for (int i = 0; i < n; i++) {
@@ -484,7 +486,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // add a new column to the vector
-    private float[][] Increase_Cols_in_Vector() {
+    private float[][] Increase_Cols_in_Vector(float[][] b) {
         int m = b.length, n = b[0].length;
         float[][] nb = new float[m][n + 1];
         for (int i = 0; i < m; i++) {
@@ -496,7 +498,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // remove the last column from the vector
-    private float[][] Decrease_Col_in_Vector(float c) {
+    private float[][] Decrease_Col_in_Vector(float[][] b, float c) {
         int m = b.length;
         float[][] nb = new float[m][1];
         for (int i = 0; i < m; i++) {
@@ -507,7 +509,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ////////////////////////////////////////////// Free Variables ///////////////////////////////////////////////
     // fill rows to full square system
-    private void Fill_Square_System() {
+    private void Fill_Square_System(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length;
         if (m < n) {
             if (n - m == 1) {
@@ -515,13 +517,13 @@ public class System_Linear_Equations extends ShareTools {
             } else {
                 fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
             }
-            A = Increase_Rows_in_Matrix(m);
+            this.A = Increase_Rows_in_Matrix(A,m);
         }
-        b = Increase_Rows_in_Vector(n);
+        this.b = Increase_Rows_in_Vector(b,n);
     }
 
     // counter free variables in the system
-    private int Count_Free_Variables(int r) {
+    private int Count_Free_Variables(float[][] b, int r) {
         int t = b[0].length - 1;
         if (t == 1 && !Is_Zero_Row(b,r)) {
             float c = - b[r][0] / b[r][1];
@@ -530,17 +532,18 @@ public class System_Linear_Equations extends ShareTools {
             } else {
                 fr.println("exist certainly const for scalar (λ = " + c + ") so we simplify the vector b");
             }
-            b = Decrease_Col_in_Vector(c);
+            b = Decrease_Col_in_Vector(b,c);
             t--;
-            Write_Status_System();
+            Write_Status_System(A,b);
+            this.b = b;
         }
         return t;
     }
 
     // define free variable in row "r" where exist zero rows in the matrix
-    private void Define_Free_Variable(int r) {
+    private void Define_Free_Variable(float[][] A, float[][] b, int r) {
         if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
-            int n = A.length, t = Count_Free_Variables(r);
+            int n = A.length, t = Count_Free_Variables(b,r);
             int d = n, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
             if (d1 != -1) {
                 d = d1;
@@ -551,10 +554,12 @@ public class System_Linear_Equations extends ShareTools {
             } if (d < n) {
                 A[r][d] = 1;
                 fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
-                b = Increase_Cols_in_Vector();
+                b = Increase_Cols_in_Vector(b);
                 b[r][++t] = 1;
-                Write_Status_System();
+                Write_Status_System(A,b);
             }
+            this.A = A;
+            this.b = b;
         }
     }
 
@@ -653,7 +658,7 @@ public class System_Linear_Equations extends ShareTools {
 
     /////////////////////////////////// Methods to Solution (Non-Ranking Methods) ///////////////////////////////////
     // solve system of linear equations Ax = b by invertible multiplication method: x = Inv(A)*b
-    private float[][] Invertible_Method() {
+    private float[][] Invertible_Method(float[][] A, float[][] b) {
         float det = Determinant(A);
         if (det != 0) {
             fr.println("implement the solution by multiplication of b in invertible A: x = b*Inv(A)");
@@ -675,7 +680,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // solve system of linear equations Ax = b by cramer method (first algorithm)
-    private float[][] Cramer_Method() {
+    private float[][] Cramer_Method(float[][] A, float[][] b) {
         float det = Determinant(A);
         if (det != 0) {
             fr.println("x(i) = |A(i)|/|A| for each 1<=i<=n");
@@ -707,7 +712,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // solve system of linear equations Ax = b by forward backward method: Ly = b and then Ux = y
-    private float[][] Forward_Backward_Method() {
+    private float[][] Forward_Backward_Method(float[][] A, float[][] b) {
         float det = Determinant(A);
         if (det != 0) {
             int n = b.length;
@@ -727,8 +732,7 @@ public class System_Linear_Equations extends ShareTools {
             }
             fr.println("third, we will solve forward system Ly = b:");
             float[][] y = new float[n][1];
-            A = L;
-            Write_Status_System();
+            Write_Status_System(L,b);
             for (int i = 0; i < n; i++) {
                 y[i][0] = b[i][0];
                 for (int j = 0; j < i; j++) {
@@ -738,8 +742,7 @@ public class System_Linear_Equations extends ShareTools {
             }
             fr.println("finally, we will solve backward system Ux = y:");
             x = new float[n][1];
-            A = U; b = y;
-            Write_Status_System();
+            Write_Status_System(U,y);
             for (int i = n - 1; i >= 0; i--) {
                 x[i][0] = y[i][0];
                 for (int j = i + 1; j < n; j++) {
@@ -761,7 +764,7 @@ public class System_Linear_Equations extends ShareTools {
         int n = A.length;
         for (int i = 0; i < n; i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(i);
+            Define_Free_Variable(A,b,i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,true);
                 int l = Index_Row_from_Matrix(A,i);
@@ -771,7 +774,7 @@ public class System_Linear_Equations extends ShareTools {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_System(A,b,i,r);
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
             }
             int t = b[0].length - 1;
@@ -786,7 +789,7 @@ public class System_Linear_Equations extends ShareTools {
                         }
                     }
                     A[j][i] = 0;
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
                 A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
                 if (Is_Unit_Vector(A,j)) {
@@ -798,7 +801,7 @@ public class System_Linear_Equations extends ShareTools {
                             b[j][k] /= A[j][d];
                         }
                         A[j][d] = 1;
-                        Write_Status_System();
+                        Write_Status_System(A,b);
                     }
                 }
             }
@@ -820,7 +823,7 @@ public class System_Linear_Equations extends ShareTools {
         int n = A.length;
         for (int i = n - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(i);
+            Define_Free_Variable(A,b,i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,false);
                 int l = Index_Row_from_Matrix(A,i);
@@ -830,7 +833,7 @@ public class System_Linear_Equations extends ShareTools {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_System(A,b,i,r);
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
             }
             int t = b[0].length - 1;
@@ -845,7 +848,7 @@ public class System_Linear_Equations extends ShareTools {
                         }
                     }
                     A[j][i] = 0;
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
                 A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
                 if (Is_Unit_Vector(A,j)) {
@@ -857,7 +860,7 @@ public class System_Linear_Equations extends ShareTools {
                             b[j][k] /= A[j][d];
                         }
                         A[j][d] = 1;
-                        Write_Status_System();
+                        Write_Status_System(A,b);
                     }
                 }
             }
@@ -880,14 +883,14 @@ public class System_Linear_Equations extends ShareTools {
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-                Define_Free_Variable(i);
+                Define_Free_Variable(A,b,i);
                 if (A[i][i] == 0) {
                     int r = Index_UnZero_Value(A,i,true);
                     if (r >= 0 && r < n && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                         Retreat_Elementary_Action(i,r);
                         Retreat_Rows_System(A,b,i,r);
-                        Write_Status_System();
+                        Write_Status_System(A,b);
                     }
                 }
                 int t = b[0].length - 1;
@@ -902,7 +905,7 @@ public class System_Linear_Equations extends ShareTools {
                             }
                         }
                         A[j][i] = 0;
-                        Write_Status_System();
+                        Write_Status_System(A,b);
                     }
                     A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
                     if (Is_Unit_Vector(A,j)) {
@@ -914,7 +917,7 @@ public class System_Linear_Equations extends ShareTools {
                                 b[j][k] /= A[j][d];
                             }
                             A[j][d] = 1;
-                            Write_Status_System();
+                            Write_Status_System(A,b);
                         }
                     }
                 }
@@ -929,7 +932,7 @@ public class System_Linear_Equations extends ShareTools {
         int n = A.length, i = 0, j = 0;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(A)) {
-            Define_Free_Variable(i);
+            Define_Free_Variable(A,b,i);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < n && r != i) {
@@ -938,7 +941,7 @@ public class System_Linear_Equations extends ShareTools {
                     Retreat_Rows_Matrix(E,i,r);
                     Mul_Mats_System(E,A,b);
                     E = Unit_Matrix(n);
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
             } if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
@@ -946,7 +949,7 @@ public class System_Linear_Equations extends ShareTools {
                 Mul_Mats_System(E,A,b);
                 E = Unit_Matrix(n);
                 A[j][i] = 0;
-                Write_Status_System();
+                Write_Status_System(A,b);
             }
             A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
             if (Is_Unit_Vector(A,j)) {
@@ -957,7 +960,7 @@ public class System_Linear_Equations extends ShareTools {
                     Mul_Mats_System(E,A,b);
                     E = Unit_Matrix(n);
                     A[j][d] = 1;
-                    Write_Status_System();
+                    Write_Status_System(A,b);
                 }
             } if (j == n - 1) {
                 i = (i + 1) % n;
@@ -969,24 +972,24 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Many_Variables_System() throws Exception {
-        Fill_Square_System();
+    private void Many_Variables_System(float[][] A, float[][] b) throws Exception {
+        Fill_Square_System(A,b);
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
-        Write_Status_System();
+        Write_Status_System(A,b);
         switch (op) {
             case 1:
                 fr.println("implement the solution by invertible method:");
-                x = Invertible_Method();
+                x = Invertible_Method(A,b);
                 break;
             case 2:
                 fr.println("implement the solution by cramer method:");
-                x = Cramer_Method();
+                x = Cramer_Method(A,b);
                 break;
             case 3:
                 fr.println("implement the solution by forward backward method:");
-                x = Forward_Backward_Method();
+                x = Forward_Backward_Method(A,b);
                 break;
             case 4:
                 fr.println("implement the solution by upper --> lower ranking method:");
@@ -1008,13 +1011,13 @@ public class System_Linear_Equations extends ShareTools {
                 throw new Exception("you entered an invalid value for an option number to solution");
         }
         if (x != null) {
-            Write_Solution();
+            Write_Solution(x);
         }
     }
 
     ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
     // solve an equation ax = b
-    private void Single_Variable_Equation() {
+    private void Single_Variable_Equation(float[][] A, float[][] b) {
         if (A[0][0] == 0 && b[0][0] == 0) {
             fr.println("exists an infinite number of solutions which are belongs to the R set");
         } else {
@@ -1039,14 +1042,14 @@ public class System_Linear_Equations extends ShareTools {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
-            Write_Exercise();
+            Write_Exercise(A,b);
             if (m <= n && m == k) {
-                if (Is_Linear_Independent()) { // no solution
+                if (Is_Linear_Independent(A,b)) { // no solution
                     fr.println("does not an exists solutions");
                 } else if (n > 1) { // R2 space or higher
-                    Many_Variables_System();
+                    Many_Variables_System(A,b);
                 } else { // R1 space
-                    Single_Variable_Equation();
+                    Single_Variable_Equation(A,b);
                 }
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
