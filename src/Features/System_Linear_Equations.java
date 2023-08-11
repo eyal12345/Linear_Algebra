@@ -552,7 +552,7 @@ public class System_Linear_Equations extends ShareTools {
             } if (d < n) {
                 A[r][d] = 1;
                 fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
-                b = Increase_Cols_in_Vector(b);
+                b = Increase_Cols_in_Vector(this.b);
                 b[r][++t] = 1;
                 Write_Status_System(A,b);
             }
