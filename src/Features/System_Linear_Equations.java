@@ -429,7 +429,6 @@ public class System_Linear_Equations extends ShareTools {
                 A[r2][j] = k;
             }
         }
-        this.A = A;
         for (int j = 0; j < m; j++) {
             if (!Is_Zero_Col(b,j)) {
                 float k = b[r1][j];
@@ -437,7 +436,7 @@ public class System_Linear_Equations extends ShareTools {
                 b[r2][j] = k;
             }
         }
-        this.b = b;
+        this.A = A; this.b = b;
     }
 
     // multiplication of matrix and vector in same matrix
