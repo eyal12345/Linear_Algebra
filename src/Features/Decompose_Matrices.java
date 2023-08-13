@@ -317,8 +317,6 @@ public class Decompose_Matrices extends ShareTools {
         Scanner sc = new Scanner(System.in);
         User_Menu_Decompose();
         int op = sc.nextInt();
-        fr.println("M = ");
-        fr.println(Display_Status_Matrix(M,fn));
         switch (op) {
             case 1:
                 fr.println("find L and U by decomposition of M:");
@@ -363,6 +361,8 @@ public class Decompose_Matrices extends ShareTools {
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
+                fr.println("M = ");
+                fr.println(Display_Status_Matrix(M,fn));
                 Decompose_Matrix(M);
             }
             fr.close();
