@@ -76,8 +76,9 @@ public class Receive_Matrices extends ShareTools {
     // get the LU decomposition by multiplication of L and U (first algorithm)
     private void From_LU_To_M_V1(float[][] L, float[][] U) {
         if (Is_One_Slant(L)) {
+            float[][] M = Mul_Mats(L,U);
             fr.println("M = ");
-            fr.println(Display_Status_Matrix(Mul_Mats(L,U),fn));
+            fr.println(Display_Status_Matrix(M,fn));
         } else {
             fr.println("these are values other than 1 on the main diagonal of L matrix");
         }
