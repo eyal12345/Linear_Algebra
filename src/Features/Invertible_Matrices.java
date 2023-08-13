@@ -17,7 +17,7 @@ public class Invertible_Matrices extends ShareTools {
 
     public Invertible_Matrices(float[][] nM, String repr, String file) {
         this.M = nM;
-        this.InvM = Unit_Matrix(M.length);
+        this.InvM = null;
         this.fn = repr;
         this.ne = file.split("\\.")[0];
         this.fr = null;
@@ -210,6 +210,7 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Upper_Ranking_Method(float[][] M) {
         fr.println(Which_Type_Triangular(M,true));
         int n = M.length;
+        float[][] InvM = this.InvM;
         for (int i = 0; i < n; i++) {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,true);
@@ -253,6 +254,7 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Lower_Ranking_Method(float[][] M) {
         fr.println(Which_Type_Triangular(M,false));
         int n = M.length;
+        float[][] InvM = this.InvM;
         for (int i = n - 1; i >= 0; i--) {
             if (M[i][i] == 0) {
                 int r = Index_UnZero_Value(M,i,false);
@@ -296,6 +298,7 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Parallel_Ranking_Method(float[][] M) {
         fr.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
+        float[][] InvM = this.InvM;
         while (!Is_Unit_Matrix(M)) {
             for (int i = 0; i < n; i++) {
                 if (M[i][i] == 0) {
@@ -333,6 +336,7 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Elementary_Matrices_Method(float[][] M) {
         fr.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0, j = 0;
+        float[][] InvM = this.InvM;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
             if (M[i][i] == 0) {
@@ -340,20 +344,20 @@ public class Invertible_Matrices extends ShareTools {
                 Retreat_Elementary_Action(i,r);
                 Retreat_Rows_Matrix(E,i,r);
                 Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; E = Unit_Matrix(n);
+                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
                 Write_Status_Matrices(M,InvM);
             } if (i != j && M[j][i] != 0) {
                 E[j][i] -= (M[j][i] / M[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
                 Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; E = Unit_Matrix(n);
+                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
                 M[j][i] = 0;
                 Write_Status_Matrices(M,InvM);
             } if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
                 Mul_Elementary_Action(E[j][j],j);
                 Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; E = Unit_Matrix(n);
+                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
                 M[j][j] = 1;
                 Write_Status_Matrices(M,InvM);
             } if (j == n - 1) {
@@ -384,6 +388,7 @@ public class Invertible_Matrices extends ShareTools {
         Scanner sc = new Scanner(System.in);
         User_Menu_Invertible();
         int op = sc.nextInt();
+        InvM = Unit_Matrix(M.length);
         Write_Status_Matrices(M,InvM);
         switch (op) {
             case 1:
