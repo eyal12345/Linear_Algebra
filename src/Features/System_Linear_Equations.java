@@ -483,7 +483,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // add a new column to the vector
-    private float[][] Increase_Cols_in_Vector(float[][] b) {
+    private float[][] Increase_Col_in_Vector(float[][] b) {
         int m = b.length, n = b[0].length;
         float[][] nb = new float[m][n + 1];
         for (int i = 0; i < m; i++) {
@@ -551,7 +551,7 @@ public class System_Linear_Equations extends ShareTools {
             } if (d < n) {
                 A[r][d] = 1;
                 fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + n + " space:");
-                b = Increase_Cols_in_Vector(b);
+                b = Increase_Col_in_Vector(b);
                 b[r][++t] = 1;
                 Write_Status_System(A,b);
             }
