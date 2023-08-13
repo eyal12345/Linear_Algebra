@@ -319,7 +319,6 @@ public class Decompose_Matrices extends ShareTools {
         int op = sc.nextInt();
         fr.println("M = ");
         fr.println(Display_Status_Matrix(M,fn));
-        float[][] M2;
         switch (op) {
             case 1:
                 fr.println("find L and U by decomposition of M:");
