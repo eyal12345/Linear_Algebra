@@ -520,7 +520,7 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     // counter free variables in the system
-    private int Count_Free_Variables(float[][] b, int r) {
+    private int Count_Free_Variables(float[][] A, float[][] b, int r) {
         int t = b[0].length - 1;
         if (t == 1 && !Is_Zero_Row(b,r)) {
             float c = - b[r][0] / b[r][1];
@@ -540,7 +540,7 @@ public class System_Linear_Equations extends ShareTools {
     // define free variable in row "r" where exist zero rows in the matrix
     private void Define_Free_Variable(float[][] A, float[][] b, int r) {
         if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
-            int n = A.length, t = Count_Free_Variables(b,r); b = this.b;
+            int n = A.length, t = Count_Free_Variables(A,b,r); b = this.b;
             int d = n, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
             if (d1 != -1) {
                 d = d1;
