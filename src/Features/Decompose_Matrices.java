@@ -115,7 +115,7 @@ public class Decompose_Matrices extends ShareTools {
 
     ////////////////////////////////////// Methods to Solution (Decompose M) ////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
-    private float[][] From_M_To_LU_V1() {
+    private void From_M_To_LU_V1(float[][] M) {
         int n = M.length;
         float[][] L = new float[n][n];
         float[][] U = new float[n][n];
@@ -139,11 +139,12 @@ public class Decompose_Matrices extends ShareTools {
         }
         fr.println("L = ");
         fr.println(Display_Status_Matrix(L,fn));
-        return U;
+        fr.println("U = ");
+        fr.println(Display_Status_Matrix(U,fn));
     }
 
     // get the LL' decomposition of M (first algorithm)
-    private float[][] From_M_To_LLT_V1() {
+    private void From_M_To_LLT_V1(float[][] M) {
         if (Is_Symmetrical_Matrix(M) && Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -174,15 +175,15 @@ public class Decompose_Matrices extends ShareTools {
             }
             fr.println("L = ");
             fr.println(Display_Status_Matrix(L,fn));
-            return LT;
+            fr.println("L' = ");
+            fr.println(Display_Status_Matrix(LT,fn));
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
-            return null;
         }
     }
 
     // get the LDL' decomposition of M (first algorithm)
-    private float[][] From_M_To_LDLT_V1() {
+    private void From_M_To_LDLT_V1(float[][] M) {
         if (Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -221,15 +222,15 @@ public class Decompose_Matrices extends ShareTools {
             fr.println(Display_Status_Matrix(L,fn));
             fr.println("D = ");
             fr.println(Display_Status_Matrix(D,fn));
-            return LT;
+            fr.println("L' = ");
+            fr.println(Display_Status_Matrix(LT,fn));
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix");
-            return null;
         }
     }
 
     // get the LU decomposition of M (second algorithm)
-    private float[][] From_M_To_LU_V2() {
+    private void From_M_To_LU_V2(float[][] M) {
         int n = M.length;
         float[][] L = new float[n][n];
         float[][] U = new float[n][n];
@@ -249,11 +250,12 @@ public class Decompose_Matrices extends ShareTools {
         }
         fr.println("L = ");
         fr.println(Display_Status_Matrix(L,fn));
-        return U;
+        fr.println("U = ");
+        fr.println(Display_Status_Matrix(U,fn));
     }
 
     // get the LL' decomposition of M (second algorithm)
-    private float[][] From_M_To_LLT_V2() {
+    private void From_M_To_LLT_V2(float[][] M) {
         if (Is_Symmetrical_Matrix(M) && Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -269,15 +271,15 @@ public class Decompose_Matrices extends ShareTools {
             }
             fr.println("L = ");
             fr.println(Display_Status_Matrix(L,fn));
-            return LT;
+            fr.println("L' = ");
+            fr.println(Display_Status_Matrix(LT,fn));
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
-            return null;
         }
     }
 
     // get the LDL' decomposition of M (second algorithm)
-    private float[][] From_M_To_LDLT_V2() {
+    private void From_M_To_LDLT_V2(float[][] M) {
         if (Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -302,16 +304,16 @@ public class Decompose_Matrices extends ShareTools {
             fr.println(Display_Status_Matrix(L,fn));
             fr.println("D = ");
             fr.println(Display_Status_Matrix(D,fn));
-            return LT;
+            fr.println("L' = ");
+            fr.println(Display_Status_Matrix(LT,fn));
         } else {
             fr.println("this is a matrix which is not a symmetrical matrix");
-            return null;
         }
     }
 
     ////////////////////////////////////// User Interface (Decompose M) //////////////////////////////////////
     // get the matrix components
-    private void Decompose_Matrix() throws Exception {
+    private void Decompose_Matrix(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Decompose();
         int op = sc.nextInt();
@@ -321,47 +323,27 @@ public class Decompose_Matrices extends ShareTools {
         switch (op) {
             case 1:
                 fr.println("find L and U by decomposition of M:");
-                M2 = From_M_To_LU_V1();
-                fr.println("U = ");
-                fr.println(Display_Status_Matrix(M2,fn));
+                From_M_To_LU_V1(M);
                 break;
             case 2:
                 fr.println("find L and L' by decomposition of M:");
-                M2 = From_M_To_LLT_V1();
-                if (M2 != null) {
-                    fr.println("L' = ");
-                    fr.println(Display_Status_Matrix(M2,fn));
-                }
+                From_M_To_LLT_V1(M);
                 break;
             case 3:
                 fr.println("find L, D and L' by decomposition of M:");
-                M2 = From_M_To_LDLT_V1();
-                if (M2 != null) {
-                    fr.println("L' = ");
-                    fr.println(Display_Status_Matrix(M2,fn));
-                }
+                From_M_To_LDLT_V1(M);
                 break;
             case 4:
                 fr.println("find L and U by decomposition of M:");
-                M2 = From_M_To_LU_V2();
-                fr.println("U = ");
-                fr.println(Display_Status_Matrix(M2,fn));
+                From_M_To_LU_V2(M);
                 break;
             case 5:
                 fr.println("find L and L' by decomposition of M:");
-                M2 = From_M_To_LLT_V2();
-                if (M2 != null) {
-                    fr.println("L' = ");
-                    fr.println(Display_Status_Matrix(M2,fn));
-                }
+                From_M_To_LLT_V2(M);
                 break;
             case 6:
                 fr.println("find L, D and L' by decomposition of M:");
-                M2 = From_M_To_LDLT_V2();
-                if (M2 != null) {
-                    fr.println("L' = ");
-                    fr.println(Display_Status_Matrix(M2,fn));
-                }
+                From_M_To_LDLT_V2(M);
                 break;
             default:
                 throw new Exception("you entered an invalid number");
@@ -382,7 +364,7 @@ public class Decompose_Matrices extends ShareTools {
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
-                Decompose_Matrix();
+                Decompose_Matrix(M);
             }
             fr.close();
         } else {
