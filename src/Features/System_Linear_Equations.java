@@ -176,8 +176,7 @@ public class System_Linear_Equations extends ShareTools {
             }
             suf.append(" that belongs to the R set");
         }
-        fr.print("x = " + sol.append(suf));
-        fr.println();
+        fr.println("x = " + sol.append(suf));
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
