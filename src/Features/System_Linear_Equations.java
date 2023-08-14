@@ -972,7 +972,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Many_Variables_System(float[][] A, float[][] b) throws Exception {
+    private void Several_Variables(float[][] A, float[][] b) throws Exception {
         Fill_Square_System(A,b);
         A = this.A; b = this.b;
         Scanner sc = new Scanner(System.in);
@@ -1018,7 +1018,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
     // solve an equation ax = b
-    private void Single_Variable_Equation(float[][] A, float[][] b) {
+    private void Single_Variable(float[][] A, float[][] b) {
         if (A[0][0] == 0 && b[0][0] == 0) {
             fr.println("exists an infinite number of solutions which are belongs to the R set");
         } else {
@@ -1048,9 +1048,9 @@ public class System_Linear_Equations extends ShareTools {
                 if (Is_Linear_Independent(A,b)) { // no solution
                     fr.println("does not an exists solutions");
                 } else if (n > 1) { // R2 space or higher
-                    Many_Variables_System(A,b);
+                    Several_Variables(A,b);
                 } else { // R1 space
-                    Single_Variable_Equation(A,b);
+                    Single_Variable(A,b);
                 }
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
