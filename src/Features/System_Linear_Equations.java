@@ -477,7 +477,7 @@ public class System_Linear_Equations extends ShareTools {
         int n = b.length;
         float[][] nb = new float[m][1];
         for (int i = 0; i < n; i++) {
-            nb[i][0] = (i < m) ? b[i][0] : 0;
+            nb[i][0] = b[i][0];
         }
         return nb;
     }
