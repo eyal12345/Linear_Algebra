@@ -196,20 +196,20 @@ public class System_Linear_Equations extends ShareTools {
     // display the coordinates as a vector representation
     private String Display_Vector(float[][] x, int c) {
         int m = x.length;
-        String s = "(";
+        StringBuilder s = new StringBuilder("(");
         for (int i = 0; i < m; i++) {
             if ((Math.round(x[i][c] * 1000.0) / 1000.0) % 1 == 0) {
-                s += (int) (Math.round(x[i][c] * 1000.0) / 1000.0);
+                s.append((int) (Math.round(x[i][c] * 1000.0) / 1000.0));
             } else if (fn.equals("decimal")) {
-                s += Math.round(x[i][c] * 1000.0) / 1000.0;
+                s.append(Math.round(x[i][c] * 1000.0) / 1000.0);
             } else if (fn.equals("rational")) {
-                s += convertDecimalToFraction(x[i][c]);
+                s.append(convertDecimalToFraction(x[i][c]));
             } if (i != m - 1) {
-                s += " ,";
+                s.append(" ,");
             }
         }
-        s += ")";
-        return s;
+        s.append(")");
+        return s.toString();
     }
 
     ////////////////////////////////////////////////// Quantity //////////////////////////////////////////////////
