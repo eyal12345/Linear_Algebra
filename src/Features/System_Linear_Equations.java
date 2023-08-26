@@ -32,31 +32,33 @@ public class System_Linear_Equations extends ShareTools {
         int m = A.length, n = A[0].length;
         fr.println(Executive_Order(m,n));
         if (n == 1) {
-            if (A[0][0] % 1 == 0) {
-                if (A[0][0] == 1) {
-                    if (b[0][0] % 1 == 0) {
-                        fr.println("x = " + (int) b[0][0]);
+            for (int i = 0; i < m; i++) {
+                if (A[i][0] % 1 == 0) {
+                    if (A[i][0] == 1) {
+                        if (b[i][0] % 1 == 0) {
+                            fr.println("x = " + (int) b[i][0]);
+                        } else {
+                            fr.println("x = " + b[i][0]);
+                        }
+                    } else if (A[i][0] == -1) {
+                        if (b[i][0] % 1 == 0) {
+                            fr.println("-x = " + (int) b[i][0]);
+                        } else {
+                            fr.println("-x = " + b[i][0]);
+                        }
                     } else {
-                        fr.println("x = " + b[0][0]);
-                    }
-                } else if (A[0][0] == -1) {
-                    if (b[0][0] % 1 == 0) {
-                        fr.println("-x = " + (int) b[0][0]);
-                    } else {
-                        fr.println("-x = " + b[0][0]);
+                        if (b[i][0] % 1 == 0) {
+                            fr.println((int) A[i][0] + "x = " + (int) b[i][0]);
+                        } else {
+                            fr.println((int) A[i][0] + "x = " + b[i][0]);
+                        }
                     }
                 } else {
-                    if (b[0][0] % 1 == 0) {
-                        fr.println((int) A[0][0] + "x = " + (int) b[0][0]);
-                    } else {
-                        fr.println((int) A[0][0] + "x = " + b[0][0]);
-                    }
+                    if (b[i][0] % 1 == 0)
+                        fr.println(A[i][0] + "x = " + (int) b[i][0]);
+                    else
+                        fr.println(A[i][0] + "x = " + b[i][0]);
                 }
-            } else {
-                if (b[0][0] % 1 == 0)
-                    fr.println(A[0][0] + "x = " + (int) b[0][0]);
-                else
-                    fr.println(A[0][0] + "x = " + b[0][0]);
             }
         } else {
             for (int i = 0; i < m; i++) {
@@ -217,6 +219,8 @@ public class System_Linear_Equations extends ShareTools {
     private String Executive_Order(int m, int n) {
         if (m == 1 && n == 1) {
             return "solve the next equation in R1 space (1 equation)(1 unknown):";
+        } else if (m > 1 && n == 1) {
+            return "solve the next equation in R1 space (" + m + " equations)(1 unknown):";
         } else if (m == 1 && n > 1) {
             return "solve the next equation in R" + n + " space (1 equation)(" + n + " unknowns):";
         } else {
@@ -285,7 +289,7 @@ public class System_Linear_Equations extends ShareTools {
                         R.add(A[r1][j] / A[r2][j]);
                     }
                 }
-                if (Is_Equals_Values(R) && R.size() > 1 && (b[r1][0] != 0 || b[r2][0] != 0) && (b[r1][0] / b[r2][0] != R.get(0))) {
+                if (Is_Equals_Values(R) && R.size() > 0 && (b[r1][0] != 0 || b[r2][0] != 0) && (b[r1][0] / b[r2][0] != R.get(0))) {
                     return true;
                 }
             }
@@ -461,25 +465,17 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
     // add more zero rows in the matrix by needed
-    private float[][] Increase_Rows_in_Matrix(float[][] A, int m) {
-        int n = A[0].length;
+    private void Increase_Rows_in_System(float[][] A, float[][] b) {
+        int m = A.length, n = A[0].length;
         float[][] nA = new float[n][n];
+        float[][] nb = new float[n][1];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 nA[i][j] = A[i][j];
             }
-        }
-        return nA;
-    }
-
-    // add more zero rows in the vector by needed
-    private float[][] Increase_Rows_in_Vector(float[][] b, int m) {
-        int n = b.length;
-        float[][] nb = new float[m][1];
-        for (int i = 0; i < n; i++) {
             nb[i][0] = b[i][0];
         }
-        return nb;
+        this.A = nA; this.b = nb;
     }
 
     // add a new column to the vector
@@ -508,15 +504,14 @@ public class System_Linear_Equations extends ShareTools {
     // fill rows to full square system
     private void Fill_Square_System(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length;
-        if (m < n) {
+        if (m < n) { // Underdetermined Systems
             if (n - m == 1) {
                 fr.println("added one more row of zeros in order to get a square completion");
             } else {
                 fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
             }
-            this.A = Increase_Rows_in_Matrix(A,m);
-        }
-        this.b = Increase_Rows_in_Vector(b,n);
+            Increase_Rows_in_System(A,b);
+        } // Overdetermined Systems
     }
 
     // counter free variables in the system
@@ -1044,7 +1039,7 @@ public class System_Linear_Equations extends ShareTools {
             File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise(A,b);
-            if (m <= n && m == k) {
+            if (m == k) {
                 if (Is_Linear_Independent(A,b)) { // no solution
                     fr.println("does not an exists solutions");
                 } else if (n > 1) { // R2 space or higher
