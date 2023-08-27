@@ -6,34 +6,35 @@ public class ShareTools {
     // display a matrix each current status
     public static String Display_Status_Matrix(float[][] M, String fn) {
         int n = M.length;
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if ((Math.round(M[i][j] * 1000.0) / 1000.0) % 1 == 0) {
-                    s += (int) (Math.round(M[i][j] * 1000.0) / 1000.0);
+                    s.append((int) (Math.round(M[i][j] * 1000.0) / 1000.0));
                 } else if (fn.equals("decimal")) {
-                    s += Math.round(M[i][j] * 1000.0) / 1000.0;
+                    s.append(Math.round(M[i][j] * 1000.0) / 1000.0);
                 } else if (fn.equals("rational")) {
-                    s += convertDecimalToFraction(M[i][j]);
+                    s.append(convertDecimalToFraction(M[i][j]));
                 } if (j != n - 1) {
-                    s += " ,";
+                    s.append(" ,");
                 }
             }
-            s += "\n";
+            s.append("\n");
         }
-        return s;
+        return s.toString();
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if a matrix is a unit matrix
     public static boolean Is_Unit_Matrix(float[][] M) {
-        int m = M.length, n = M[0].length;
+        int m = M.length, n = M[0].length, k = 0;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (M[j][j] != 1 || (i != j && M[i][j] != 0)) {
+                if (M[k][k] != 1 || (i != j && M[i][j] != 0)) {
                     return false;
                 }
             }
+            k++;
         }
         return true;
     }

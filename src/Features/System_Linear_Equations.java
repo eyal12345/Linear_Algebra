@@ -299,11 +299,11 @@ public class System_Linear_Equations extends ShareTools {
 
     // check if the specific row in the matrix is a unit vector
     private boolean Is_Exist_Vector(float[][] A, int r) {
-        int n = A[0].length;
+        int m = A.length;
         float[] v = Row_from_Matrix(A,r);
         v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
         int c1 = Index_for_Unit_Vector(v);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             if (i != r && Is_Unit_Vector(A,r) && Is_Unit_Vector(A,i)) {
                 int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
                 if (c1 == c2 && c1 != -1) {
@@ -478,8 +478,24 @@ public class System_Linear_Equations extends ShareTools {
         this.A = nA; this.b = nb;
     }
 
-    // remove the last zero row from the system by needed
-    private void Decrease_Row_in_System(float[][] A, float[][] b, int r) {
+    // add zero row from the system by needed
+    private void Add_Zero_Row(float[][] A, float[][] b) {
+        int m = A.length, n = A[0].length, t = b[0].length;
+        float[][] nA = new float[m + 1][n];
+        float[][] nb = new float[m + 1][t];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n ; j++) {
+                nA[i][j] = A[i][j];
+            }
+            for (int k = 0; k < t ; k++) {
+                nb[i][k] = b[i][k];
+            }
+        }
+        this.A = nA; this.b = nb;
+    }
+
+    // remove zero row from the system by needed
+    private void Delete_Zero_Row(float[][] A, float[][] b, int r) {
         int m = A.length, n = A[0].length;
         float[][] nA = new float[m - 1][n];
         float[][] nb = new float[m - 1][1];
@@ -529,9 +545,8 @@ public class System_Linear_Equations extends ShareTools {
                 fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
             }
             Increase_Rows_in_System(A,b);
-        } else if (m > n) { // Overdetermined Systems
-            return;
         }
+        // Overdetermined Systems
     }
 
     // counter free variables in the system
@@ -555,7 +570,13 @@ public class System_Linear_Equations extends ShareTools {
     // define free variable in row "r" where exist zero rows in the matrix
     private void Define_Free_Variable(float[][] A, float[][] b, int r) {
         int m = A.length, n = A[0].length;
-        if (m <= n && Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
+        if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
+            fr.println("adding a new row to the system");
+            Add_Zero_Row(A,b);
+            A = this.A; b = this.b;
+            m = A.length; r++;
+        }
+        if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
             int t = Count_Free_Variables(A,b,r); b = this.b;
             int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
             if (d1 != -1) {
@@ -774,8 +795,10 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,true));
         int m = A.length, n = A[0].length;
-        for (int i = 0; i < n; i++) {
-            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+        for (int i = 0; i < Math.min(m,n); i++) {
+            if (i != m) {
+                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+            }
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             if (A[i][i] == 0) {
@@ -815,7 +838,7 @@ public class System_Linear_Equations extends ShareTools {
                         return null;
                     } else {
                         fr.println("delete the zero row from the system:");
-                        Decrease_Row_in_System(A,b,j);
+                        Delete_Zero_Row(A,b,j);
                         A = this.A; b = this.b;
                         m = A.length; n = A[0].length;
                         Write_Status_System(A,b);
@@ -849,8 +872,10 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,false));
         int m = A.length, n = A[0].length;
-        for (int i = n - 1; i >= 0; i--) {
-            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+        for (int i = Math.min(m,n) - 1; i >= 0; i--) {
+            if (i != m) {
+                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+            }
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             if (A[i][i] == 0) {
@@ -890,7 +915,7 @@ public class System_Linear_Equations extends ShareTools {
                         return null;
                     } else {
                         fr.println("delete the zero row from the system:");
-                        Decrease_Row_in_System(A,b,j);
+                        Delete_Zero_Row(A,b,j);
                         A = this.A; b = this.b;
                         m = A.length; n = A[0].length;
                         Write_Status_System(A,b);
@@ -926,7 +951,9 @@ public class System_Linear_Equations extends ShareTools {
         int m = A.length, n = A[0].length;
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
-                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+                if (i != m) {
+                    A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+                }
                 Define_Free_Variable(A,b,i);
                 A = this.A; b = this.b;
                 if (A[i][i] == 0) {
@@ -963,7 +990,7 @@ public class System_Linear_Equations extends ShareTools {
                             return null;
                         } else {
                             fr.println("delete the zero row from the system:");
-                            Decrease_Row_in_System(A,b,j);
+                            Delete_Zero_Row(A,b,j);
                             A = this.A; b = this.b;
                             m = A.length; n = A[0].length;
                             Write_Status_System(A,b);
@@ -990,10 +1017,14 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Elementary_Matrices_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by an elementary matrices:");
         int m = A.length, n = A[0].length, i = 0, j = 0;
-        float[][] E = Unit_Matrix(m);
+        float[][] E;
         while (!Is_Unit_Matrix(A)) {
+            if (i != m) {
+                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
+            }
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
+            m = A.length; E = Unit_Matrix(m);
             if (A[i][i] == 0) {
                 int r = Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < m && r != i) {
@@ -1024,7 +1055,7 @@ public class System_Linear_Equations extends ShareTools {
                     return null;
                 } else {
                     fr.println("delete the zero row from the system:");
-                    Decrease_Row_in_System(A,b,j);
+                    Delete_Zero_Row(A,b,j);
                     A = this.A; b = this.b;
                     m = A.length; n = A[0].length;
                     E = Unit_Matrix(m);
@@ -1052,7 +1083,7 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
     private void Several_Variables_System(float[][] A, float[][] b) throws Exception {
-        Fill_Square_System(A,b);
+//        Fill_Square_System(A,b);
         A = this.A; b = this.b;
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
