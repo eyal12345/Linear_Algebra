@@ -151,50 +151,54 @@ public class System_Linear_Equations extends ShareTools {
 
     // show the resulting solution as a vector representation
     private void Write_Solution(float[][] x) {
-        int m = x.length, n = x[0].length;
-        StringBuilder sol = new StringBuilder();
-        StringBuilder suf = new StringBuilder();
-        if (Is_Zero_Col(x,1)) {
-            fr.println("exist a single solution in R" + m + " space for the system which is:");
-            if (m == 1 && n == 1) {
-                if (x[0][0] % 1 == 0) {
-                    sol.append((int) x[0][0]);
-                } else if (fn.equals("decimal")) {
-                    sol.append(x[0][0]);
-                } else if (fn.equals("rational")) {
-                    sol.append(convertDecimalToFraction(x[0][0]));
-                }
-            } else {
-                sol.append(Display_Vector(x,0));
-            }
-        } else {
-            if (m == 1 && n == 2) {
-                fr.println("exists an infinite number of solutions which are belongs to the R set:");
-                suf.append("λ");
-            } else {
-                fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
-                suf.append(" when ");
-                if (!Is_Zero_Col(x,0)) {
+        if (x != null) {
+            int m = x.length, n = x[0].length;
+            StringBuilder sol = new StringBuilder();
+            StringBuilder suf = new StringBuilder();
+            if (Is_Zero_Col(x,1)) {
+                fr.println("exist a single solution in R" + m + " space for the system which is:");
+                if (m == 1 && n == 1) {
+                    if (x[0][0] % 1 == 0) {
+                        sol.append((int) x[0][0]);
+                    } else if (fn.equals("decimal")) {
+                        sol.append(x[0][0]);
+                    } else if (fn.equals("rational")) {
+                        sol.append(convertDecimalToFraction(x[0][0]));
+                    }
+                } else {
                     sol.append(Display_Vector(x,0));
                 }
-                for (int t = 1; t < n && !Is_Zero_Col(x,t); t++) {
-                    if (sol.length() > 0) {
-                        sol.append(" + ");
+            } else {
+                if (m == 1 && n == 2) {
+                    fr.println("exists an infinite number of solutions which are belongs to the R set:");
+                    suf.append("λ");
+                } else {
+                    fr.println("the solution is an infinite set of vectors in R" + m + " space which are linearly dependents in the vector space:");
+                    suf.append(" when ");
+                    if (!Is_Zero_Col(x,0)) {
+                        sol.append(Display_Vector(x,0));
                     }
-                    sol = new StringBuilder((Is_Zero_Col(x, 2)) ? sol + "λ*" : sol + "λ" + t + "*");
-                    if (n == 2) {
-                        suf.append("λ it's a free scalar");
-                    } else if (t == n - 1) {
-                        suf.append("λ").append(t).append(" it's a free scalars");
-                    } else {
-                        suf.append("λ").append(t).append(",");
+                    for (int t = 1; t < n && !Is_Zero_Col(x,t); t++) {
+                        if (sol.length() > 0) {
+                            sol.append(" + ");
+                        }
+                        sol = new StringBuilder((Is_Zero_Col(x, 2)) ? sol + "λ*" : sol + "λ" + t + "*");
+                        if (n == 2) {
+                            suf.append("λ it's a free scalar");
+                        } else if (t == n - 1) {
+                            suf.append("λ").append(t).append(" it's a free scalars");
+                        } else {
+                            suf.append("λ").append(t).append(",");
+                        }
+                        sol.append(Display_Vector(x,t));
                     }
-                    sol.append(Display_Vector(x,t));
+                    suf.append(" that belongs to the R set");
                 }
-                suf.append(" that belongs to the R set");
             }
+            fr.println("x = " + sol.append(suf));
+        } else {
+            fr.println("does not an exists solutions");
         }
-        fr.println("x = " + sol.append(suf));
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
@@ -818,7 +822,6 @@ public class System_Linear_Equations extends ShareTools {
                     }
                 }
                 if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                    fr.println("does not an exists solutions");
                     return null;
                 }
             }
@@ -896,7 +899,6 @@ public class System_Linear_Equations extends ShareTools {
                     }
                 }
                 if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                    fr.println("does not an exists solutions");
                     return null;
                 }
             }
@@ -971,7 +973,6 @@ public class System_Linear_Equations extends ShareTools {
                         }
                     }
                     if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                        fr.println("does not an exists solutions");
                         return null;
                     }
                 }
@@ -1036,7 +1037,6 @@ public class System_Linear_Equations extends ShareTools {
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                fr.println("does not an exists solutions");
                 return null;
             }
             if (j == m - 1) {
@@ -1087,9 +1087,7 @@ public class System_Linear_Equations extends ShareTools {
             default:
                 throw new Exception("you entered an invalid value for an option number to solution");
         }
-        if (x != null) {
-            Write_Solution(x);
-        }
+        Write_Solution(x);
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
