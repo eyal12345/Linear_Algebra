@@ -33,6 +33,7 @@ public class System_Linear_Equations extends ShareTools {
         fr.println(Executive_Order(m,n));
         if (n == 1) {
             for (int i = 0; i < m; i++) {
+                fr.print("eq" + (i + 1) + ": ");
                 if (A[i][0] % 1 == 0) {
                     if (A[i][0] == 1) {
                         if (b[i][0] % 1 == 0) {
@@ -759,11 +760,8 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,true));
         int m = A.length, n = A[0].length;
+        boolean single = (m == 1 && n == 1);
         for (int i = 0; i < Math.min(m,n); i++) {
-            if (n == 1 && Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
-                fr.println("does not an exists solutions");
-                return null;
-            }
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
@@ -780,8 +778,9 @@ public class System_Linear_Equations extends ShareTools {
                 }
             }
             int t = b[0].length - 1;
-            for (int j = i + 1; j < m; j++) {
-                if (A[i][i] != 0 && A[j][i] != 0) {
+            int s = single ? i : i + 1;
+            for (int j = s; j < m; j++) {
+                if (A[i][i] != 0 && A[j][i] != 0 && !single) {
                     float c = A[j][i] / A[i][i];
                     Sum_Elementary_Action(c,j,i);
                     for (int k = 0; k < n; k++) {
@@ -839,11 +838,8 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         fr.println(Which_Type_Triangular(A,false));
         int m = A.length, n = A[0].length;
+        boolean single = (m == 1 && n == 1);
         for (int i = Math.min(m,n) - 1; i >= 0; i--) {
-            if (n == 1 && Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
-                fr.println("does not an exists solutions");
-                return null;
-            }
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
@@ -860,8 +856,9 @@ public class System_Linear_Equations extends ShareTools {
                 }
             }
             int t = b[0].length - 1;
-            for (int j = i - 1; j >= 0; j--) {
-                if (A[i][i] != 0 && A[j][i] != 0) {
+            int s = single ? i : i - 1;
+            for (int j = s; j >= 0; j--) {
+                if (A[i][i] != 0 && A[j][i] != 0 && !single) {
                     float c = A[j][i] / A[i][i];
                     Sum_Elementary_Action(c,j,i);
                     for (int k = n - 1; k >= 0; k--) {
@@ -919,12 +916,9 @@ public class System_Linear_Equations extends ShareTools {
     private float[][] Parallel_Ranking_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by a parallel ranking:");
         int m = A.length, n = A[0].length;
+        boolean single = (m == 1 && n == 1);
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
-                if (n == 1 && Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
-                    fr.println("does not an exists solutions");
-                    return null;
-                }
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 Define_Free_Variable(A,b,i);
                 A = this.A; b = this.b;
@@ -939,7 +933,7 @@ public class System_Linear_Equations extends ShareTools {
                 }
                 int t = b[0].length - 1;
                 for (int j = 0; j < m; j++) {
-                    if (i != j && A[i][i] != 0 && A[j][i] != 0) {
+                    if (i != j && A[i][i] != 0 && A[j][i] != 0 && !single) {
                         float c = A[j][i] / A[i][i];
                         Sum_Elementary_Action(c,j,i);
                         for (int k = 0; k < n; k++) {
@@ -989,13 +983,10 @@ public class System_Linear_Equations extends ShareTools {
     // solve system of linear equations Ax = b by parallel elementary matrices
     private float[][] Elementary_Matrices_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by an elementary matrices:");
-        int m, n = A[0].length, i = 0, j = 0;
+        int m = A.length, n = A[0].length, i = 0, j = 0;
+        boolean single = (m == 1 && n == 1);
         float[][] E;
         while (!Is_Unit_Matrix(A)) {
-            if (n == 1 && Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
-                fr.println("does not an exists solutions");
-                return null;
-            }
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
@@ -1011,7 +1002,7 @@ public class System_Linear_Equations extends ShareTools {
                     Write_Status_System(A,b);
                 }
             }
-            if (i != j && A[i][i] != 0 && A[j][i] != 0) {
+            if (i != j && A[i][i] != 0 && A[j][i] != 0 && !single) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
                 Mul_Mats_System(E,A,b);
