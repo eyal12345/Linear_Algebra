@@ -27,14 +27,13 @@ public class ShareTools {
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if a matrix is a unit matrix
     public static boolean Is_Unit_Matrix(float[][] M) {
-        int m = M.length, n = M[0].length, k = 0;
+        int m = M.length, n = M[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (M[k][k] != 1 || (i != j && M[i][j] != 0)) {
+                if (M[j][j] != 1 || (i != j && M[i][j] != 0)) {
                     return false;
                 }
             }
-            k++;
         }
         return true;
     }

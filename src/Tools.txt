@@ -1,0 +1,29 @@
+///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
+// add more zero rows in the system by needed
+private void Increase_Rows_in_System(float[][] A, float[][] b) {
+    int m = A.length, n = A[0].length;
+    float[][] nA = new float[n][n];
+    float[][] nb = new float[n][1];
+    for (int i = 0; i < m; i++) {
+        for (int j = 0; j < n; j++) {
+            nA[i][j] = A[i][j];
+        }
+        nb[i][0] = b[i][0];
+    }
+    this.A = nA; this.b = nb;
+}
+
+////////////////////////////////////////////// Free Variables ///////////////////////////////////////////////
+// fill rows to full square system
+private void Fill_Square_System(float[][] A, float[][] b) {
+    int m = A.length, n = A[0].length;
+    if (m < n) { // Underdetermined Systems
+        if (n - m == 1) {
+            fr.println("added one more row of zeros in order to get a square completion");
+        } else {
+            fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
+        }
+        Increase_Rows_in_System(A,b);
+    }
+    // Overdetermined Systems
+}

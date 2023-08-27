@@ -338,11 +338,11 @@ public class System_Linear_Equations extends ShareTools {
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the specific column index of the row requested from the matrix which are indicating a unit vector
     private int Index_Row_from_Matrix(float[][] A, int r) {
-        int n = A[0].length;
+        int m = A.length;
         float[] v = Row_from_Matrix(A,r);
         v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
         int c1 = Index_for_Unit_Vector(v);
-        for (int i = 0; i < n; i++) {
+        for (int i = 0; i < m; i++) {
             int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
             if (c1 == c2 && c1 != -1) {
                 return i;
@@ -464,20 +464,6 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
-    // add more zero rows in the system by needed
-    private void Increase_Rows_in_System(float[][] A, float[][] b) {
-        int m = A.length, n = A[0].length;
-        float[][] nA = new float[n][n];
-        float[][] nb = new float[n][1];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                nA[i][j] = A[i][j];
-            }
-            nb[i][0] = b[i][0];
-        }
-        this.A = nA; this.b = nb;
-    }
-
     // add zero row from the system by needed
     private void Add_Zero_Row(float[][] A, float[][] b) {
         int m = A.length, n = A[0].length, t = b[0].length;
@@ -535,20 +521,6 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////// Free Variables ///////////////////////////////////////////////
-    // fill rows to full square system
-    private void Fill_Square_System(float[][] A, float[][] b) {
-        int m = A.length, n = A[0].length;
-        if (m < n) { // Underdetermined Systems
-            if (n - m == 1) {
-                fr.println("added one more row of zeros in order to get a square completion");
-            } else {
-                fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
-            }
-            Increase_Rows_in_System(A,b);
-        }
-        // Overdetermined Systems
-    }
-
     // counter free variables in the system
     private int Count_Free_Variables(float[][] A, float[][] b, int r) {
         int t = b[0].length - 1;
@@ -574,7 +546,7 @@ public class System_Linear_Equations extends ShareTools {
             fr.println("adding a new row to the system");
             Add_Zero_Row(A,b);
             A = this.A; b = this.b;
-            m = A.length; r++;
+            m = A.length;
         }
         if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
             int t = Count_Free_Variables(A,b,r); b = this.b;
@@ -796,9 +768,7 @@ public class System_Linear_Equations extends ShareTools {
         fr.println(Which_Type_Triangular(A,true));
         int m = A.length, n = A[0].length;
         for (int i = 0; i < Math.min(m,n); i++) {
-            if (i != m) {
-                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            }
+            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             if (A[i][i] == 0) {
@@ -873,9 +843,7 @@ public class System_Linear_Equations extends ShareTools {
         fr.println(Which_Type_Triangular(A,false));
         int m = A.length, n = A[0].length;
         for (int i = Math.min(m,n) - 1; i >= 0; i--) {
-            if (i != m) {
-                A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            }
+            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             if (A[i][i] == 0) {
@@ -1083,7 +1051,6 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
     private void Several_Variables_System(float[][] A, float[][] b) throws Exception {
-//        Fill_Square_System(A,b);
         A = this.A; b = this.b;
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
