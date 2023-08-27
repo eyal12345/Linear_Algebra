@@ -765,7 +765,7 @@ public class System_Linear_Equations extends ShareTools {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
-            if (A[i][i] == 0) {
+            if (A[i][i] == 0 && !single) {
                 int r = Index_UnZero_Value(A,i,true);
                 int l = Index_Row_from_Matrix(A,i);
                 if (Is_Exist_Vector(A,i) && l < i) {
@@ -843,7 +843,7 @@ public class System_Linear_Equations extends ShareTools {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
-            if (A[i][i] == 0) {
+            if (A[i][i] == 0 && !single) {
                 int r = Index_UnZero_Value(A,i,false);
                 int l = Index_Row_from_Matrix(A,i);
                 if (Is_Exist_Vector(A,i) && l < i) {
@@ -922,7 +922,7 @@ public class System_Linear_Equations extends ShareTools {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 Define_Free_Variable(A,b,i);
                 A = this.A; b = this.b;
-                if (A[i][i] == 0) {
+                if (A[i][i] == 0 && !single) {
                     int r = Index_UnZero_Value(A,i,true);
                     if (r >= 0 && r < m && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
@@ -991,7 +991,7 @@ public class System_Linear_Equations extends ShareTools {
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             m = A.length; E = Unit_Matrix(m);
-            if (A[i][i] == 0) {
+            if (A[i][i] == 0 && !single) {
                 int r = Index_UnZero_Value(A,i,true);
                 if (r >= 0 && r < m && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
