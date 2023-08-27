@@ -1058,7 +1058,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Solve_System(float[][] A, float[][] b) throws Exception {
+    private void Solve_System_Linear_Equations(float[][] A, float[][] b) throws Exception {
         A = this.A; b = this.b;
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
@@ -1101,36 +1101,18 @@ public class System_Linear_Equations extends ShareTools {
         }
     }
 
-    ///////////////////////////////////////////////// R1 Space ////////////////////////////////////////////////
-    // solve an equation ax = b
-    private void Single_Variable_System(float[][] A, float[][] b) {
-        if (A[0][0] == 0 && b[0][0] == 0) {
-            fr.println("exists an infinite number of solutions which are belongs to the R set");
-        } else {
-            fr.println("exist a single solution in R1 space for the equation which is:");
-            float c = b[0][0] / A[0][0];
-            if (c % 1 == 0) {
-                fr.println("x = " + (int) c);
-            } else if (fn.equals("decimal")) {
-                fr.println("x = " + c);
-            } else if (fn.equals("rational")) {
-                fr.println("x = " + convertDecimalToFraction(c));
-            }
-        }
-    }
-
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
     // check if user input is valid
     public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
-            int m = A.length, n = A[0].length, k = b.length;
+            int m = A.length, k = b.length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
             File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise(A,b);
             if (m == k) {
-                Solve_System(A,b);
+                Solve_System_Linear_Equations(A,b);
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
             }
