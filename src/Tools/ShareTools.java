@@ -27,10 +27,10 @@ public class ShareTools {
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if a matrix is a unit matrix
     public static boolean Is_Unit_Matrix(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
+        int m = M.length, n = M[0].length;
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (M[i][i] != 1 || (i != j && M[i][j] != 0)) {
+                if (M[j][j] != 1 || (i != j && M[i][j] != 0)) {
                     return false;
                 }
             }
@@ -51,8 +51,8 @@ public class ShareTools {
 
     // check if the matrix is an upper triangular
     public static boolean Is_Upper_Triangular(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
+        int m = M.length;
+        for (int i = 0; i < m; i++) {
             for (int j = 0; j < i; j++) {
                 if (M[i][j] != 0) {
                     return false;
@@ -64,8 +64,8 @@ public class ShareTools {
 
     // check if the matrix is a lower triangular
     public static boolean Is_Lower_Triangular(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n - 1; i++) {
+        int m = M.length, n = M[0].length;
+        for (int i = 0; i < m - 1; i++) {
             for (int j = i + 1; j < n; j++) {
                 if (M[i][j] != 0) {
                     return false;
