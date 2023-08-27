@@ -30,7 +30,8 @@ public class ShareTools {
         int m = M.length, n = M[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if (M[j][j] != 1 || (i != j && M[i][j] != 0)) {
+                int r = Math.min(i,j);
+                if (M[r][r] != 1 || (i != j && M[i][j] != 0)) {
                     return false;
                 }
             }

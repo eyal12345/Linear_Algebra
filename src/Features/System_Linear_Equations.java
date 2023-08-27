@@ -547,6 +547,7 @@ public class System_Linear_Equations extends ShareTools {
             Add_Zero_Row(A,b);
             A = this.A; b = this.b;
             m = A.length;
+            Write_Status_System(A,b);
         }
         if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
             int t = Count_Free_Variables(A,b,r); b = this.b;
