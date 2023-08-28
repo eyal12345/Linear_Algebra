@@ -1,0 +1,12 @@
+invert the next matrix (3*3 size):
+0 ,1 ,2
+0 ,3 ,5
+0 ,3 ,6
+
+0 ,1 ,2 | 1 ,0 ,0
+0 ,3 ,5 | 0 ,1 ,0
+0 ,3 ,6 | 0 ,0 ,1
+
+implement the solution by ranking rows method:
+transform M matrix to I by a parallel ranking:
+this is a singular matrix

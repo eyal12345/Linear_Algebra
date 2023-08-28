@@ -67,11 +67,35 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if the matrix is a zero matrix
+    public boolean Is_Zero_Matrix(float[][] M) {
+        int m = M.length, n = M[0].length;
+        for (int i = 0 ;i < m ;i++) {
+            for (int j = 0; j < n; j++) {
+                if (M[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // check if exist in the matrix a zeros row
     private boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
         for (int j = 0; j < n; j++) {
             if (A[r][j] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if exist in the vector a zeros column
+    private boolean Is_Zero_Col(float[][] v, int c) {
+        int m = v.length, n = v[0].length;
+        for (int i = 0; i < m && c < n; i++) {
+            if (v[i][c] != 0) {
                 return false;
             }
         }
@@ -219,7 +243,7 @@ public class Invertible_Matrices extends ShareTools {
         float[][] InvM = this.InvM;
         while (!Is_Unit_Matrix(M)) {
             for (int i = 0; i < n; i++) {
-                if (M[i][i] == 0) {
+                if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
                     int r = Index_UnZero_Value(M,i);
                     Retreat_Elementary_Action(i,r);
                     Retreat_Rows_Matrices(M,InvM,i,r);
@@ -236,7 +260,7 @@ public class Invertible_Matrices extends ShareTools {
                         M[j][i] = 0;
                         Write_Status_Matrices(M,InvM);
                     }
-                    if (Is_Zero_Row(M,j)) {
+                    if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
                         fr.println("this is a singular matrix");
                         return null;
                     } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
@@ -265,7 +289,7 @@ public class Invertible_Matrices extends ShareTools {
         float[][] InvM = this.InvM;
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
-            if (M[i][i] == 0) {
+            if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
                 int r = Index_UnZero_Value(M,i);
                 Retreat_Elementary_Action(i,r);
                 Retreat_Rows_Matrix(E,i,r);
@@ -281,7 +305,7 @@ public class Invertible_Matrices extends ShareTools {
                 M[j][i] = 0;
                 Write_Status_Matrices(M,InvM);
             }
-            if (Is_Zero_Row(M,j)) {
+            if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
                 fr.println("this is a singular matrix");
                 return null;
             } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
