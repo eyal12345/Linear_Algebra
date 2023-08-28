@@ -8,4 +8,5 @@ eq3:                       = 1
 0 ,0 ,0 | 1
 
 implement the solution by ranking rows method:
+transform A matrix to I by a ranking rows:
 does not an exists solutions
