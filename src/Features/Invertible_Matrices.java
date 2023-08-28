@@ -66,6 +66,18 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("3. invert a matrix by elementary matrices");
     }
 
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if exist in the matrix a zeros row
+    private boolean Is_Zero_Row(float[][] A, int r) {
+        int n = A[0].length;
+        for (int j = 0; j < n; j++) {
+            if (A[r][j] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index starting from the specific column in the matrix which are him value not equal to 0
     private int Index_UnZero_Value(float[][] M, int k) {
@@ -181,14 +193,19 @@ public class Invertible_Matrices extends ShareTools {
     private float[][] Invertible_Direct(float[][] M) {
         int n = M.length;
         float det = Determinant(M);
-        float[][] InvM = new float[n][n];
-        float[][] adj = Adjoint(M);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                InvM[i][j] = (1 / det) * adj[i][j];
+        if (det == 0) {
+            fr.println("this is a singular matrix");
+            return null;
+        } else {
+            float[][] InvM = new float[n][n];
+            float[][] adj = Adjoint(M);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    InvM[i][j] = (1 / det) * adj[i][j];
+                }
             }
+            return InvM;
         }
-        return InvM;
     }
 
     // invert the M matrix by parallel ranking
@@ -215,7 +232,10 @@ public class Invertible_Matrices extends ShareTools {
                         M[j][i] = 0;
                         Write_Status_Matrices(M,InvM);
                     }
-                    if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+                    if (Is_Zero_Row(M,j)) {
+                        fr.println("this is a singular matrix");
+                        return null;
+                    } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
                         float c = 1 / M[j][j];
                         Mul_Elementary_Action(c,j);
                         for (int k = 0; k < n; k++) {
@@ -253,7 +273,10 @@ public class Invertible_Matrices extends ShareTools {
                 M[j][i] = 0;
                 Write_Status_Matrices(M,InvM);
             }
-            if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+            if (Is_Zero_Row(M,j)) {
+                fr.println("this is a singular matrix");
+                return null;
+            } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
                 Mul_Elementary_Action(E[j][j],j);
                 Mul_Mats_Matrices(E,M,InvM);
@@ -294,8 +317,10 @@ public class Invertible_Matrices extends ShareTools {
             default:
                 throw new Exception("you entered an invalid number");
         }
-        fr.println("the invertible of this matrix is:");
-        fr.println(Display_Status_Matrix(InvM,fn));
+        if (InvM != null) {
+            fr.println("the invertible of this matrix is:");
+            fr.println(Display_Status_Matrix(InvM,fn));
+        }
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
@@ -312,12 +337,7 @@ public class Invertible_Matrices extends ShareTools {
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
-                float det = Determinant(M);
-                if (det == 0) {
-                    fr.println("this is a singular matrix");
-                } else {
-                    Invert_Matrix(M);
-                }
+                Invert_Matrix(M);
             }
             fr.close();
         } else {
