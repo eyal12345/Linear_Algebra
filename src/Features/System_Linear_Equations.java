@@ -224,6 +224,19 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if the matrix is a zero matrix
+    public boolean Is_Zero_Matrix(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int i = 0 ;i < m ;i++) {
+            for (int j = 0; j < n; j++) {
+                if (A[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // check if the vector is a zero vector
     private boolean Is_Zero_Vector(float[] v) {
         int n = v.length;
@@ -493,31 +506,33 @@ public class System_Linear_Equations extends ShareTools {
 
     // define free variable in row "r" where exist zero rows in the matrix
     private void Define_Free_Variable(float[][] A, float[][] b, int r) {
-        int m = A.length, n = A[0].length;
-        if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
-            fr.println("adding a new row to the system");
-            Add_Zero_Row(A,b);
-            A = this.A; b = this.b;
-            m = A.length;
-            Write_Status_System(A,b);
-        }
-        if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
-            int t = Count_Free_Variables(A,b,r); b = this.b;
-            int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
-            if (d1 != -1) {
-                d = d1;
-            } else if (d2 != -1) {
-                d = d2;
-            } else if (!Is_Exist_Vector(A,r)) {
-                d = r;
-            } if (d < m && Is_Zero_Row(b,r)) {
-                A[r][d] = 1;
-                fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + m + " space:");
-                b = Increase_Col_in_Vector(b);
-                b[r][++t] = 1;
+        if (!(Is_Zero_Matrix(A) && !Is_Zero_Matrix(b))) {
+            int m = A.length, n = A[0].length;
+            if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
+                fr.println("adding a new row to the system");
+                Add_Zero_Row(A,b);
+                A = this.A; b = this.b;
+                m = A.length;
                 Write_Status_System(A,b);
             }
-            this.A = A; this.b = b;
+            if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
+                int t = Count_Free_Variables(A,b,r); b = this.b;
+                int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
+                if (d1 != -1) {
+                    d = d1;
+                } else if (d2 != -1) {
+                    d = d2;
+                } else if (!Is_Exist_Vector(A,r)) {
+                    d = r;
+                } if (d < m && Is_Zero_Row(b,r)) {
+                    A[r][d] = 1;
+                    fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + m + " space:");
+                    b = Increase_Col_in_Vector(b);
+                    b[r][++t] = 1;
+                    Write_Status_System(A,b);
+                }
+                this.A = A; this.b = b;
+            }
         }
     }
 
