@@ -224,19 +224,6 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if the matrix is a zero matrix
-    public boolean Is_Zero_Matrix(float[][] A) {
-        int m = A.length, n = A[0].length;
-        for (int i = 0 ;i < m ;i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // check if the vector is a zero vector
     private boolean Is_Zero_Vector(float[] v) {
         int n = v.length;
@@ -731,19 +718,14 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
     // solve system of linear equations Ax = b by ranking rows
     private float[][] Ranking_Rows_Method(float[][] A, float[][] b) {
-        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
-            fr.println("does not an exists solutions");
-            return null;
-        }
         fr.println("transform A matrix to I by a ranking rows:");
         int m = A.length, n = A[0].length;
-        boolean single = (m == 1 && n == 1);
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
                 Define_Free_Variable(A,b,i);
                 A = this.A; b = this.b;
-                if (A[i][i] == 0 && !single) {
+                if (A[i][i] == 0 && !Is_Zero_Col(A,i)) {
                     int r = Index_UnZero_Value(A,i);
                     if (r >= 0 && r < m && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
@@ -754,7 +736,7 @@ public class System_Linear_Equations extends ShareTools {
                 }
                 int t = b[0].length - 1;
                 for (int j = 0; j < m; j++) {
-                    if (i != j && A[i][i] != 0 && A[j][i] != 0 && !single) {
+                    if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                         float c = A[j][i] / A[i][i];
                         Sum_Elementary_Action(c,j,i);
                         for (int k = 0; k < n; k++) {
@@ -803,20 +785,15 @@ public class System_Linear_Equations extends ShareTools {
 
     // solve system of linear equations Ax = b by parallel elementary matrices
     private float[][] Elementary_Matrices_Method(float[][] A, float[][] b) {
-        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
-            fr.println("does not an exists solutions");
-            return null;
-        }
         fr.println("transform A matrix to I by an elementary matrices:");
-        int m = A.length, n = A[0].length, i = 0, j = 0;
-        boolean single = (m == 1 && n == 1);
+        int m, n = A[0].length, i = 0, j = 0;
         float[][] E;
         while (!Is_Unit_Matrix(A)) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
             Define_Free_Variable(A,b,i);
             A = this.A; b = this.b;
             m = A.length; E = Unit_Matrix(m);
-            if (A[i][i] == 0 && !single) {
+            if (A[i][i] == 0 && !Is_Zero_Col(A,i)) {
                 int r = Index_UnZero_Value(A,i);
                 if (r >= 0 && r < m && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
@@ -827,7 +804,7 @@ public class System_Linear_Equations extends ShareTools {
                     Write_Status_System(A,b);
                 }
             }
-            if (i != j && A[i][i] != 0 && A[j][i] != 0 && !single) {
+            if (i != j && A[i][i] != 0 && A[j][i] != 0) {
                 E[j][i] -= (A[j][i] / A[i][i]);
                 Sum_Elementary_Action(-E[j][i],j,i);
                 Mul_Mats_System(E,A,b);

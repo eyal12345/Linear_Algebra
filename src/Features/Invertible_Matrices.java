@@ -67,19 +67,6 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if the matrix is a zero matrix
-    public boolean Is_Zero_Matrix(float[][] M) {
-        int m = M.length, n = M[0].length;
-        for (int i = 0 ;i < m ;i++) {
-            for (int j = 0; j < n; j++) {
-                if (M[i][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // check if exist in the matrix a zeros row
     private boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
@@ -234,10 +221,6 @@ public class Invertible_Matrices extends ShareTools {
 
     // invert the M matrix by parallel ranking
     private float[][] Ranking_Rows_Method(float[][] M) {
-        if (Is_Zero_Matrix(M)) {
-            fr.println("this is a singular matrix");
-            return null;
-        }
         fr.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = this.InvM;
@@ -280,10 +263,6 @@ public class Invertible_Matrices extends ShareTools {
 
     // invert the M matrix by parallel elementary matrices
     private float[][] Elementary_Matrices_Method(float[][] M) {
-        if (Is_Zero_Matrix(M)) {
-            fr.println("this is a singular matrix");
-            return null;
-        }
         fr.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0, j = 0;
         float[][] InvM = this.InvM;
