@@ -185,7 +185,7 @@ public class System_Linear_Equations extends ShareTools {
         System.out.println("1. invertible method (not support vector solutions)");
         System.out.println("2. cramer method (not support vector solutions)");
         System.out.println("3. forward backward method (not support vector solutions)");
-        System.out.println("4. parallel ranking method");
+        System.out.println("4. ranking rows method");
         System.out.println("5. elementary matrices method");
     }
 
@@ -714,7 +714,7 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
     // solve system of linear equations Ax = b by ranking rows
     private float[][] Ranking_Rows_Method(float[][] A, float[][] b) {
-        fr.println("transform A matrix to I by a parallel ranking:");
+        fr.println("transform A matrix to I by a ranking rows:");
         int m = A.length, n = A[0].length;
         boolean single = (m == 1 && n == 1);
         while (!Is_Unit_Matrix(A)) {
