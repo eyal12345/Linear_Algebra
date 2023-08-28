@@ -763,11 +763,6 @@ public class System_Linear_Equations extends ShareTools {
                         A[j][i] = 0;
                         Write_Status_System(A,b);
                     }
-                    if (j == n) {
-                        A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                    } else {
-                        A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-                    }
                     boolean changed = false;
                     if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
                         fr.println("delete the zero row from the system:");
@@ -776,16 +771,23 @@ public class System_Linear_Equations extends ShareTools {
                         m = A.length; n = A[0].length;
                         changed = true;
                         Write_Status_System(A,b);
-                    } else if (Is_Unit_Vector(A,j)) {
-                        int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                        if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                            float c = 1 / A[j][d];
-                            Mul_Elementary_Action(c,j);
-                            for (int k = 0; k <= t; k++) {
-                                b[j][k] /= A[j][d];
+                    } else {
+                        if (j == n) {
+                            A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                        } else {
+                            A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
+                        }
+                        if (Is_Unit_Vector(A,j)) {
+                            int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
+                            if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
+                                float c = 1 / A[j][d];
+                                Mul_Elementary_Action(c,j);
+                                for (int k = 0; k <= t; k++) {
+                                    b[j][k] /= A[j][d];
+                                }
+                                A[j][d] = 1;
+                                Write_Status_System(A,b);
                             }
-                            A[j][d] = 1;
-                            Write_Status_System(A,b);
                         }
                     }
                     if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
@@ -827,11 +829,6 @@ public class System_Linear_Equations extends ShareTools {
                 A[j][i] = 0;
                 Write_Status_System(A,b);
             }
-            if (j == n) {
-                A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-            } else {
-                A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-            }
             boolean changed = false;
             if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
                 fr.println("delete the zero row from the system:");
@@ -841,15 +838,22 @@ public class System_Linear_Equations extends ShareTools {
                 E = Unit_Matrix(m);
                 changed = true;
                 Write_Status_System(A,b);
-            } else if (Is_Unit_Vector(A,j)) {
-                int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                    E[j][j] = 1 / A[j][d];
-                    Mul_Elementary_Action(E[j][j],j);
-                    Mul_Mats_System(E,A,b);
-                    A = this.A; b = this.b; E = Unit_Matrix(m);
-                    A[j][d] = 1;
-                    Write_Status_System(A,b);
+            } else {
+                if (j == n) {
+                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
+                } else {
+                    A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
+                }
+                if (Is_Unit_Vector(A,j)) {
+                    int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
+                    if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
+                        E[j][j] = 1 / A[j][d];
+                        Mul_Elementary_Action(E[j][j],j);
+                        Mul_Mats_System(E,A,b);
+                        A = this.A; b = this.b; E = Unit_Matrix(m);
+                        A[j][d] = 1;
+                        Write_Status_System(A,b);
+                    }
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
