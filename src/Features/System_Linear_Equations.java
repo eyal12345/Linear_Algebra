@@ -17,12 +17,12 @@ public class System_Linear_Equations extends ShareTools {
     private final String ne;
     private PrintWriter fr;
 
-    public System_Linear_Equations(float[][] nA, float[][] nb, String repr, String file) {
+    public System_Linear_Equations(float[][] nA, float[][] nb, String fn, String ne) {
         this.A = nA;
         this.b = nb;
         this.x = null;
-        this.fn = repr;
-        this.ne = file.split("\\.")[0];
+        this.fn = fn;
+        this.ne = ne;
         this.fr = null;
     }
 
@@ -907,7 +907,7 @@ public class System_Linear_Equations extends ShareTools {
             int m = A.length, k = b.length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/System_Linear_Equations/" + ne + "_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/System_Linear_Equations/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise(A,b);
             if (m == k) {

@@ -14,10 +14,10 @@ public class Receive_Matrices extends ShareTools {
     private final String ne;
     private PrintWriter fr;
 
-    public Receive_Matrices(float[][] nL, String repr, String file) {
+    public Receive_Matrices(float[][] nL, String fn, String ne) {
         this.L = nL;
-        this.fn = repr;
-        this.ne = file.split("\\.")[0];
+        this.fn = fn;
+        this.ne = ne;
         this.fr = null;
     }
 
@@ -227,7 +227,7 @@ public class Receive_Matrices extends ShareTools {
             int m = L.length, n = L[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Receive_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Receive_Matrices/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(L,fn));

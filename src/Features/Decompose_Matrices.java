@@ -14,10 +14,10 @@ public class Decompose_Matrices extends ShareTools {
     private final String ne;
     private PrintWriter fr;
 
-    public Decompose_Matrices(float[][] nM, String repr, String file) {
+    public Decompose_Matrices(float[][] nM, String fn, String ne) {
         this.M = nM;
-        this.fn = repr;
-        this.ne = file.split("\\.")[0];
+        this.fn = fn;
+        this.ne = ne;
         this.fr = null;
     }
 
@@ -354,7 +354,7 @@ public class Decompose_Matrices extends ShareTools {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Decompose_Matrices/" + ne + "_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Decompose_Matrices/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             fr.println("decompose the next matrix (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(M,fn));
