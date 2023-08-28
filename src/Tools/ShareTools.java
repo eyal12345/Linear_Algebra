@@ -25,6 +25,19 @@ public class ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if the matrix is a zero matrix
+    public static boolean Is_Zero_Matrix(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int i = 0 ;i < m ;i++) {
+            for (int j = 0; j < n; j++) {
+                if (A[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // check if a matrix is a unit matrix
     public static boolean Is_Unit_Matrix(float[][] M) {
         int m = M.length, n = M[0].length;

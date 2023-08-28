@@ -224,19 +224,6 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if the matrix is a zero matrix
-    private boolean Is_Zero_Matrix(float[][] A) {
-        int m = A.length, n = A[0].length;
-        for (int i = 0 ;i < m ;i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // check if the vector is a zero vector
     private boolean Is_Zero_Vector(float[] v) {
         int n = v.length;

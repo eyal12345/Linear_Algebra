@@ -210,6 +210,10 @@ public class Invertible_Matrices extends ShareTools {
 
     // invert the M matrix by parallel ranking
     private float[][] Ranking_Rows_Method(float[][] M) {
+        if (Is_Zero_Matrix(M)) {
+            fr.println("this is a singular matrix");
+            return null;
+        }
         fr.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = this.InvM;
@@ -252,6 +256,10 @@ public class Invertible_Matrices extends ShareTools {
 
     // invert the M matrix by parallel elementary matrices
     private float[][] Elementary_Matrices_Method(float[][] M) {
+        if (Is_Zero_Matrix(M)) {
+            fr.println("this is a singular matrix");
+            return null;
+        }
         fr.println("transform M matrix to I by an elementary matrices:");
         int n = M.length, i = 0, j = 0;
         float[][] InvM = this.InvM;
