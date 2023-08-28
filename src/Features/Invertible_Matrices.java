@@ -271,22 +271,23 @@ public class Invertible_Matrices extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
-    private void Many_Variables_Matrix(float[][] M) throws Exception {
+    private void Invert_Matrix(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Invertible();
         int op = sc.nextInt();
         InvM = Unit_Matrix(M.length);
-        Write_Status_Matrices(M,InvM);
         switch (op) {
             case 1:
                 fr.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
                 InvM = Invertible_Direct(M);
                 break;
             case 2:
+                Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by ranking rows method:");
                 InvM = Ranking_Rows_Method(M);
                 break;
             case 3:
+                Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by elementary matrices method:");
                 InvM = Elementary_Matrices_Method(M);
                 break;
@@ -295,20 +296,6 @@ public class Invertible_Matrices extends ShareTools {
         }
         fr.println("the invertible of this matrix is:");
         fr.println(Display_Status_Matrix(InvM,fn));
-    }
-
-    //////////////////////////////////////////////// 1*1 Matrix ///////////////////////////////////////////////
-    private void Single_Variable_Matrix(float[][] M) {
-        float c = 1 / M[0][0];
-        String msg = "the invertible of this matrix is: ";
-        if (c % 1 == 0) {
-            msg += (int) c;
-        } else if (fn.equals("decimal")) {
-            msg += c;
-        } else if (fn.equals("rational")) {
-            msg += convertDecimalToFraction(c);
-        }
-        fr.println(msg);
     }
 
     /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
@@ -328,10 +315,8 @@ public class Invertible_Matrices extends ShareTools {
                 float det = Determinant(M);
                 if (det == 0) {
                     fr.println("this is a singular matrix");
-                } else if (n > 1) { // 2*2 size or higher
-                    Many_Variables_Matrix(M);
-                } else { // 1*1 size
-                    Single_Variable_Matrix(M);
+                } else {
+                    Invert_Matrix(M);
                 }
             }
             fr.close();

@@ -137,13 +137,17 @@ public class ShareTools {
     // calculate adjoint matrix of a matrix
     public static float[][] Adjoint(float[][] M) {
         int n = M.length;
-        float[][] Adj = new float[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                Adj[j][i] = (float) (Math.pow(-1,i + j) * Determinant(Sub_Matrix(M,i,j)));
+        if (n == 1) {
+            return Unit_Matrix(1);
+        } else {
+            float[][] Adj = new float[n][n];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    Adj[j][i] = (float) (Math.pow(-1,i + j) * Determinant(Sub_Matrix(M,i,j)));
+                }
             }
+            return Adj;
         }
-        return Adj;
     }
 
     // calculate invertible matrix of a matrix
