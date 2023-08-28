@@ -224,6 +224,19 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if the matrix is a zero matrix
+    private boolean Is_Zero_Matrix(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int i = 0 ;i < m ;i++) {
+            for (int j = 0; j < n; j++) {
+                if (A[i][j] != 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     // check if the vector is a zero vector
     private boolean Is_Zero_Vector(float[] v) {
         int n = v.length;
@@ -400,11 +413,13 @@ public class System_Linear_Equations extends ShareTools {
             for (int j = 0; j < nA; j++) {
                 for (int k = 0; k < m; k++) {
                     EA[i][j] += E[i][k] * A[k][j];
+                    EA[i][j] = (EA[i][j] >= -0.0001 && EA[i][j] <= 0.0001) ? 0 : EA[i][j];
                 }
             }
             for (int j = 0; j < nb; j++) {
                 for (int k = 0; k < m; k++) {
                     Eb[i][j] += E[i][k] * b[k][j];
+                    Eb[i][j] = (Eb[i][j] >= -0.0001 && Eb[i][j] <= 0.0001) ? 0 : Eb[i][j];
                 }
             }
         }
@@ -430,16 +445,18 @@ public class System_Linear_Equations extends ShareTools {
 
     // remove zero row from the system by needed
     private void Delete_Zero_Row(float[][] A, float[][] b, int r) {
-        int m = A.length, n = A[0].length;
+        int m = A.length, n = A[0].length, t = b[0].length;
         float[][] nA = new float[m - 1][n];
-        float[][] nb = new float[m - 1][1];
+        float[][] nb = new float[m - 1][t];
         int k = 0;
         for (int i = 0; i < m; i++) {
             if (i != r) {
                 for (int j = 0; j < n ; j++) {
                     nA[k][j] = A[i][j];
                 }
-                nb[k][0] = b[i][0];
+                for (int j = 0; j < t ; j++) {
+                    nb[k][j] = b[i][j];
+                }
                 k++;
             }
         }
@@ -714,6 +731,10 @@ public class System_Linear_Equations extends ShareTools {
     ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
     // solve system of linear equations Ax = b by ranking rows
     private float[][] Ranking_Rows_Method(float[][] A, float[][] b) {
+        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
+            fr.println("does not an exists solutions");
+            return null;
+        }
         fr.println("transform A matrix to I by a ranking rows:");
         int m = A.length, n = A[0].length;
         boolean single = (m == 1 && n == 1);
@@ -782,6 +803,10 @@ public class System_Linear_Equations extends ShareTools {
 
     // solve system of linear equations Ax = b by parallel elementary matrices
     private float[][] Elementary_Matrices_Method(float[][] A, float[][] b) {
+        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
+            fr.println("does not an exists solutions");
+            return null;
+        }
         fr.println("transform A matrix to I by an elementary matrices:");
         int m = A.length, n = A[0].length, i = 0, j = 0;
         boolean single = (m == 1 && n == 1);
@@ -849,8 +874,7 @@ public class System_Linear_Equations extends ShareTools {
 
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose action in order to solve a system Ax = b
-    private void Solve_System_Linear_Equations(float[][] A, float[][] b) throws Exception {
-        A = this.A; b = this.b;
+    private void Solve_System(float[][] A, float[][] b) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
@@ -869,11 +893,11 @@ public class System_Linear_Equations extends ShareTools {
                 x = Forward_Backward_Method(A,b);
                 break;
             case 4:
-                fr.println("implement the solution by parallel ranking method:");
+                fr.println("implement the solution by ranking rows method:");
                 x = Ranking_Rows_Method(A,b);
                 break;
             case 5:
-                fr.println("implement the solution by elementary ranking method:");
+                fr.println("implement the solution by elementary matrices method:");
                 x = Elementary_Matrices_Method(A,b);
                 break;
             default:
@@ -895,7 +919,7 @@ public class System_Linear_Equations extends ShareTools {
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise(A,b);
             if (m == k) {
-                Solve_System_Linear_Equations(A,b);
+                Solve_System(A,b);
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
             }

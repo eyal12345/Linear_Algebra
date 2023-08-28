@@ -50,19 +50,6 @@ public class ShareTools {
         return (c <= 1);
     }
 
-    // check if the matrix is an upper triangular
-    public static boolean Is_Upper_Triangular(float[][] M) {
-        int m = M.length;
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < i; j++) {
-                if (M[i][j] != 0) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
-
     // check if the matrix is a lower triangular
     public static boolean Is_Lower_Triangular(float[][] M) {
         int m = M.length, n = M[0].length;
@@ -101,15 +88,19 @@ public class ShareTools {
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate determinant of a matrix
     public static float Determinant(float[][] M) {
-        int n = M.length;
-        if (n == 1) {
-            return M[0][0];
+        int m = M.length, n = M[0].length;
+        if (m != n) {
+            return 0;
+        } else {
+            if (m == 1) {
+                return M[0][0];
+            }
+            float sum = 0;
+            for (int i = 0; i < m; i++) {
+                sum += M[0][i] * Determinant(Sub_Matrix(M,0,i)) * Math.pow(-1,i);
+            }
+            return sum;
         }
-        float sum = 0;
-        for (int i = 0; i < n; i++) {
-            sum += M[0][i] * Determinant(Sub_Matrix(M,0,i)) * Math.pow(-1,i);
-        }
-        return sum;
     }
 
     // calculate of sub-matrix from a matrix by cutting row "x" and column "y"

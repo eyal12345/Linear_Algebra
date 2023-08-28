@@ -1,0 +1,31 @@
+solve the next equation in R1 space (3 equations)(1 unknown):
+eq1: x = 2
+eq2: 2x = 4
+eq3: 3x = 6
+
+1 | 2
+2 | 4
+3 | 6
+
+implement the solution by elementary matrices method:
+transform A matrix to I by an elementary matrices:
+R2 --> R2 - 2*R1
+
+1 | 2
+0 | 0
+3 | 6
+
+delete the zero row from the system:
+1 | 2
+3 | 6
+
+R2 --> R2 - 3*R1
+
+1 | 2
+0 | 0
+
+delete the zero row from the system:
+1 | 2
+
+exist a single solution in R1 space for the system which is:
+x = 2
