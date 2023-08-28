@@ -130,25 +130,6 @@ public class System_Linear_Equations extends ShareTools {
         this.A = A; this.b = b;
     }
 
-    // determine what kind of matrix
-    private String Which_Type_Triangular(float[][] A, boolean flag) {
-        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            return "A is already parallel triangular so now will be change directly to I:";
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
-            return "A is already upper triangular so now we'll go directly to the lower ranking:";
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
-            return "A is already lower triangular so now we'll go directly to the upper ranking:";
-        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
-            return "transform L matrix to I by an upper ranking:";
-        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
-            return "transform U matrix to I by a lower ranking:";
-        } else if (flag) {
-            return "transform A matrix to U by an upper ranking:";
-        } else {
-            return "transform A matrix to L by a lower ranking:";
-        }
-    }
-
     // show the resulting solution as a vector representation
     private void Write_Solution(float[][] x) {
         int m = x.length, n = x[0].length;
@@ -204,10 +185,8 @@ public class System_Linear_Equations extends ShareTools {
         System.out.println("1. invertible method (not support vector solutions)");
         System.out.println("2. cramer method (not support vector solutions)");
         System.out.println("3. forward backward method (not support vector solutions)");
-        System.out.println("4. upper --> lower ranking method");
-        System.out.println("5. lower --> upper ranking method");
-        System.out.println("6. parallel ranking method");
-        System.out.println("7. elementary matrices method");
+        System.out.println("4. parallel ranking method");
+        System.out.println("5. elementary matrices method");
     }
 
     /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
@@ -328,21 +307,6 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-    // get the specific column index of the row requested from the matrix which are indicating a unit vector
-    private int Index_Row_from_Matrix(float[][] A, int r) {
-        int m = A.length;
-        float[] v = Row_from_Matrix(A,r);
-        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
-        int c1 = Index_for_Unit_Vector(v);
-        for (int i = 0; i < m; i++) {
-            int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
-            if (c1 == c2 && c1 != -1) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     // get the index from the vector that is indicating a unit vector
     private int Index_for_Unit_Vector(float[] v) {
         int n = v.length;
@@ -354,20 +318,12 @@ public class System_Linear_Equations extends ShareTools {
         return -1;
     }
 
-    // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
-    private int Index_UnZero_Value(float[][] A, int k, boolean flag) {
+    // get the index starting from the specific column in the matrix which are him value not equal to 0
+    private int Index_UnZero_Value(float[][] A, int k) {
         int n = A.length;
-        if (flag) {
-            for (int i = k + 1; i < n + k; i++) {
-                if (A[i % n][k] != 0) {
-                    return i % n;
-                }
-            }
-        } else {
-            for (int i = n + k - 1; i > k - 1; i--) {
-                if (A[i % n][k] != 0) {
-                    return i % n;
-                }
+        for (int i = k + 1; i < n + k; i++) {
+            if (A[i % n][k] != 0) {
+                return i % n;
             }
         }
         return -1;
@@ -756,164 +712,8 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
-    // solve system of linear equations Ax = b by an upper ranking and then a lower ranking
-    private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
-        fr.println(Which_Type_Triangular(A,true));
-        int m = A.length, n = A[0].length;
-        boolean single = (m == 1 && n == 1);
-        for (int i = 0; i < Math.min(m,n); i++) {
-            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(A,b,i);
-            A = this.A; b = this.b;
-            if (A[i][i] == 0 && !single) {
-                int r = Index_UnZero_Value(A,i,true);
-                int l = Index_Row_from_Matrix(A,i);
-                if (Is_Exist_Vector(A,i) && l < i) {
-                    r = Index_UnZero_Value(A,i,false);
-                } if (r >= 0 && r < m && r != i) {
-                    A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
-                    Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(A,b,i,r);
-                    Write_Status_System(A,b);
-                }
-            }
-            int t = b[0].length - 1;
-            int s = single ? i : i + 1;
-            for (int j = s; j < m; j++) {
-                if (A[i][i] != 0 && A[j][i] != 0 && !single) {
-                    float c = A[j][i] / A[i][i];
-                    Sum_Elementary_Action(c,j,i);
-                    for (int k = 0; k < n; k++) {
-                        A[j][k] -= A[i][k] * c;
-                        if (k <= t) {
-                            b[j][k] -= b[i][k] * c;
-                        }
-                    }
-                    A[j][i] = 0;
-                    Write_Status_System(A,b);
-                }
-                if (j == n) {
-                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                } else {
-                    A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-                }
-                boolean changed = false;
-                if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
-                    fr.println("delete the zero row from the system:");
-                    Delete_Zero_Row(A,b,j);
-                    A = this.A; b = this.b;
-                    m = A.length; n = A[0].length;
-                    changed = true;
-                    Write_Status_System(A,b);
-                } else if (Is_Unit_Vector(A,j)) {
-                    int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                    if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                        float c = 1 / A[j][d];
-                        Mul_Elementary_Action(c,j);
-                        for (int k = 0; k <= t; k++) {
-                            b[j][k] /= A[j][d];
-                        }
-                        A[j][d] = 1;
-                        Write_Status_System(A,b);
-                    }
-                }
-                if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                    fr.println("does not an exists solutions");
-                    return null;
-                }
-            }
-            if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
-                fr.print("and now ");
-                return Lower_Ranking_Method(A,b);
-            }
-        }
-        if (!Is_Unit_Matrix(A)) {
-            fr.println("still not yet received an unit matrix");
-            return Lower_Ranking_Method(A,b);
-        }
-        return b;
-    }
-
-    // solve system of linear equations Ax = b by a lower ranking and then an upper ranking
-    private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
-        fr.println(Which_Type_Triangular(A,false));
-        int m = A.length, n = A[0].length;
-        boolean single = (m == 1 && n == 1);
-        for (int i = Math.min(m,n) - 1; i >= 0; i--) {
-            A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(A,b,i);
-            A = this.A; b = this.b;
-            if (A[i][i] == 0 && !single) {
-                int r = Index_UnZero_Value(A,i,false);
-                int l = Index_Row_from_Matrix(A,i);
-                if (Is_Exist_Vector(A,i) && l < i) {
-                    r = Index_UnZero_Value(A,i,true);
-                } if (r >= 0 && r < m && r != i) {
-                    A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
-                    Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_System(A,b,i,r);
-                    Write_Status_System(A,b);
-                }
-            }
-            int t = b[0].length - 1;
-            int s = single ? i : i - 1;
-            for (int j = s; j >= 0; j--) {
-                if (A[i][i] != 0 && A[j][i] != 0 && !single) {
-                    float c = A[j][i] / A[i][i];
-                    Sum_Elementary_Action(c,j,i);
-                    for (int k = n - 1; k >= 0; k--) {
-                        A[j][k] -= A[i][k] * c;
-                        if (k <= t) {
-                            b[j][k] -= b[i][k] * c;
-                        }
-                    }
-                    A[j][i] = 0;
-                    Write_Status_System(A,b);
-                }
-                if (j == n) {
-                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                } else {
-                    A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-                }
-                boolean changed = false;
-                if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
-                    fr.println("delete the zero row from the system:");
-                    Delete_Zero_Row(A,b,j);
-                    A = this.A; b = this.b;
-                    m = A.length; n = A[0].length;
-                    changed = true;
-                    Write_Status_System(A,b);
-                } else if (Is_Unit_Vector(A,j)) {
-                    int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                    if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                        float c = 1 / A[j][d];
-                        Mul_Elementary_Action(c,j);
-                        for (int k = 0; k <= t; k++) {
-                            b[j][k] /= A[j][d];
-                        }
-                        A[j][d] = 1;
-                        Write_Status_System(A,b);
-                    }
-                }
-                if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                    fr.println("does not an exists solutions");
-                    return null;
-                }
-            }
-            if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-                fr.print("and now ");
-                return Upper_Ranking_Method(A,b);
-            }
-        }
-        if (!Is_Unit_Matrix(A)) {
-            fr.println("still not yet received an unit matrix");
-            return Upper_Ranking_Method(A,b);
-        }
-        return b;
-    }
-
-    // solve system of linear equations Ax = b by parallel ranking
-    private float[][] Parallel_Ranking_Method(float[][] A, float[][] b) {
+    // solve system of linear equations Ax = b by ranking rows
+    private float[][] Ranking_Rows_Method(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by a parallel ranking:");
         int m = A.length, n = A[0].length;
         boolean single = (m == 1 && n == 1);
@@ -923,7 +723,7 @@ public class System_Linear_Equations extends ShareTools {
                 Define_Free_Variable(A,b,i);
                 A = this.A; b = this.b;
                 if (A[i][i] == 0 && !single) {
-                    int r = Index_UnZero_Value(A,i,true);
+                    int r = Index_UnZero_Value(A,i);
                     if (r >= 0 && r < m && r != i) {
                         A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                         Retreat_Elementary_Action(i,r);
@@ -992,7 +792,7 @@ public class System_Linear_Equations extends ShareTools {
             A = this.A; b = this.b;
             m = A.length; E = Unit_Matrix(m);
             if (A[i][i] == 0 && !single) {
-                int r = Index_UnZero_Value(A,i,true);
+                int r = Index_UnZero_Value(A,i);
                 if (r >= 0 && r < m && r != i) {
                     A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                     Retreat_Elementary_Action(i,r);
@@ -1069,18 +869,10 @@ public class System_Linear_Equations extends ShareTools {
                 x = Forward_Backward_Method(A,b);
                 break;
             case 4:
-                fr.println("implement the solution by upper --> lower ranking method:");
-                x = Upper_Ranking_Method(A,b);
+                fr.println("implement the solution by parallel ranking method:");
+                x = Ranking_Rows_Method(A,b);
                 break;
             case 5:
-                fr.println("implement the solution by lower --> upper ranking method:");
-                x = Lower_Ranking_Method(A,b);
-                break;
-            case 6:
-                fr.println("implement the solution by parallel ranking method:");
-                x = Parallel_Ranking_Method(A,b);
-                break;
-            case 7:
                 fr.println("implement the solution by elementary ranking method:");
                 x = Elementary_Matrices_Method(A,b);
                 break;
