@@ -318,32 +318,31 @@ public class Decompose_Matrices extends ShareTools {
         User_Menu_Decompose();
         int op = sc.nextInt();
         switch (op) {
-            case 1:
+            case 1 -> {
                 fr.println("find L and U by decomposition of M:");
                 From_M_To_LU_V1(M);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 fr.println("find L and L' by decomposition of M:");
                 From_M_To_LLT_V1(M);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 fr.println("find L, D and L' by decomposition of M:");
                 From_M_To_LDLT_V1(M);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 fr.println("find L and U by decomposition of M:");
                 From_M_To_LU_V2(M);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 fr.println("find L and L' by decomposition of M:");
                 From_M_To_LLT_V2(M);
-                break;
-            case 6:
+            }
+            case 6 -> {
                 fr.println("find L, D and L' by decomposition of M:");
                 From_M_To_LDLT_V2(M);
-                break;
-            default:
-                throw new Exception("you entered an invalid number");
+            }
+            default -> throw new Exception("you entered an invalid number");
         }
     }
 

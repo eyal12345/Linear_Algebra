@@ -871,28 +871,27 @@ public class System_Linear_Equations extends ShareTools {
             fr.println("does not an exists solutions");
             x = null;
         } else switch (op) {
-            case 1:
+            case 1 -> {
                 fr.println("implement the solution by invertible method:");
                 x = Invertible_Method(A,b);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 fr.println("implement the solution by cramer method:");
                 x = Cramer_Method(A,b);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 fr.println("implement the solution by forward backward method:");
                 x = Forward_Backward_Method(A,b);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 fr.println("implement the solution by ranking rows method:");
                 x = Ranking_Rows_Method(A,b);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 fr.println("implement the solution by elementary matrices method:");
                 x = Elementary_Matrices_Method(A,b);
-                break;
-            default:
-                throw new Exception("you entered an invalid value for an option number to solution");
+            }
+            default -> throw new Exception("you entered an invalid value for an option number to solution");
         }
         if (x != null) {
             Write_Solution(x);

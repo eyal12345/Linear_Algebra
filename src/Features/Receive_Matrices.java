@@ -167,21 +167,21 @@ public class Receive_Matrices extends ShareTools {
         int op = sc.nextInt();
         float[][] U, D, LT;
         switch (op) {
-            case 1:
+            case 1 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
                 From_LU_To_M_V1(L,U);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
                 From_LLT_To_M_V1(L,LT);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
                 D = Create_Diagonal_Matrix(n);
                 fr.println("D = ");
@@ -190,22 +190,22 @@ public class Receive_Matrices extends ShareTools {
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
                 From_LDLT_To_M_V1(L,D,LT);
-                break;
-            case 4:
+            }
+            case 4 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
                 From_LU_To_M_V2(L,U);
-                break;
-            case 5:
+            }
+            case 5 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
                 From_LLT_To_M_V2(L,LT);
-                break;
-            case 6:
+            }
+            case 6 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
                 D = Create_Diagonal_Matrix(n);
                 fr.println("D = ");
@@ -214,9 +214,8 @@ public class Receive_Matrices extends ShareTools {
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
                 From_LDLT_To_M_V2(L,D,LT);
-                break;
-            default:
-                throw new Exception("you entered an invalid number");
+            }
+            default -> throw new Exception("you entered an invalid number");
         }
     }
 

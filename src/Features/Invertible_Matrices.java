@@ -311,22 +311,21 @@ public class Invertible_Matrices extends ShareTools {
         int op = sc.nextInt();
         InvM = Unit_Matrix(M.length);
         switch (op) {
-            case 1:
+            case 1 -> {
                 fr.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
                 InvM = Invertible_Direct(M);
-                break;
-            case 2:
+            }
+            case 2 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by ranking rows method:");
                 InvM = Ranking_Rows_Method(M);
-                break;
-            case 3:
+            }
+            case 3 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by elementary matrices method:");
                 InvM = Elementary_Matrices_Method(M);
-                break;
-            default:
-                throw new Exception("you entered an invalid number");
+            }
+            default -> throw new Exception("you entered an invalid number");
         }
         if (InvM != null) {
             fr.println("the invertible of this matrix is:");
