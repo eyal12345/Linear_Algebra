@@ -224,17 +224,15 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if the matrix is a zero matrix
-    public boolean Is_Zero_Matrix(float[][] A) {
-        int m = A.length, n = A[0].length;
+    // check if exist invalid row in the system which is not allow to reach a solution
+    public boolean Is_Invalid_System(float[][] A, float[][] b) {
+        int m = A.length;
         for (int i = 0 ;i < m ;i++) {
-            for (int j = 0; j < n; j++) {
-                if (A[i][j] != 0) {
-                    return false;
-                }
+            if (Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     // check if the vector is a zero vector
@@ -869,7 +867,7 @@ public class System_Linear_Equations extends ShareTools {
         User_Menu_System();
         int op = sc.nextInt();
         Write_Status_System(A,b);
-        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
+        if (Is_Invalid_System(A,b)) {
             fr.println("does not an exists solutions");
             x = null;
         } else switch (op) {
