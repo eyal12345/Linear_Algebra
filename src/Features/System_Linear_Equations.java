@@ -515,7 +515,7 @@ public class System_Linear_Equations extends ShareTools {
                 m = A.length;
                 Write_Status_System(A,b);
             }
-            if (Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
+            if (m <= n && Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
                 int t = Count_Free_Variables(A,b,r); b = this.b;
                 int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
                 if (d1 != -1) {
