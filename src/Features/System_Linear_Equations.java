@@ -227,7 +227,7 @@ public class System_Linear_Equations extends ShareTools {
     // check if exist invalid row in the system which is not allow to reach a solution
     public boolean Is_Invalid_System(float[][] A, float[][] b) {
         int m = A.length;
-        for (int i = 0 ;i < m ;i++) {
+        for (int i = 0; i < m; i++) {
             if (Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
                 return true;
             }
