@@ -506,33 +506,31 @@ public class System_Linear_Equations extends ShareTools {
 
     // define free variable in row "r" where exist zero rows in the matrix
     private void Define_Free_Variable(float[][] A, float[][] b, int r) {
-        if (!(Is_Zero_Matrix(A) && !Is_Zero_Matrix(b))) {
-            int m = A.length, n = A[0].length;
-            if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
-                fr.println("adding a new row to the system");
-                Add_Zero_Row(A,b);
-                A = this.A; b = this.b;
-                m = A.length;
+        int m = A.length, n = A[0].length;
+        if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
+            fr.println("adding a new row to the system");
+            Add_Zero_Row(A,b);
+            A = this.A; b = this.b;
+            m = A.length;
+            Write_Status_System(A,b);
+        }
+        if (m <= n && Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
+            int t = Count_Free_Variables(A,b,r); b = this.b;
+            int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
+            if (d1 != -1) {
+                d = d1;
+            } else if (d2 != -1) {
+                d = d2;
+            } else if (!Is_Exist_Vector(A,r)) {
+                d = r;
+            } if (d < m && Is_Zero_Row(b,r)) {
+                A[r][d] = 1;
+                fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + m + " space:");
+                b = Increase_Col_in_Vector(b);
+                b[r][++t] = 1;
                 Write_Status_System(A,b);
             }
-            if (m <= n && Is_Zero_Row(A,r) && !Is_Linear_Dependent_Rows(A)) {
-                int t = Count_Free_Variables(A,b,r); b = this.b;
-                int d = m, d1 = Intersection_Zero_Row_Col(A,r), d2 = Linear_Dependent_Columns(A);
-                if (d1 != -1) {
-                    d = d1;
-                } else if (d2 != -1) {
-                    d = d2;
-                } else if (!Is_Exist_Vector(A,r)) {
-                    d = r;
-                } if (d < m && Is_Zero_Row(b,r)) {
-                    A[r][d] = 1;
-                    fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + m + " space:");
-                    b = Increase_Col_in_Vector(b);
-                    b[r][++t] = 1;
-                    Write_Status_System(A,b);
-                }
-                this.A = A; this.b = b;
-            }
+            this.A = A; this.b = b;
         }
     }
 
@@ -776,23 +774,16 @@ public class System_Linear_Equations extends ShareTools {
                         m = A.length; n = A[0].length;
                         changed = true;
                         Write_Status_System(A,b);
-                    } else {
-                        if (j == n) {
-                            A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                        } else if (j < n) {
-                            A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-                        }
-                        if (Is_Unit_Vector(A,j)) {
-                            int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                            if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                                float c = 1 / A[j][d];
-                                Mul_Elementary_Action(c,j);
-                                for (int k = 0; k <= t; k++) {
-                                    b[j][k] /= A[j][d];
-                                }
-                                A[j][d] = 1;
-                                Write_Status_System(A,b);
+                    } else if (Is_Unit_Vector(A,j)) {
+                        int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
+                        if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
+                            float c = 1 / A[j][d];
+                            Mul_Elementary_Action(c,j);
+                            for (int k = 0; k <= t; k++) {
+                                b[j][k] /= A[j][d];
                             }
+                            A[j][d] = 1;
+                            Write_Status_System(A,b);
                         }
                     }
                     if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
@@ -848,22 +839,15 @@ public class System_Linear_Equations extends ShareTools {
                 E = Unit_Matrix(m);
                 changed = true;
                 Write_Status_System(A,b);
-            } else {
-                if (j == n) {
-                    A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                } else {
-                    A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
-                }
-                if (Is_Unit_Vector(A,j)) {
-                    int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
-                    if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
-                        E[j][j] = 1 / A[j][d];
-                        Mul_Elementary_Action(E[j][j],j);
-                        Mul_Mats_System(E,A,b);
-                        A = this.A; b = this.b; E = Unit_Matrix(m);
-                        A[j][d] = 1;
-                        Write_Status_System(A,b);
-                    }
+            } else if (Is_Unit_Vector(A,j)) {
+                int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
+                if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
+                    E[j][j] = 1 / A[j][d];
+                    Mul_Elementary_Action(E[j][j],j);
+                    Mul_Mats_System(E,A,b);
+                    A = this.A; b = this.b; E = Unit_Matrix(m);
+                    A[j][d] = 1;
+                    Write_Status_System(A,b);
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
@@ -885,7 +869,10 @@ public class System_Linear_Equations extends ShareTools {
         User_Menu_System();
         int op = sc.nextInt();
         Write_Status_System(A,b);
-        switch (op) {
+        if (Is_Zero_Matrix(A) && !Is_Zero_Matrix(b)) {
+            fr.println("does not an exists solutions");
+            x = null;
+        } else switch (op) {
             case 1:
                 fr.println("implement the solution by invertible method:");
                 x = Invertible_Method(A,b);
