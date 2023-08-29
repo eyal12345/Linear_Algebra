@@ -779,7 +779,7 @@ public class System_Linear_Equations extends ShareTools {
                     } else {
                         if (j == n) {
                             A[j][i] = (A[j][i] >= -0.0001 && A[j][i] <= 0.0001) ? 0 : A[j][i];
-                        } else {
+                        } else if (j < n) {
                             A[j][j] = (A[j][j] >= -0.0001 && A[j][j] <= 0.0001) ? 0 : A[j][j];
                         }
                         if (Is_Unit_Vector(A,j)) {
