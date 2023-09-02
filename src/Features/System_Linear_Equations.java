@@ -902,10 +902,10 @@ public class System_Linear_Equations extends ShareTools {
     // check if user input is valid
     public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
-            int m = A.length, k = b.length, l = b[0].length;
+            int m = A.length, n = A[0].length, k = b.length, l = b[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/System_Linear_Equations/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/System_Linear_Equations/R" + n + "/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             Write_Exercise(A,b);
             if (m == k && l == 1) {

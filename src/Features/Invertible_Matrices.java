@@ -340,7 +340,7 @@ public class Invertible_Matrices extends ShareTools {
             int m = M.length, n = M[0].length;
             LocalDateTime cur = LocalDateTime.now();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Invertible_Matrices/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
+            File file = new File("Results/Invertible_Matrices/R" + n + "/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
             fr = new PrintWriter(new FileWriter(file, true));
             fr.println("invert the next matrix (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(M,fn));
