@@ -1,4 +1,5 @@
 import Tools.ContentReader;
+import Tools.Random_Systems;
 import Features.Receive_Matrices;
 import Features.Decompose_Matrices;
 import Features.Invertible_Matrices;
@@ -59,6 +60,8 @@ public class Main {
                         System_Linear_Equations sle = new System_Linear_Equations(A,b,"decimal",args[0]);
                         sle.Progress_Run();
                     }
+//                    Random_Systems rs = new Random_Systems();
+//                    rs.Rand_Exercises();
                 }
             }
         } catch (Exception ex) {
