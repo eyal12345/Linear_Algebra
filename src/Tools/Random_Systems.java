@@ -13,11 +13,11 @@ public class Random_Systems {
                     for (int j = 0; j < A[0].length; j++) {
                         A[i][j] = (int)(Math.random()*12 - 6);
                     }
-                    b[i][0] = (int)(Math.random()*42 - 21);
+                    b[i][0] = 0;
                 }
-                if (ShareTools.Determinant(A) % 50000 == 0) {
+                if (ShareTools.Determinant(A) == 0) {
                     System.out.println(ShareTools.Determinant(A));
-                    System_Linear_Equations sle = new System_Linear_Equations(A,b,"rational","test");
+                    System_Linear_Equations sle = new System_Linear_Equations(A,b,"rational","Ex17.txt");
                     sle.Progress_Run();
                     flag = false;
                 }

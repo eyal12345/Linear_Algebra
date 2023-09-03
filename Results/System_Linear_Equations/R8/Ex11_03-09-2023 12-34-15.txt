@@ -1,0 +1,8 @@
+solve the next system in R8 space (8 equations)(8 unknowns):
+eq1:        - 2*x2        + 2*x4 + 2*x5        +   x7 + 4*x8  = 0
+eq2: + 2*x1 + 4*x2 - 4*x3 - 2*x4        - 4*x6 - 2*x7 + 2*x8  = 0
+eq3: + 4*x1 -   x2 + 4*x3 + 3*x4 + 3*x5 - 2*x6 -   x7         = 0
+eq4:               - 4*x3 + 4*x4 -   x5 +   x6 - 2*x7 + 2*x8  = 0
+eq5: + 2*x1 + 3*x2 - 4*x3 + 4*x4 - 3*x5        + 2*x7 - 3*x8  = 0
+eq6: - 2*x1 + 2*x2        + 2*x4 - 2*x5        +   x7 - 2*x8  = 0
+eq7: -   x1 - 2*x2        - 2*x4 + 2*x5        -

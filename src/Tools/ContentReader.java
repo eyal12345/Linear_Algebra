@@ -9,9 +9,9 @@ import java.io.InputStreamReader;
 
 public class ContentReader {
 
-    public float[][] Read_Exercise(String file) throws IOException {
+    public float[][] Read_Exercise(String path) throws IOException {
         List<Float> list = new ArrayList<>();
-        InputStream inputStream = ContentReader.class.getResourceAsStream("/Exercises/" + file);
+        InputStream inputStream = ContentReader.class.getResourceAsStream(path);
         if (inputStream == null) {
             System.out.println("File not found!");
             return null;
