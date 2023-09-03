@@ -37,17 +37,19 @@ public class Main {
                 float[][] M = cr.Read_Exercise(path);
                 if (M != null) {
                     String[] items = path.split("/");
+                    String title = prop.getProperty("TITLE");
+                    String exercise = prop.getProperty("EXERCISE");
                     String format = prop.getProperty("FORMAT");
-                    if (items[2].equals("Receive_Matrices")) {
-                        Receive_Matrices re = new Receive_Matrices(M,format,items[4]);
+                    if (title.equals("Receive_Matrices")) {
+                        Receive_Matrices re = new Receive_Matrices(M,format,exercise);
                         re.Progress_Run();
-                    } else if (items[2].equals("Decompose_Matrices")) {
-                        Decompose_Matrices de = new Decompose_Matrices(M,format,items[4]);
+                    } else if (title.equals("Decompose_Matrices")) {
+                        Decompose_Matrices de = new Decompose_Matrices(M,format,exercise);
                         de.Progress_Run();
-                    } else if (items[2].equals("Invertible_Matrices")) {
-                        Invertible_Matrices inv = new Invertible_Matrices(M,format,items[4]);
+                    } else if (title.equals("Invertible_Matrices")) {
+                        Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise);
                         inv.Progress_Run();
-                    } else if (items[2].equals("System_Linear_Equations")) {
+                    } else if (title.equals("System_Linear_Equations")) {
                         float[][] A = cr.Matrix_Values(M);
                         float[] v = cr.Vector_Values(M);
                         float[][] b = new float[v.length][1];
