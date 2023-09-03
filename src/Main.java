@@ -40,16 +40,16 @@ public class Main {
                     String title = prop.getProperty("TITLE");
                     String exercise = prop.getProperty("EXERCISE");
                     String format = prop.getProperty("FORMAT");
-                    if (title.equals("Receive_Matrices")) {
+                    if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
                         Receive_Matrices re = new Receive_Matrices(M,format,exercise);
                         re.Progress_Run();
-                    } else if (title.equals("Decompose_Matrices")) {
+                    } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
                         Decompose_Matrices de = new Decompose_Matrices(M,format,exercise);
                         de.Progress_Run();
-                    } else if (title.equals("Invertible_Matrices")) {
+                    } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
                         Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise);
                         inv.Progress_Run();
-                    } else if (title.equals("System_Linear_Equations")) {
+                    } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
                         float[][] A = cr.Matrix_Values(M);
                         float[] v = cr.Vector_Values(M);
                         float[][] b = new float[v.length][1];
@@ -58,6 +58,8 @@ public class Main {
                         }
                         System_Linear_Equations sle = new System_Linear_Equations(A,b,format,items[4]);
                         sle.Progress_Run();
+                    } else {
+                        throw new Exception("you entered an invalid value of title subject");
                     }
                 }
             }
