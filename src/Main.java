@@ -36,7 +36,6 @@ public class Main {
                 ContentReader cr = new ContentReader();
                 float[][] M = cr.Read_Exercise(path);
                 if (M != null) {
-                    String[] items = path.split("/");
                     String title = prop.getProperty("TITLE");
                     String exercise = prop.getProperty("EXERCISE");
                     String format = prop.getProperty("FORMAT");
@@ -56,7 +55,7 @@ public class Main {
                         for (int i = 0; i < v.length; i++) {
                             b[i][0] = v[i];
                         }
-                        System_Linear_Equations sle = new System_Linear_Equations(A,b,format,items[4]);
+                        System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise);
                         sle.Progress_Run();
                     } else {
                         throw new Exception("you entered an invalid value of title subject");
