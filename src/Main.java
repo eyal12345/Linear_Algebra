@@ -5,35 +5,17 @@ import Features.Invertible_Matrices;
 import Features.System_Linear_Equations;
 import java.util.Properties;
 import java.io.FileInputStream;
-import java.io.File;
 
 public class Main {
-
-    //////////////////////////////////////////// Build Exercise Path ////////////////////////////////////////////
-
-    private static String Build_Path_Exercise(Properties prop) {
-        String title = prop.getProperty("TITLE");
-        String space = prop.getProperty("SPACE");
-        String exercise = prop.getProperty("EXERCISE");
-        String path = "/Exercises/" + title + "/" + space + "/" + exercise + ".txt";
-        File file = new File("src" + path);
-        if (file.exists()) {
-            return path;
-        } else {
-            System.out.println("File not found!");
-            return null;
-        }
-    }
 
     ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
         try {
-            FileInputStream propsInput = new FileInputStream("config.properties");
+            ContentReader cr = new ContentReader();
             Properties prop = new Properties();
-            prop.load(propsInput);
-            String path = Build_Path_Exercise(prop);
+            prop.load(new FileInputStream("config.properties"));
+            String path = cr.Build_Path_Exercise(prop);
             if (path != null) {
-                ContentReader cr = new ContentReader();
                 float[][] M = cr.Read_Exercise(path);
                 if (M != null) {
                     String title = prop.getProperty("TITLE");
@@ -49,12 +31,8 @@ public class Main {
                         Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise);
                         inv.Progress_Run();
                     } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
-                        float[][] A = cr.Matrix_Values(M);
-                        float[] v = cr.Vector_Values(M);
-                        float[][] b = new float[v.length][1];
-                        for (int i = 0; i < v.length; i++) {
-                            b[i][0] = v[i];
-                        }
+                        float[][] A = cr.Extract_Matrix_Component(M);
+                        float[][] b = cr.Extract_Vector_Component(M);
                         System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise);
                         sle.Progress_Run();
                     } else {

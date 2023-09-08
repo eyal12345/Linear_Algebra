@@ -1,13 +1,25 @@
 package Tools;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Properties;
 
 public class ContentReader {
+
+    public String Build_Path_Exercise(Properties prop) {
+        String title = prop.getProperty("TITLE");
+        String space = prop.getProperty("SPACE");
+        String exercise = prop.getProperty("EXERCISE");
+        String path = "/Exercises/" + title + "/" + space + "/" + exercise + ".txt";
+        File file = new File("src" + path);
+        if (file.exists()) {
+            return path;
+        } else {
+            System.out.println("File not found!");
+            return null;
+        }
+    }
 
     public float[][] Read_Exercise(String path) throws IOException {
         List<Float> list = new ArrayList<>();
@@ -38,7 +50,7 @@ public class ContentReader {
         return M;
     }
 
-    public float[][] Matrix_Values(float[][] M) {
+    public float[][] Extract_Matrix_Component(float[][] M) {
         int m = M.length, n = M[0].length;
         float[][] A = new float[m][n - 1];
         for (int i = 0; i < m; i++) {
@@ -49,11 +61,11 @@ public class ContentReader {
         return A;
     }
 
-    public float[] Vector_Values(float[][] M) {
+    public float[][] Extract_Vector_Component(float[][] M) {
         int m = M.length, n = M[0].length;
-        float[] b = new float[m];
+        float[][] b = new float[m][1];
         for (int i = 0; i < m; i++) {
-            b[i] = M[i][n - 1];
+            b[i][0] = M[i][n - 1];
         }
         return b;
     }
