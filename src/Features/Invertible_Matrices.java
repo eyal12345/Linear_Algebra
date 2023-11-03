@@ -246,7 +246,7 @@ public class Invertible_Matrices extends ShareTools {
                     if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
                         fr.println("this is a singular matrix");
                         return null;
-                    } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+                    } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
                         float c = 1 / M[j][j];
                         Mul_Elementary_Action(c,j);
                         for (int k = 0; k < n; k++) {
@@ -287,7 +287,7 @@ public class Invertible_Matrices extends ShareTools {
             if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
                 fr.println("this is a singular matrix");
                 return null;
-            } else if (Is_Unit_Vector(M,j) && M[j][j] != 1) {
+            } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
                 Mul_Elementary_Action(E[j][j],j);
                 Mul_Mats_Matrices(E,M,InvM);
