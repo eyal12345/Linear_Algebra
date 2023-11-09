@@ -1,0 +1,28 @@
+solve the next system in R3 space (3 equations)(3 unknowns):
+eq1:                       = 0
+eq2:                       = 0
+eq3:                       = 0
+
+0 ,0 ,0 | 0
+0 ,0 ,0 | 0
+0 ,0 ,0 | 0
+
+implement the solution by ranking rows method:
+transform A matrix to I by a ranking rows:
+define a new column in the vector b when x1 is a free variable in R3 space:
+1 ,0 ,0 | 0 ,1
+0 ,0 ,0 | 0 ,0
+0 ,0 ,0 | 0 ,0
+
+define a new column in the vector b when x2 is a free variable in R3 space:
+1 ,0 ,0 | 0 ,1 ,0
+0 ,1 ,0 | 0 ,0 ,1
+0 ,0 ,0 | 0 ,0 ,0
+
+define a new column in the vector b when x3 is a free variable in R3 space:
+1 ,0 ,0 | 0 ,1 ,0 ,0
+0 ,1 ,0 | 0 ,0 ,1 ,0
+0 ,0 ,1 | 0 ,0 ,0 ,1
+
+the solution is an infinite set of vectors in R3 space which are linearly dependents in the vector space:
+x = λ1*(1 ,0 ,0) + λ2*(0 ,1 ,0) + λ3*(0 ,0 ,1) when λ1,λ2,λ3 it's a free scalars that belongs to the R set
