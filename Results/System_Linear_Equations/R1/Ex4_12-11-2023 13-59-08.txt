@@ -1,0 +1,12 @@
+solve the next equation in R1 space (1 equation)(1 unknown):
+eq1: 0x = 0
+
+0 | 0
+
+implement the solution by elementary matrices method:
+transform A matrix to I by an elementary matrices:
+define a new column in the vector b when x1 is a free variable in R1 space:
+1 | 0 ,1
+
+exists an infinite number of solutions which are belongs to the R set:
+x = λ
