@@ -11,8 +11,8 @@ public class ContentReader {
         String title = prop.getProperty("TITLE");
         String space = prop.getProperty("SPACE");
         String exercise = prop.getProperty("EXERCISE");
-        String path = "/Exercises/" + title + "/" + space + "/" + exercise + ".txt";
-        File file = new File("src" + path);
+        String path = "Exercises/" + title + "/" + space + "/" + exercise + ".txt";
+        File file = new File(path);
         if (file.exists()) {
             return path;
         } else {

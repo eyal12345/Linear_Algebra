@@ -1,12 +1,22 @@
 import Tools.ContentReader;
 import Features.Receive_Matrices;
 import Features.Decompose_Matrices;
-import Features.Invertible_Matrices;
-import Features.System_Linear_Equations;
+import Features.Invertible_Matrices.Invertible_Matrices;
+import Features.System_Linear_Equations.System_Linear_Equations;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Properties;
-import java.io.FileInputStream;
+import java.io.*;
 
 public class Main {
+
+    public static PrintWriter Create_Exercise_Path(float[][] M, String title, String exercise) throws IOException {
+        int n = M[0].length;
+        LocalDateTime cur = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
+        File file = new File("Results/" + title + "/R" + n + "/" + exercise.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
+        return new PrintWriter(new FileWriter(file, true));
+    }
 
     ////////////////////////////////////////////// Run Progress ////////////////////////////////////////////////
     public static void main(String[] args) {
@@ -28,12 +38,14 @@ public class Main {
                         Decompose_Matrices de = new Decompose_Matrices(M,format,exercise);
                         de.Progress_Run();
                     } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
-                        Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise);
+                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+                        Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
                         inv.Progress_Run();
                     } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
                         float[][] A = cr.Extract_Matrix_Component(M);
                         float[][] b = cr.Extract_Vector_Component(M);
-                        System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise);
+                        PrintWriter fr = Create_Exercise_Path(A,title,exercise);
+                        System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
                         sle.Progress_Run();
                     } else {
                         throw new Exception("you entered an invalid value of title subject");

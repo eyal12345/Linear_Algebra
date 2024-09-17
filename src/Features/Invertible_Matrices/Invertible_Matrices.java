@@ -1,6 +1,7 @@
-package Features;
+package Features.Invertible_Matrices;
 
-import Tools.ShareTools;
+import Features.ShareTools;
+
 import java.util.Scanner;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,23 +10,23 @@ import java.io.FileWriter;
 import java.io.File;
 
 public class Invertible_Matrices extends ShareTools {
-    private float[][] M;
-    private float[][] InvM;
-    private final String fn;
-    private final String ne;
-    private PrintWriter fr;
+    public float[][] M;
+    public float[][] InvM;
+    public final String fn;
+    public final String ne;
+    public PrintWriter fr;
 
-    public Invertible_Matrices(float[][] nM, String fn, String ne) {
+    public Invertible_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
         this.M = nM;
         this.InvM = null;
         this.fn = fn;
         this.ne = ne;
-        this.fr = null;
+        this.fr = fr;
     }
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display current status of the matrices M and InvM each time of iteration on an element
-    private void Write_Status_Matrices(float[][] M, float[][] InvM) {
+    public void Write_Status_Matrices(float[][] M, float[][] InvM) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -68,7 +69,7 @@ public class Invertible_Matrices extends ShareTools {
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if exist in the matrix a zeros row
-    private boolean Is_Zero_Row(float[][] A, int r) {
+    public boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
         for (int j = 0; j < n; j++) {
             if (A[r][j] != 0) {
@@ -79,7 +80,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // check if exist in the vector a zeros column
-    private boolean Is_Zero_Col(float[][] v, int c) {
+    public boolean Is_Zero_Col(float[][] v, int c) {
         int m = v.length, n = v[0].length;
         for (int i = 0; i < m && c < n; i++) {
             if (v[i][c] != 0) {
@@ -91,7 +92,7 @@ public class Invertible_Matrices extends ShareTools {
 
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index starting from the specific column in the matrix which are him value not equal to 0
-    private int Index_UnZero_Value(float[][] M, int k) {
+    public int Index_UnZero_Value(float[][] M, int k) {
         int n = M.length;
         for (int i = k + 1; i < n + k; i++) {
             if (M[i % n][k] != 0) {
@@ -103,7 +104,7 @@ public class Invertible_Matrices extends ShareTools {
 
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // replace between two rows in the matrices
-    private void Retreat_Rows_Matrices(float[][] M, float[][] InvM, int r1, int r2) {
+    public void Retreat_Rows_Matrices(float[][] M, float[][] InvM, int r1, int r2) {
         int n = M[0].length, m = InvM[0].length;
         for (int j = 0; j < n; j++) {
             float k = M[r1][j];
@@ -118,7 +119,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // multiplication of two matrices in same matrix
-    private void Mul_Mats_Matrices(float[][] E, float[][] M, float[][] InvM) {
+    public void Mul_Mats_Matrices(float[][] E, float[][] M, float[][] InvM) {
         int m = M.length, n = InvM[0].length;
         float[][] EM = new float[m][n];
         float[][] EInvM = new float[m][n];
@@ -135,7 +136,7 @@ public class Invertible_Matrices extends ShareTools {
 
     //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
     // show elementary actions for replace between rows in the matrices
-    private void Retreat_Elementary_Action(int i, int j) {
+    public void Retreat_Elementary_Description(int i, int j) {
         int r1 = i + 1, r2 = j + 1;
         if (r1 <= r2) {
             fr.println("R" + r1 + " <--> R" + r2);
@@ -146,7 +147,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // show elementary actions for sum between rows in the matrices
-    private void Sum_Elementary_Action(float k, int j, int i) {
+    public void Sum_Elementary_Description(float k, int j, int i) {
         if (k != 0) {
             int r = j + 1, c = i + 1;
             k = (float) (Math.round(k * 1000.0) / 1000.0);
@@ -180,7 +181,7 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     // show elementary actions for multiplication of a row in the matrices
-    private void Mul_Elementary_Action(float k, int j) {
+    public void Mul_Elementary_Description(float k, int j) {
         if (k != 1) {
             int r = j + 1;
             k = (float) (Math.round(k * 1000.0) / 1000.0);
@@ -201,7 +202,7 @@ public class Invertible_Matrices extends ShareTools {
 
     /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
-    private float[][] Invertible_Direct(float[][] M) {
+    public float[][] Invertible_Direct(float[][] M) {
         int n = M.length;
         float det = Determinant(M);
         if (det == 0) {
@@ -219,90 +220,6 @@ public class Invertible_Matrices extends ShareTools {
         }
     }
 
-    // invert the M matrix by parallel ranking
-    private float[][] Ranking_Rows_Method(float[][] M) {
-        fr.println("transform M matrix to I by a parallel ranking:");
-        int n = M.length;
-        float[][] InvM = this.InvM;
-        while (!Is_Unit_Matrix(M)) {
-            for (int i = 0; i < n; i++) {
-                if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
-                    int r = Index_UnZero_Value(M,i);
-                    Retreat_Elementary_Action(i,r);
-                    Retreat_Rows_Matrices(M,InvM,i,r);
-                    Write_Status_Matrices(M,InvM);
-                }
-                for (int j = 0; j < n; j++) {
-                    if (i != j && M[j][i] != 0) {
-                        float c = M[j][i] / M[i][i];
-                        Sum_Elementary_Action(c,j,i);
-                        for (int k = 0; k < n; k++) {
-                            M[j][k] -= M[i][k] * c;
-                            InvM[j][k] -= InvM[i][k] * c;
-                        }
-                        M[j][i] = 0;
-                        Write_Status_Matrices(M,InvM);
-                    }
-                    if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
-                        fr.println("this is a singular matrix");
-                        return null;
-                    } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
-                        float c = 1 / M[j][j];
-                        Mul_Elementary_Action(c,j);
-                        for (int k = 0; k < n; k++) {
-                            InvM[j][k] /= M[j][j];
-                        }
-                        M[j][j] = 1;
-                        Write_Status_Matrices(M,InvM);
-                    }
-                }
-            }
-        }
-        return InvM;
-    }
-
-    // invert the M matrix by parallel elementary matrices
-    private float[][] Elementary_Matrices_Method(float[][] M) {
-        fr.println("transform M matrix to I by an elementary matrices:");
-        int n = M.length, i = 0, j = 0;
-        float[][] InvM = this.InvM;
-        float[][] E = Unit_Matrix(n);
-        while (!Is_Unit_Matrix(M)) {
-            if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
-                int r = Index_UnZero_Value(M,i);
-                Retreat_Elementary_Action(i,r);
-                Retreat_Rows_Matrix(E,i,r);
-                Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
-                Write_Status_Matrices(M,InvM);
-            }
-            if (i != j && M[j][i] != 0) {
-                E[j][i] -= (M[j][i] / M[i][i]);
-                Sum_Elementary_Action(-E[j][i],j,i);
-                Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
-                M[j][i] = 0;
-                Write_Status_Matrices(M,InvM);
-            }
-            if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
-                fr.println("this is a singular matrix");
-                return null;
-            } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
-                E[j][j] = 1 / M[j][j];
-                Mul_Elementary_Action(E[j][j],j);
-                Mul_Mats_Matrices(E,M,InvM);
-                M = this.M; InvM = this.InvM; E = Unit_Matrix(n);
-                M[j][j] = 1;
-                Write_Status_Matrices(M,InvM);
-            }
-            if (j == n - 1) {
-                i = (i + 1) % n;
-            }
-            j = (j + 1) % n;
-        }
-        return InvM;
-    }
-
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
     private void Invert_Matrix(float[][] M) throws Exception {
@@ -318,12 +235,14 @@ public class Invertible_Matrices extends ShareTools {
             case 2 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by ranking rows method:");
-                InvM = Ranking_Rows_Method(M);
+                Ranking_Rows_Method met = new Ranking_Rows_Method(M,fn,ne,fr);
+                InvM = met.Ranking_Rows_Action(M);
             }
             case 3 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by elementary matrices method:");
-                InvM = Elementary_Matrices_Method(M);
+                Elementary_Matrices_Method met = new Elementary_Matrices_Method(M,fn,ne,fr);
+                InvM = met.Elementary_Matrices_Action(M);
             }
             default -> throw new Exception("you entered an invalid number");
         }
