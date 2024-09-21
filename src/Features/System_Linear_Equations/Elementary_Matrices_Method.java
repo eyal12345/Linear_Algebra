@@ -56,20 +56,6 @@ public class Elementary_Matrices_Method extends System_Linear_Equations {
         }
     }
 
-    // check if number of rows in the matrix has reduced
-    private boolean Is_Reduced_Rows(float[][] A, float[][] b, int r) {
-        boolean changed = false;
-        int m = A.length, n = A[0].length;
-        if (m > n && Is_Zero_Row(A,r) && Is_Zero_Row(b,r)) {
-            fr.println("delete the zero row from the system:");
-            Delete_Zero_Row(A,b,r);
-            A = this.A; b = this.b;
-            changed = true;
-            Write_Status_System(A,b);
-        }
-        return changed;
-    }
-
     // solve system of linear equations Ax = b by parallel elementary matrices
     public float[][] Elementary_Matrices_Action(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by an elementary matrices:");

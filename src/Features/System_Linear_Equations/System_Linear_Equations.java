@@ -457,6 +457,20 @@ public class System_Linear_Equations extends ShareTools {
         this.A = nA; this.b = nb;
     }
 
+    // check if number of rows in the matrix has reduced
+    public boolean Is_Reduced_Rows(float[][] A, float[][] b, int r) {
+        boolean changed = false;
+        int m = A.length, n = A[0].length;
+        if (m > n && Is_Zero_Row(A,r) && Is_Zero_Row(b,r)) {
+            fr.println("delete the zero row from the system:");
+            Delete_Zero_Row(A,b,r);
+            A = this.A; b = this.b;
+            changed = true;
+            Write_Status_System(A,b);
+        }
+        return changed;
+    }
+
     // add a new column to the vector
     private float[][] Increase_Col_in_Vector(float[][] b) {
         int m = b.length, n = b[0].length;
