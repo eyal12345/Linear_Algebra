@@ -12,17 +12,11 @@ import java.io.File;
 public class Invertible_Matrices extends ShareTools {
     public float[][] M;
     public float[][] InvM;
-//    public final String fn;
-//    public final String ne;
-//    public PrintWriter fr;
 
     public Invertible_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
         super(fn, ne, fr);
         this.M = nM;
         this.InvM = Unit_Matrix(nM.length);
-//        this.fn = fn;
-//        this.ne = ne;
-//        this.fr = fr;
     }
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////

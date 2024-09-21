@@ -9,18 +9,12 @@ public class System_Linear_Equations extends ShareTools {
     public float[][] A;
     public float[][] b;
     public float[][] x;
-//    public final String fn;
-//    public final String ne;
-//    public PrintWriter fr;
 
     public System_Linear_Equations(float[][] nA, float[][] nb, String fn, String ne, PrintWriter fr) {
         super(fn, ne, fr);
         this.A = nA;
         this.b = nb;
         this.x = null;
-//        this.fn = fn;
-//        this.ne = ne;
-//        this.fr = fr;
     }
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
