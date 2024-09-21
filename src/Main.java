@@ -1,6 +1,6 @@
-import Tools.ContentReader;
-import Features.Receive_Matrices;
-import Features.Decompose_Matrices;
+import Features.ContentReader;
+import Features.Receive_Matrices.Receive_Matrices;
+import Features.Decompose_Matrices.Decompose_Matrices;
 import Features.Invertible_Matrices.Invertible_Matrices;
 import Features.System_Linear_Equations.System_Linear_Equations;
 import java.time.format.DateTimeFormatter;
