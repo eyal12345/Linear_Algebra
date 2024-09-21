@@ -23,31 +23,32 @@ public class ContentReader {
 
     public float[][] Read_Exercise(String path) throws IOException {
         List<Float> list = new ArrayList<>();
-        InputStream inputStream = ContentReader.class.getResourceAsStream(path);
-        if (inputStream == null) {
+        try {
+            InputStream inputStream = new FileInputStream(path);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            String line = reader.readLine();
+            int rows = 0, cols = line.split(",|\\|").length;
+            while (line != null) {
+                String[] elements = line.split(",|\\|");
+                for (int j = 0; j < cols; j++) {
+                    list.add(Float.parseFloat(elements[j]));
+                }
+                rows++;
+                line = reader.readLine();
+            }
+            reader.close();
+            float[][] M = new float[rows][cols];
+            int index = 0;
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    M[i][j] = list.get(index++);
+                }
+            }
+            return M;
+        } catch (IOException e) {
             System.out.println("File not found!");
             return null;
         }
-        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-        String line = reader.readLine();
-        int rows = 0, cols = line.split(",|\\|").length;
-        while (line != null) {
-            String[] elements = line.split(",|\\|");
-            for (int j = 0; j < cols; j++) {
-                list.add(Float.parseFloat(elements[j]));
-            }
-            rows++;
-            line = reader.readLine();
-        }
-        reader.close();
-        float[][] M = new float[rows][cols];
-        int index = 0;
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                M[i][j] = list.get(index++);
-            }
-        }
-        return M;
     }
 
     public float[][] Extract_Matrix_Component(float[][] M) {
