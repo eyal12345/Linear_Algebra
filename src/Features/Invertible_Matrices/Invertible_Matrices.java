@@ -18,7 +18,7 @@ public class Invertible_Matrices extends ShareTools {
 
     public Invertible_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
         this.M = nM;
-        this.InvM = null;
+        this.InvM = Unit_Matrix(nM.length);
         this.fn = fn;
         this.ne = ne;
         this.fr = fr;

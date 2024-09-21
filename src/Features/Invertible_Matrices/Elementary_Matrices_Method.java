@@ -9,19 +9,6 @@ public class Elementary_Matrices_Method extends Invertible_Matrices {
         super(M, fn, ne, fr);
     }
 
-    private void Retreat_Elementary_Action(float[][] M, int c) {
-        int n = M.length;
-        float[][] E = Unit_Matrix(n);
-        if (M[c][c] == 0 && !Is_Zero_Col(M,c)) {
-            int r = Index_UnZero_Value(M,c);
-            Retreat_Elementary_Description(c,r);
-            Retreat_Rows_Matrix(E,c,r);
-            Mul_Mats_Matrices(E,M,InvM);
-//            M = this.M; InvM = this.InvM;
-            Write_Status_Matrices(M,InvM);
-        }
-    }
-
     // invert the M matrix by parallel elementary matrices
     public float[][] Elementary_Matrices_Action(float[][] M) {
         fr.println("transform M matrix to I by an elementary matrices:");

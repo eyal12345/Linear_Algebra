@@ -1,6 +1,4 @@
-package Tools;
-
-import Features.ShareTools;
+package Features;
 
 import java.io.PrintWriter;
 
