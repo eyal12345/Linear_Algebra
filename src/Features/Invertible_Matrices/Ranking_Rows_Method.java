@@ -1,6 +1,5 @@
 package Features.Invertible_Matrices;
 
-import Features.Invertible_Matrices.Invertible_Matrices;
 import java.io.PrintWriter;
 
 public class Ranking_Rows_Method extends Invertible_Matrices {
