@@ -32,10 +32,12 @@ public class Main {
                     String exercise = prop.getProperty("EXERCISE");
                     String format = prop.getProperty("FORMAT");
                     if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
-                        Receive_Matrices re = new Receive_Matrices(M,format,exercise);
+                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+                        Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
                         re.Progress_Run();
                     } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
-                        Decompose_Matrices de = new Decompose_Matrices(M,format,exercise);
+                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+                        Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
                         de.Progress_Run();
                     } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
                         PrintWriter fr = Create_Exercise_Path(M,title,exercise);

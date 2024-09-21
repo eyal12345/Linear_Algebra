@@ -9,15 +9,10 @@ import java.io.File;
 
 public class Decompose_Matrices extends ShareTools {
     private final float[][] M;
-    private final String fn;
-    private final String ne;
-    private PrintWriter fr;
 
-    public Decompose_Matrices(float[][] nM, String fn, String ne) {
+    public Decompose_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
+        super(fn, ne, fr);
         this.M = nM;
-        this.fn = fn;
-        this.ne = ne;
-        this.fr = null;
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
@@ -57,61 +52,6 @@ public class Decompose_Matrices extends ShareTools {
         return true;
     }
 
-    //////////////////////////////////////////// Elementary Actions //////////////////////////////////////////////
-    // show elementary actions for sum between rows in the matrices
-    private void Sum_Elementary_Action(float k, int j, int i) {
-        if (k != 0) {
-            int r = j + 1, c = i + 1;
-            k = (float) (Math.round(k * 10000.0) / 10000.0);
-            if (k > 0) {
-                if (k % 1 == 0) {
-                    if (k == 1) {
-                        fr.println("R" + r + " --> R" + r + " - R" + c);
-                    } else {
-                        fr.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c);
-                    }
-                } else if (fn.equals("decimal")) {
-                    fr.println("R" + r + " --> R" + r + " - " + k + "*R" + c);
-                } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " - " + convertDecimalToFraction(k) + "*R" + c);
-                }
-            } else {
-                if (k % 1 == 0) {
-                    if (k == -1) {
-                        fr.println("R" + r + " --> R" + r + " + R" + c);
-                    } else {
-                        fr.println("R" + r + " --> R" + r + " + " + (int) ((-1) * k) + "*R" + c);
-                    }
-                } else if (fn.equals("decimal")) {
-                    fr.println("R" + r + " --> R" + r + " + " + (-k) + "*R" + c);
-                } else if (fn.equals("rational")) {
-                    fr.println("R" + r + " --> R" + r + " + " + convertDecimalToFraction(-k) + "*R" + c);
-                }
-            }
-            fr.println();
-        }
-    }
-
-    // show elementary actions for multiplication of a row in the matrices
-    private void Mul_Elementary_Action(float k, int j) {
-        if (k != 1) {
-            int r = j + 1;
-            k = (float) (Math.round(k * 10000.0) / 10000.0);
-            if (k % 1 == 0) {
-                if (k == -1) {
-                    fr.println("R" + r + " --> - R" + r);
-                } else {
-                    fr.println("R" + r + " --> " + (int) k + "*R" + r);
-                }
-            } else if (fn.equals("decimal")) {
-                fr.println("R" + r + " --> " + k + "*R" + r);
-            } else if (fn.equals("rational")) {
-                fr.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r);
-            }
-            fr.println();
-        }
-    }
-
     ////////////////////////////////////// Methods to Solution (Decompose M) ////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
     private void From_M_To_LU_V1(float[][] M) {
@@ -123,7 +63,7 @@ public class Decompose_Matrices extends ShareTools {
             L[i][i] = 1;
             for (int j = i + 1; j < n && M[i][i] != 0; j++) {
                 L[j][i] = M[j][i] / M[i][i];
-                Sum_Elementary_Action(L[j][i],j,i);
+                Sum_Elementary_Description(L[j][i],j,i);
                 for (int k = 0; k < n; k++) {
                     M[j][k] -= M[i][k] * L[j][i];
                 }
@@ -152,7 +92,7 @@ public class Decompose_Matrices extends ShareTools {
             for (int i = 0; i < n && M[i][i] != 0; i++) {
                 for (int j = i + 1; j < n; j++) {
                     float c = M[j][i] / M[i][i];
-                    Sum_Elementary_Action(c,j,i);
+                    Sum_Elementary_Description(c,j,i);
                     for (int k = 0; k < n; k++) {
                         M[j][k] -= M[i][k] * c;
                     }
@@ -162,7 +102,7 @@ public class Decompose_Matrices extends ShareTools {
                     }
                 }
                 float c = (float) Math.sqrt(M[i][i]);
-                Mul_Elementary_Action(1 / c,i);
+                Mul_Elementary_Description(1 / c,i);
                 for (int k = i; k < n; k++) {
                     M[i][k] /= c;
                     L[k][i] = M[i][k];
@@ -193,7 +133,7 @@ public class Decompose_Matrices extends ShareTools {
                 L[i][i] = 1;
                 for (int j = i + 1; j < n && M[i][i] != 0; j++) {
                     float c = M[j][i] / M[i][i];
-                    Sum_Elementary_Action(c,j,i);
+                    Sum_Elementary_Description(c,j,i);
                     for (int k = 0; k < n; k++) {
                         M[j][k] -= M[i][k] * c;
                     }
@@ -204,7 +144,7 @@ public class Decompose_Matrices extends ShareTools {
                 }
                 D[i][i] = M[i][i];
                 if (D[i][i] != 0) {
-                    Mul_Elementary_Action(1 / D[i][i],i);
+                    Mul_Elementary_Description(1 / D[i][i],i);
                     for (int k = i; k < n; k++) {
                         M[i][k] /= D[i][i];
                         L[k][i] = M[i][k];

@@ -9,15 +9,10 @@ import java.io.File;
 
 public class Receive_Matrices extends ShareTools {
     private final float[][] L;
-    private final String fn;
-    private final String ne;
-    private PrintWriter fr;
 
-    public Receive_Matrices(float[][] nL, String fn, String ne) {
+    public Receive_Matrices(float[][] nL, String fn, String ne, PrintWriter fr) {
+        super(fn, ne, fr);
         this.L = nL;
-        this.fn = fn;
-        this.ne = ne;
-        this.fr = null;
     }
 
     ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
