@@ -1,0 +1,98 @@
+solve the next system in R4 space (8 equations)(4 unknowns):
+eq1:                              = 0
+eq2:                              = 0
+eq3:                              = 0
+eq4:                              = 0
+eq5:                              = 0
+eq6:                              = 0
+eq7:                              = 0
+eq8:                              = 0
+
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+
+implement the solution by elementary matrices method:
+transform A matrix to I by an elementary matrices:
+delete the zero row from the system:
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+
+delete the zero row from the system:
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+
+delete the zero row from the system:
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+
+delete the zero row from the system:
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+0 ,0 ,0 ,0 | 0
+
+define a new column in the vector b when x1 is a free variable in R4 space:
+0 ,0 ,0 ,0 | 0 ,0
+1 ,0 ,0 ,0 | 0 ,1
+0 ,0 ,0 ,0 | 0 ,0
+0 ,0 ,0 ,0 | 0 ,0
+
+define a new column in the vector b when x2 is a free variable in R4 space:
+0 ,0 ,0 ,0 | 0 ,0 ,0
+1 ,0 ,0 ,0 | 0 ,1 ,0
+0 ,1 ,0 ,0 | 0 ,0 ,1
+0 ,0 ,0 ,0 | 0 ,0 ,0
+
+define a new column in the vector b when x3 is a free variable in R4 space:
+0 ,0 ,0 ,0 | 0 ,0 ,0 ,0
+1 ,0 ,0 ,0 | 0 ,1 ,0 ,0
+0 ,1 ,0 ,0 | 0 ,0 ,1 ,0
+0 ,0 ,1 ,0 | 0 ,0 ,0 ,1
+
+define a new column in the vector b when x4 is a free variable in R4 space:
+0 ,0 ,0 ,1 | 0 ,0 ,0 ,0 ,1
+1 ,0 ,0 ,0 | 0 ,1 ,0 ,0 ,0
+0 ,1 ,0 ,0 | 0 ,0 ,1 ,0 ,0
+0 ,0 ,1 ,0 | 0 ,0 ,0 ,1 ,0
+
+R1 <--> R2
+
+1 ,0 ,0 ,0 | 0 ,1 ,0 ,0 ,0
+0 ,0 ,0 ,1 | 0 ,0 ,0 ,0 ,1
+0 ,1 ,0 ,0 | 0 ,0 ,1 ,0 ,0
+0 ,0 ,1 ,0 | 0 ,0 ,0 ,1 ,0
+
+R2 <--> R3
+
+1 ,0 ,0 ,0 | 0 ,1 ,0 ,0 ,0
+0 ,1 ,0 ,0 | 0 ,0 ,1 ,0 ,0
+0 ,0 ,0 ,1 | 0 ,0 ,0 ,0 ,1
+0 ,0 ,1 ,0 | 0 ,0 ,0 ,1 ,0
+
+R3 <--> R4
+
+1 ,0 ,0 ,0 | 0 ,1 ,0 ,0 ,0
+0 ,1 ,0 ,0 | 0 ,0 ,1 ,0 ,0
+0 ,0 ,1 ,0 | 0 ,0 ,0 ,1 ,0
+0 ,0 ,0 ,1 | 0 ,0 ,0 ,0 ,1
+
+the solution is an infinite set of vectors in R4 space which are linearly dependents in the vector space:
+x = λ1*(1 ,0 ,0 ,0) + λ2*(0 ,1 ,0 ,0) + λ3*(0 ,0 ,1 ,0) + λ4*(0 ,0 ,0 ,1) when λ1,λ2,λ3,λ4 it's a free scalars that belongs to the R set
