@@ -1,4 +1,4 @@
-package Features;
+package Init_App;
 
 import Features.System_Linear_Equations.System_Linear_Equations;
 import Features.Invertible_Matrices.Invertible_Matrices;
