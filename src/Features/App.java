@@ -21,10 +21,7 @@ public class App {
         return new PrintWriter(new FileWriter(file, true));
     }
 
-    private static String Build_Path_Exercise(Properties prop) {
-        String title = prop.getProperty("TITLE");
-        String space = prop.getProperty("SPACE");
-        String exercise = prop.getProperty("EXERCISE");
+    private static String Build_Path_Exercise(String title, String space, String exercise) {
         String path = "Exercises/" + title + "/" + space + "/" + exercise + ".txt";
         File file = new File(path);
         if (file.exists()) {
@@ -85,38 +82,43 @@ public class App {
         return b;
     }
 
+    private static void Choose_Mathematical_Branch(float[][] M, String title, String exercise, String format) throws Exception {
+        if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
+            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+            Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
+            re.Progress_Run();
+        } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
+            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+            Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
+            de.Progress_Run();
+        } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
+            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+            Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
+            inv.Progress_Run();
+        } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
+            float[][] A = Extract_Matrix_Component(M);
+            float[][] b = Extract_Vector_Component(M);
+            PrintWriter fr = Create_Exercise_Path(A,title,exercise);
+            System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
+            sle.Progress_Run();
+        } else {
+            throw new Exception("you entered an invalid value of title subject");
+        }
+    }
+
     public static void Run_Progress() {
         try {
             Properties prop = new Properties();
             prop.load(new FileInputStream("config.properties"));
-            String path = Build_Path_Exercise(prop);
+            String title = prop.getProperty("TITLE");
+            String space = prop.getProperty("SPACE");
+            String exercise = prop.getProperty("EXERCISE");
+            String format = prop.getProperty("FORMAT");
+            String path = Build_Path_Exercise(title,space,exercise);
             if (path != null) {
                 float[][] M = Read_Exercise(path);
                 if (M != null) {
-                    String title = prop.getProperty("TITLE");
-                    String exercise = prop.getProperty("EXERCISE");
-                    String format = prop.getProperty("FORMAT");
-                    if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
-                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
-                        Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
-                        re.Progress_Run();
-                    } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
-                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
-                        Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
-                        de.Progress_Run();
-                    } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
-                        PrintWriter fr = Create_Exercise_Path(M,title,exercise);
-                        Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
-                        inv.Progress_Run();
-                    } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
-                        float[][] A = Extract_Matrix_Component(M);
-                        float[][] b = Extract_Vector_Component(M);
-                        PrintWriter fr = Create_Exercise_Path(A,title,exercise);
-                        System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
-                        sle.Progress_Run();
-                    } else {
-                        throw new Exception("you entered an invalid value of title subject");
-                    }
+                    Choose_Mathematical_Branch(M,title,exercise,format);
                 }
             }
         } catch (Exception ex) {
