@@ -140,10 +140,6 @@ public class Receive_Matrices extends ShareTools {
     public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = L.length, n = L[0].length;
-            LocalDateTime cur = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-            File file = new File("Results/Receive_Matrices/R" + n + "/" + ne.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
-            fr = new PrintWriter(new FileWriter(file, true));
             fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(L,fn));
             if (m != n) {

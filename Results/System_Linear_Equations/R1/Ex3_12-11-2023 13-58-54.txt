@@ -1,6 +1,0 @@
-solve the next equation in R1 space (1 equation)(1 unknown):
-eq1: 0x = 1
-
-0 | 1
-
-does not an exists solutions

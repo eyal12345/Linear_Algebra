@@ -17,7 +17,7 @@ public class App {
         int n = M[0].length;
         LocalDateTime cur = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        File file = new File("Results/" + title + "/R" + n + "/" + exercise.split("\\.")[0] + "_" + cur.format(formatter) + ".txt");
+        File file = new File("Exercises/" + title + "/R" + n + "/" + exercise.split("\\.")[0] + "_Result_" + cur.format(formatter) + ".txt");
         return new PrintWriter(new FileWriter(file, true));
     }
 
