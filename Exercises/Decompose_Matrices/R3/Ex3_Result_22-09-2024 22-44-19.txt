@@ -1,0 +1,40 @@
+decompose the next matrix (3*3 size):
+2 ,0 ,0
+6 ,4 ,0
+-8 ,5 ,0
+
+M = 
+2 ,0 ,0
+6 ,4 ,0
+-8 ,5 ,0
+
+find L and U by decomposition of M:
+transform M matrix to U by an upper ranking:
+R2 --> R2 - 3*R1
+
+2 ,0 ,0
+0 ,4 ,0
+-8 ,5 ,0
+
+R3 --> R3 + 4*R1
+
+2 ,0 ,0
+0 ,4 ,0
+0 ,5 ,0
+
+R3 --> R3 - 1.25*R2
+
+2 ,0 ,0
+0 ,4 ,0
+0 ,0 ,0
+
+L = 
+1 ,0 ,0
+3 ,1 ,0
+-4 ,1.25 ,1
+
+U = 
+2 ,0 ,0
+0 ,4 ,0
+0 ,0 ,0
+
