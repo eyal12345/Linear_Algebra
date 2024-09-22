@@ -1,4 +1,6 @@
-package Features.Receive_Matrices;
+package Features.Receive_Matrices.Solution_Methods;
+
+import Features.Receive_Matrices.Receive_Matrices;
 
 import java.io.PrintWriter;
 

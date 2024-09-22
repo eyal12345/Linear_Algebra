@@ -1,4 +1,6 @@
-package Features.System_Linear_Equations;
+package Features.System_Linear_Equations.Solution_Methods;
+
+import Features.System_Linear_Equations.System_Linear_Equations;
 
 import java.io.PrintWriter;
 

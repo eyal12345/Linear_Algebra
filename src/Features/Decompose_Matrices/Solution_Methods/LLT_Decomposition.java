@@ -1,4 +1,6 @@
-package Features.Decompose_Matrices;
+package Features.Decompose_Matrices.Solution_Methods;
+
+import Features.Decompose_Matrices.Decompose_Matrices;
 
 import java.io.PrintWriter;
 

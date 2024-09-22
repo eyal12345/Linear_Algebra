@@ -1,6 +1,7 @@
 package Features.System_Linear_Equations;
 
 import Features.ShareTools;
+import Features.System_Linear_Equations.Solution_Methods.*;
 import java.util.Scanner;
 import java.util.Vector;
 import java.io.PrintWriter;

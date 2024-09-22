@@ -1,17 +1,19 @@
-package Features.Receive_Matrices;
+package Features.Receive_Matrices.Solution_Methods;
+
+import Features.Receive_Matrices.Receive_Matrices;
 
 import java.io.PrintWriter;
 
-public class LDLT_Receiver extends Receive_Matrices {
+public class LU_Receiver extends Receive_Matrices {
 
-    public LDLT_Receiver(float[][] L, String fn, String ne, PrintWriter fr) {
+    public LU_Receiver(float[][] L, String fn, String ne, PrintWriter fr) {
         super(L, fn, ne, fr);
     }
 
-    // get the LDL' decomposition by multiplication of L, D and L' (first algorithm)
-    public void From_LDLT_To_M_V1(float[][] L, float[][] D, float[][] LT) {
+    // get the LU decomposition by multiplication of L and U (first algorithm)
+    public void From_LU_To_M_V1(float[][] L, float[][] U) {
         if (Is_One_Slant(L)) {
-            float[][] M = Mul_Mats(Mul_Mats(L,D),LT);
+            float[][] M = Mul_Mats(L,U);
             fr.println("M = ");
             fr.println(Display_Status_Matrix(M,fn));
         } else {
@@ -19,8 +21,8 @@ public class LDLT_Receiver extends Receive_Matrices {
         }
     }
 
-    // get the LDL' decomposition by multiplication of L, D and L' (second algorithm)
-    public void From_LDLT_To_M_V2(float[][] L, float[][] D, float[][] LT) {
+    // get the LU decomposition by multiplication of L and U (second algorithm)
+    public void From_LU_To_M_V2(float[][] L, float[][] U) {
         if (Is_One_Slant(L)) {
             int n = L.length;
             float[][] M = new float[n][n];
@@ -28,7 +30,7 @@ public class LDLT_Receiver extends Receive_Matrices {
                 for (int j = 0; j < n; j++) {
                     int m = Math.min(i,j);
                     for (int k = 0; k <= m; k++) {
-                        M[i][j] += L[i][k] * D[k][k] * LT[k][j];
+                        M[i][j] += L[i][k] * U[k][j];
                     }
                 }
             }

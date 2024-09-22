@@ -1,4 +1,6 @@
-package Features.Invertible_Matrices;
+package Features.Invertible_Matrices.Solution_Methods;
+
+import Features.Invertible_Matrices.Invertible_Matrices;
 
 import java.io.PrintWriter;
 
