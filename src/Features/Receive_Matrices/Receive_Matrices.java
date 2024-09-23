@@ -78,7 +78,6 @@ public class Receive_Matrices extends ShareTools {
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
-//                LU_Receiver met = new LU_Receiver(L,fn,ne,fr);
                 run.From_LU_To_M_V1(L,U);
             }
             case 2 -> {

@@ -1,7 +1,6 @@
 package Features.Invertible_Matrices;
 
 import Features.ShareTools;
-import Features.Invertible_Matrices.Solution_Methods.*;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
@@ -125,26 +124,6 @@ public class Invertible_Matrices extends ShareTools {
         this.M = EM; this.InvM = EInvM;
     }
 
-    /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
-    // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
-    public float[][] Invertible_Direct(float[][] M) {
-        int n = M.length;
-        float det = Determinant(M);
-        if (det == 0) {
-            fr.println("this is a singular matrix");
-            return null;
-        } else {
-            float[][] InvM = new float[n][n];
-            float[][] adj = Adjoint(M);
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    InvM[i][j] = (1 / det) * adj[i][j];
-                }
-            }
-            return InvM;
-        }
-    }
-
     ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
     private void Invert_Matrix(float[][] M) throws Exception {
@@ -152,22 +131,21 @@ public class Invertible_Matrices extends ShareTools {
         User_Menu_Invertible();
         int op = sc.nextInt();
         InvM = Unit_Matrix(M.length);
+        Invertible_Matrices_Methods run = new Invertible_Matrices_Methods(M,fn,ne,fr);
         switch (op) {
             case 1 -> {
                 fr.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
-                InvM = Invertible_Direct(M);
+                InvM = run.Invertible_Direct(M);
             }
             case 2 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by ranking rows method:");
-                Ranking_Rows_Method met = new Ranking_Rows_Method(M,fn,ne,fr);
-                InvM = met.Ranking_Rows_Action(M);
+                InvM = run.Ranking_Rows_Action(M);
             }
             case 3 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by elementary matrices method:");
-                Elementary_Matrices_Method met = new Elementary_Matrices_Method(M,fn,ne,fr);
-                InvM = met.Elementary_Matrices_Action(M);
+                InvM = run.Elementary_Matrices_Action(M);
             }
             default -> throw new Exception("you entered an invalid number");
         }
