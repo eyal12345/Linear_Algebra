@@ -17,7 +17,7 @@ public class ShareTools {
 
     /////////////////////////////////////////////// Display Matrix ///////////////////////////////////////////////
     // display a matrix each current status
-    public static String Display_Status_Matrix(float[][] M, String fn) {
+    public String Display_Status_Matrix(float[][] M, String fn) {
         int n = M.length;
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < n; i++) {
@@ -39,7 +39,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if all the values in the main diagonal which are equals to 1
-    public static boolean Is_One_Slant(float[][] M) {
+    public boolean Is_One_Slant(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] != 1) {
@@ -50,7 +50,7 @@ public class ShareTools {
     }
 
     // check if the matrix is a symmetrical matrix
-    public static boolean Is_Symmetrical_Matrix(float[][] M) {
+    public boolean Is_Symmetrical_Matrix(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -63,7 +63,7 @@ public class ShareTools {
     }
 
     // check if all the values in the main diagonal which are positive
-    public static boolean Is_Values_Positives(float[][] M) {
+    public boolean Is_Values_Positives(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] < 0) {
@@ -74,7 +74,7 @@ public class ShareTools {
     }
 
     // check if exist in the matrix a zeros row
-    public static boolean Is_Zero_Row(float[][] A, int r) {
+    public boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
         for (int j = 0; j < n; j++) {
             if (A[r][j] != 0) {
@@ -85,7 +85,7 @@ public class ShareTools {
     }
 
     // check if exist in the vector a zeros column
-    public static boolean Is_Zero_Col(float[][] v, int c) {
+    public boolean Is_Zero_Col(float[][] v, int c) {
         int m = v.length, n = v[0].length;
         for (int i = 0; i < m && c < n; i++) {
             if (v[i][c] != 0) {
@@ -96,7 +96,7 @@ public class ShareTools {
     }
 
     // check if a matrix is a unit matrix
-    public static boolean Is_Unit_Matrix(float[][] M) {
+    public boolean Is_Unit_Matrix(float[][] M) {
         int m = M.length, n = M[0].length;
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -110,7 +110,7 @@ public class ShareTools {
     }
 
     // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Unit_Vector(float[][] M, int i) {
+    public boolean Is_Unit_Vector(float[][] M, int i) {
         int n = M[0].length, c = 0;
         for (int j = 0; j < n; j++) {
             if (M[i][j] != 0) {
@@ -121,7 +121,7 @@ public class ShareTools {
     }
 
     // check if the matrix is a lower triangular
-    public static boolean Is_Lower_Triangular(float[][] M) {
+    public boolean Is_Lower_Triangular(float[][] M) {
         int m = M.length, n = M[0].length;
         for (int i = 0; i < m - 1; i++) {
             for (int j = i + 1; j < n; j++) {
@@ -134,7 +134,7 @@ public class ShareTools {
     }
 
     // check if exist invalid row in the system which is not allow to reach a solution
-    public static boolean Is_Invalid_System(float[][] A, float[][] b) {
+    public boolean Is_Invalid_System(float[][] A, float[][] b) {
         int m = A.length;
         for (int i = 0; i < m; i++) {
             if (Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
@@ -145,7 +145,7 @@ public class ShareTools {
     }
 
     // check if the vector is a zero vector
-    public static boolean Is_Zero_Vector(float[] v) {
+    public boolean Is_Zero_Vector(float[] v) {
         int n = v.length;
         for (int i = 0; i < n; i++) {
             if (v[i] != 0) {
@@ -156,7 +156,7 @@ public class ShareTools {
     }
 
     // check if all vector values is equal to each other
-    public static boolean Is_Equals_Values(Vector<Float> R) {
+    public boolean Is_Equals_Values(Vector<Float> R) {
         int n = R.size();
         for (int i = 0; i < n - 1; i++) {
             if (!R.get(i).equals(R.get(i + 1))) {
@@ -167,7 +167,7 @@ public class ShareTools {
     }
 
     // check if the specific row in the matrix is a unit vector
-    public static boolean Is_Exist_Vector(float[][] A, int r) {
+    public boolean Is_Exist_Vector(float[][] A, int r) {
         int m = A.length;
         float[] v = Row_from_Matrix(A,r);
         v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
@@ -184,7 +184,7 @@ public class ShareTools {
     }
 
     // check if exists two vectors in the matrix which are linearly dependent
-    public static boolean Is_Linear_Dependent_Rows(float[][] A) {
+    public boolean Is_Linear_Dependent_Rows(float[][] A) {
         int m = A.length, n = A[0].length;
         for (int r1 = 0; r1 < m - 1; r1++) {
             for (int r2 = r1 + 1; r2 < m; r2++) {
@@ -206,7 +206,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index from the vector that is indicating a unit vector
-    public static int Index_for_Unit_Vector(float[] v) {
+    public int Index_for_Unit_Vector(float[] v) {
         int n = v.length;
         for (int c = 0; c < n; c++) {
             if (v[c] != 0) {
@@ -217,7 +217,7 @@ public class ShareTools {
     }
 
     // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public static int Index_UnZero_Value(float[][] M, int k) {
+    public int Index_UnZero_Value(float[][] M, int k) {
         int n = M.length;
         for (int i = k + 1; i < n + k; i++) {
             if (M[i % n][k] != 0) {
@@ -228,7 +228,7 @@ public class ShareTools {
     }
 
     // find two columns in the matrix which are linearly dependent
-    public static int Linear_Dependent_Columns(float[][] A) {
+    public int Linear_Dependent_Columns(float[][] A) {
         int m = A.length, n = A[0].length;
         for (int c1 = 0; c1 < n - 1; c1++) {
             for (int c2 = c1 + 1; c2 < n; c2++) {
@@ -247,7 +247,7 @@ public class ShareTools {
     }
 
     // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
-    public static int Intersection_Zero_Row_Col(float[][] A, int r) {
+    public int Intersection_Zero_Row_Col(float[][] A, int r) {
         int n = A[0].length;
         for (int c = 0; c < n; c++) {
             if (Is_Zero_Col(A,c) && Is_Zero_Row(A,r)) {
@@ -259,7 +259,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////// Matrices Creation /////////////////////////////////////////////
     // create a unit matrix with "n*n" size
-    public static float[][] Unit_Matrix(int n) {
+    public float[][] Unit_Matrix(int n) {
         float[][] I = new float[n][n];
         for (int i = 0; i < n; i++) {
             I[i][i] = 1;
@@ -268,7 +268,7 @@ public class ShareTools {
     }
 
     // duplicate the matrix values into a new matrix
-    public static float[][] Copy_Matrix(float[][] M) {
+    public float[][] Copy_Matrix(float[][] M) {
         int n = M.length;
         float[][] cM = new float[n][n];
         for (int i = 0; i < n; i++) {
@@ -281,7 +281,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
     // calculate determinant of a matrix
-    public static float Determinant(float[][] M) {
+    public float Determinant(float[][] M) {
         int m = M.length, n = M[0].length;
         if (m != n) {
             return 0;
@@ -298,7 +298,7 @@ public class ShareTools {
     }
 
     // calculate of sub-matrix from a matrix by cutting row "x" and column "y"
-    public static float[][] Sub_Matrix(float[][] M, int x, int y) {
+    public float[][] Sub_Matrix(float[][] M, int x, int y) {
         int n = M.length ,p = 0 ,q = 0;
         float[][] subM = new float[n - 1][n - 1];
         for (int i = 0; i < n; i++) {
@@ -317,7 +317,7 @@ public class ShareTools {
     }
 
     // calculate transpose matrix of a matrix
-    public static float[][] Transpose(float[][] M) {
+    public float[][] Transpose(float[][] M) {
         int n = M.length;
         float[][] MT = new float[n][n];
         for (int i = 0; i < n; i++) {
@@ -329,7 +329,7 @@ public class ShareTools {
     }
 
     // calculate adjoint matrix of a matrix
-    public static float[][] Adjoint(float[][] M) {
+    public float[][] Adjoint(float[][] M) {
         int n = M.length;
         if (n == 1) {
             return Unit_Matrix(1);
@@ -345,7 +345,7 @@ public class ShareTools {
     }
 
     // calculate invertible matrix of a matrix
-    public static float[][] Invertible(float[][] M) {
+    public float[][] Invertible(float[][] M) {
         int n = M.length;
         float det = Determinant(M);
         float[][] invM = new float[n][n];
@@ -359,7 +359,7 @@ public class ShareTools {
     }
 
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
-    public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
+    public float[][] Mul_Mats(float[][] M1, float[][] M2) {
         int m = M1.length, n = M2[0].length;
         float[][] M = new float[m][n];
         for (int i = 0; i < m; i++) {
@@ -373,7 +373,7 @@ public class ShareTools {
     }
 
     // calculate ranking of a matrix by upper triangular
-    public static float[][] Ranking_Matrix(float[][] M) {
+    public float[][] Ranking_Matrix(float[][] M) {
         int n = M.length;
         float[][] rM = Copy_Matrix(M);
         for (int i = 0; i < n - 1; i++) {
@@ -398,7 +398,7 @@ public class ShareTools {
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
     // import the specific row from the matrix
-    public static float[] Row_from_Matrix(float[][] A, int r) {
+    public float[] Row_from_Matrix(float[][] A, int r) {
         int n = A[0].length;
         float[] v = new float[n];
         for (int j = 0; j < n; j++) {
@@ -408,7 +408,7 @@ public class ShareTools {
     }
 
     // replace between two rows in a matrix
-    public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
+    public void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
         int n = M[0].length;
         for (int j = 0; j < n; j++) {
             float k = M[r1][j];
@@ -419,7 +419,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////////// Convertor /////////////////////////////////////////////////
     // convert a value to a format of rational number
-    public static String convertDecimalToFraction(float x) {
+    public String convertDecimalToFraction(float x) {
         if (x < 0) {
             return "-" + convertDecimalToFraction(-x);
         } else {
