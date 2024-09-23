@@ -1,13 +1,9 @@
-package Init_App;
+package Features;
 
 import Features.System_Linear_Equations.System_Linear_Equations;
-import Features.Invertible_Matrices;
-import Features.Decompose_Matrices;
-import Features.Determinant_Calculate;
-import Features.Receive_Matrices;
+
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
-import java.util.Properties;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
@@ -111,23 +107,13 @@ public class ContentReader {
         }
     }
 
-    public static void Run_Progress() {
-        try {
-            Properties prop = new Properties();
-            prop.load(new FileInputStream("config.properties"));
-            String title = prop.getProperty("TITLE");
-            String space = prop.getProperty("SPACE");
-            String exercise = prop.getProperty("EXERCISE");
-            String format = prop.getProperty("FORMAT");
-            String path = Build_Path_Exercise(title,space,exercise);
-            if (path != null) {
-                float[][] M = Read_Exercise(path);
-                if (M != null) {
-                    Choose_Mathematical_Branch(M,title,exercise,format);
-                }
+    public static void Run_Progress(String title, String space, String exercise, String format) throws Exception {
+        String path = Build_Path_Exercise(title,space,exercise);
+        if (path != null) {
+            float[][] M = Read_Exercise(path);
+            if (M != null) {
+                Choose_Mathematical_Branch(M,title,exercise,format);
             }
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
     }
 }
