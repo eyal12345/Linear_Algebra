@@ -1,7 +1,6 @@
 package Features.Decompose_Matrices;
 
 import Features.ShareTools;
-import Features.Decompose_Matrices.Solution_Methods.*;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
@@ -56,36 +55,31 @@ public class Decompose_Matrices extends ShareTools {
         Scanner sc = new Scanner(System.in);
         User_Menu_Decompose();
         int op = sc.nextInt();
+        Decompose_Matrices_Methods run = new Decompose_Matrices_Methods(M,fn,ne,fr);
         switch (op) {
             case 1 -> {
                 fr.println("find L and U by decomposition of M:");
-                LU_Decomposition met = new LU_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LU_V1(M);
+                run.From_M_To_LU_V1(M);
             }
             case 2 -> {
                 fr.println("find L and L' by decomposition of M:");
-                LLT_Decomposition met = new LLT_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LLT_V1(M);
+                run.From_M_To_LLT_V1(M);
             }
             case 3 -> {
                 fr.println("find L, D and L' by decomposition of M:");
-                LDLT_Decomposition met = new LDLT_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LDLT_V1(M);
+                run.From_M_To_LDLT_V1(M);
             }
             case 4 -> {
                 fr.println("find L and U by decomposition of M:");
-                LU_Decomposition met = new LU_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LU_V2(M);
+                run.From_M_To_LU_V2(M);
             }
             case 5 -> {
                 fr.println("find L and L' by decomposition of M:");
-                LLT_Decomposition met = new LLT_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LLT_V2(M);
+                run.From_M_To_LLT_V2(M);
             }
             case 6 -> {
                 fr.println("find L, D and L' by decomposition of M:");
-                LDLT_Decomposition met = new LDLT_Decomposition(M,fn,ne,fr);
-                met.From_M_To_LDLT_V2(M);
+                run.From_M_To_LDLT_V2(M);
             }
             default -> throw new Exception("you entered an invalid number");
         }

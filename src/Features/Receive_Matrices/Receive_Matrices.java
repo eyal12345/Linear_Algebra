@@ -1,7 +1,6 @@
 package Features.Receive_Matrices;
 
 import Features.ShareTools;
-import Features.Receive_Matrices.Solution_Methods.*;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
@@ -72,22 +71,22 @@ public class Receive_Matrices extends ShareTools {
         User_Menu_Receive();
         int op = sc.nextInt();
         float[][] U, D, LT;
+        Receive_Matrices_Methods run = new Receive_Matrices_Methods(L,fn,ne,fr);
         switch (op) {
             case 1 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
-                LU_Receiver met = new LU_Receiver(L,fn,ne,fr);
-                met.From_LU_To_M_V1(L,U);
+//                LU_Receiver met = new LU_Receiver(L,fn,ne,fr);
+                run.From_LU_To_M_V1(L,U);
             }
             case 2 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                LLT_Receiver met = new LLT_Receiver(L,fn,ne,fr);
-                met.From_LLT_To_M_V1(L,LT);
+                run.From_LLT_To_M_V1(L,LT);
             }
             case 3 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
@@ -97,24 +96,21 @@ public class Receive_Matrices extends ShareTools {
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                LDLT_Receiver met = new LDLT_Receiver(L,fn,ne,fr);
-                met.From_LDLT_To_M_V1(L,D,LT);
+                run.From_LDLT_To_M_V1(L,D,LT);
             }
             case 4 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
-                LU_Receiver met = new LU_Receiver(L,fn,ne,fr);
-                met.From_LU_To_M_V2(L,U);
+                run.From_LU_To_M_V2(L,U);
             }
             case 5 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                LLT_Receiver met = new LLT_Receiver(L,fn,ne,fr);
-                met.From_LLT_To_M_V2(L,LT);
+                run.From_LLT_To_M_V2(L,LT);
             }
             case 6 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
@@ -124,8 +120,7 @@ public class Receive_Matrices extends ShareTools {
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                LDLT_Receiver met = new LDLT_Receiver(L,fn,ne,fr);
-                met.From_LDLT_To_M_V2(L,D,LT);
+                run.From_LDLT_To_M_V2(L,D,LT);
             }
             default -> throw new Exception("you entered an invalid number");
         }
