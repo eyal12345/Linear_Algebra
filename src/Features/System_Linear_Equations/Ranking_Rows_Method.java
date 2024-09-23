@@ -1,16 +1,15 @@
-package Features.System_Linear_Equations.Solution_Methods;
-
-import Features.System_Linear_Equations.System_Linear_Equations;
+package Features.System_Linear_Equations;
 
 import java.io.PrintWriter;
 
-public class Ranking_Rows_Method extends System_Linear_Equations {
+public class Ranking_Rows_Method extends System_Linear_Equations_Extended implements Elementary_Method_Actions {
 
     public Ranking_Rows_Method(float[][] nA, float[][] nb, String fn, String ne, PrintWriter fr) {
         super(nA, nb, fn, ne, fr);
     }
 
-    private void Retreat_Elementary_Action(float[][] A, float[][] b, int c) {
+    @Override
+    public void Retreat_Elementary_Action(float[][] A, float[][] b, int c) {
         int m = A.length;
         if (A[c][c] == 0 && !Is_Zero_Col(A,c)) {
             int r = Index_UnZero_Value(A,c);
@@ -24,7 +23,8 @@ public class Ranking_Rows_Method extends System_Linear_Equations {
         }
     }
 
-    private void Sum_Elementary_Action(float[][] A, float[][] b, int r, int c) {
+    @Override
+    public void Sum_Elementary_Action(float[][] A, float[][] b, int r, int c) {
         int t = b[0].length - 1, n = A[0].length;
         if (c != r && A[c][c] != 0 && A[r][c] != 0) {
             float p = A[r][c] / A[c][c];
@@ -43,7 +43,8 @@ public class Ranking_Rows_Method extends System_Linear_Equations {
         }
     }
 
-    private void Mul_Elementary_Action(float[][] A, float[][] b, int r) {
+    @Override
+    public void Mul_Elementary_Action(float[][] A, float[][] b, int r) {
         int t = b[0].length - 1;
         if (Is_Unit_Vector(A,r)) {
             int d = Index_for_Unit_Vector(Row_from_Matrix(A,r));
@@ -59,8 +60,9 @@ public class Ranking_Rows_Method extends System_Linear_Equations {
         }
     }
 
+    @Override
     // solve system of linear equations Ax = b by ranking rows
-    public float[][] Ranking_Rows_Action(float[][] A, float[][] b) {
+    public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
         fr.println("transform A matrix to I by a ranking rows:");
         int m = A.length, n = A[0].length;
         while (!Is_Unit_Matrix(A)) {
@@ -83,4 +85,5 @@ public class Ranking_Rows_Method extends System_Linear_Equations {
         }
         return b;
     }
+
 }
