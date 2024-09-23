@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
 
-public class App {
+public class ContentReader {
 
     private static PrintWriter Create_Exercise_Path(float[][] M, String title, String exercise) throws IOException {
         int n = M[0].length;
