@@ -37,6 +37,63 @@ public class ShareTools {
     }
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if all the values in the main diagonal which are equals to 1
+    public boolean Is_One_Slant(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] != 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if the matrix is a symmetrical matrix
+    public boolean Is_Symmetrical_Matrix(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (M[i][j] != M[j][i]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // check if all the values in the main diagonal which are positive
+    public boolean Is_Values_Positives(float[][] M) {
+        int n = M.length;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if exist in the matrix a zeros row
+    public boolean Is_Zero_Row(float[][] A, int r) {
+        int n = A[0].length;
+        for (int j = 0; j < n; j++) {
+            if (A[r][j] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if exist in the vector a zeros column
+    public boolean Is_Zero_Col(float[][] v, int c) {
+        int m = v.length, n = v[0].length;
+        for (int i = 0; i < m && c < n; i++) {
+            if (v[i][c] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     // check if a matrix is a unit matrix
     public static boolean Is_Unit_Matrix(float[][] M) {
         int m = M.length, n = M[0].length;
@@ -73,6 +130,18 @@ public class ShareTools {
             }
         }
         return true;
+    }
+
+    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the index starting from the specific column in the matrix which are him value not equal to 0
+    public int Index_UnZero_Value(float[][] M, int k) {
+        int n = M.length;
+        for (int i = k + 1; i < n + k; i++) {
+            if (M[i % n][k] != 0) {
+                return i % n;
+            }
+        }
+        return -1;
     }
 
     ////////////////////////////////////////////// Matrices Creation /////////////////////////////////////////////

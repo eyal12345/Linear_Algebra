@@ -16,7 +16,7 @@ public class Invertible_Matrices extends ShareTools {
 
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     // display current status of the matrices M and InvM each time of iteration on an element
-    public void Write_Status_Matrices(float[][] M, float[][] InvM) {
+    private void Write_Status_Matrices(float[][] M, float[][] InvM) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -57,95 +57,129 @@ public class Invertible_Matrices extends ShareTools {
         System.out.println("3. invert a matrix by elementary matrices");
     }
 
-    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
-    // check if exist in the matrix a zeros row
-    public boolean Is_Zero_Row(float[][] A, int r) {
-        int n = A[0].length;
-        for (int j = 0; j < n; j++) {
-            if (A[r][j] != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    // check if exist in the vector a zeros column
-    public boolean Is_Zero_Col(float[][] v, int c) {
-        int m = v.length, n = v[0].length;
-        for (int i = 0; i < m && c < n; i++) {
-            if (v[i][c] != 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-    // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public int Index_UnZero_Value(float[][] M, int k) {
+    //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
+    // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
+    private float[][] Invertible_Direct(float[][] M) {
         int n = M.length;
-        for (int i = k + 1; i < n + k; i++) {
-            if (M[i % n][k] != 0) {
-                return i % n;
+        float det = Determinant(M);
+        if (det == 0) {
+            fr.println("this is a singular matrix");
+            return null;
+        } else {
+            float[][] InvM = new float[n][n];
+            float[][] adj = Adjoint(M);
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    InvM[i][j] = (1 / det) * adj[i][j];
+                }
             }
-        }
-        return -1;
-    }
-
-    ////////////////////////////////////////////// Matrix Operations /////////////////////////////////////////////
-    // replace between two rows in the matrices
-    public void Retreat_Rows_Matrices(float[][] M, float[][] InvM, int r1, int r2) {
-        int n = M[0].length, m = InvM[0].length;
-        for (int j = 0; j < n; j++) {
-            float k = M[r1][j];
-            M[r1][j] = M[r2][j];
-            M[r2][j] = k;
-        }
-        for (int j = 0; j < m; j++) {
-            float k = InvM[r1][j];
-            InvM[r1][j] = InvM[r2][j];
-            InvM[r2][j] = k;
+            return InvM;
         }
     }
 
-    // multiplication of two matrices in same matrix
-    public void Mul_Mats_Matrices(float[][] E, float[][] M, float[][] InvM) {
-        int m = M.length, n = InvM[0].length;
-        float[][] EM = new float[m][n];
-        float[][] EInvM = new float[m][n];
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                for (int k = 0; k < m; k++) {
-                    EM[i][j] += E[i][k] * M[k][j];
-                    EInvM[i][j] += E[i][k] * InvM[k][j];
+    // invert the M matrix by parallel ranking
+    private float[][] Ranking_Rows_Action(float[][] M) {
+        fr.println("transform M matrix to I by a parallel ranking:");
+        int n = M.length;
+        float[][] InvM = this.InvM;
+        while (!Is_Unit_Matrix(M)) {
+            for (int i = 0; i < n; i++) {
+                if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
+                    int r = Index_UnZero_Value(M,i);
+                    Retreat_Elementary_Description(i,r);
+                    Retreat_Rows_Matrix(M,i,r);
+                    Retreat_Rows_Matrix(InvM,i,r);
+                    Write_Status_Matrices(M,InvM);
+                }
+                for (int j = 0; j < n; j++) {
+                    if (i != j && M[j][i] != 0) {
+                        float c = M[j][i] / M[i][i];
+                        Sum_Elementary_Description(c,j,i);
+                        for (int k = 0; k < n; k++) {
+                            M[j][k] -= M[i][k] * c;
+                            InvM[j][k] -= InvM[i][k] * c;
+                        }
+                        M[j][i] = 0;
+                        Write_Status_Matrices(M,InvM);
+                    }
+                    if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
+                        fr.println("this is a singular matrix");
+                        return null;
+                    } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
+                        float c = 1 / M[j][j];
+                        Mul_Elementary_Description(c,j);
+                        for (int k = 0; k < n; k++) {
+                            InvM[j][k] /= M[j][j];
+                        }
+                        M[j][j] = 1;
+                        Write_Status_Matrices(M,InvM);
+                    }
                 }
             }
         }
-        this.M = EM; this.InvM = EInvM;
+        return InvM;
     }
 
-    ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    // invert the M matrix by parallel elementary matrices
+    private float[][] Elementary_Matrices_Action(float[][] M) {
+        fr.println("transform M matrix to I by an elementary matrices:");
+        int n = M.length, i = 0, j = 0;
+        float[][] InvM = this.InvM;
+        float[][] E = Unit_Matrix(n);
+        while (!Is_Unit_Matrix(M)) {
+            if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
+                int r = Index_UnZero_Value(M,i);
+                Retreat_Elementary_Description(i,r);
+                Retreat_Rows_Matrix(E,i,r);
+                M = Mul_Mats(E,M); InvM = Mul_Mats(E,InvM); E = Unit_Matrix(n);
+                Write_Status_Matrices(M,InvM);
+            }
+            if (i != j && M[j][i] != 0) {
+                E[j][i] -= (M[j][i] / M[i][i]);
+                Sum_Elementary_Description(-E[j][i],j,i);
+                M = Mul_Mats(E,M); InvM = Mul_Mats(E,InvM); E = Unit_Matrix(n);
+                M[j][i] = 0;
+                Write_Status_Matrices(M,InvM);
+            }
+            if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
+                fr.println("this is a singular matrix");
+                return null;
+            } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
+                E[j][j] = 1 / M[j][j];
+                Mul_Elementary_Description(E[j][j],j);
+                M = Mul_Mats(E,M); InvM = Mul_Mats(E,InvM); E = Unit_Matrix(n);
+                M[j][j] = 1;
+                Write_Status_Matrices(M,InvM);
+            }
+            if (j == n - 1) {
+                i = (i + 1) % n;
+            }
+            j = (j + 1) % n;
+        }
+        return InvM;
+    }
+
+    /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
     private void Invert_Matrix(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Invertible();
         int op = sc.nextInt();
         InvM = Unit_Matrix(M.length);
-        Invertible_Matrices_Methods run = new Invertible_Matrices_Methods(M,fn,ne,fr);
         switch (op) {
             case 1 -> {
                 fr.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
-                InvM = run.Invertible_Direct(M);
+                InvM = Invertible_Direct(M);
             }
             case 2 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by ranking rows method:");
-                InvM = run.Ranking_Rows_Action(M);
+                InvM = Ranking_Rows_Action(M);
             }
             case 3 -> {
                 Write_Status_Matrices(M,InvM);
                 fr.println("implement the solution by elementary matrices method:");
-                InvM = run.Elementary_Matrices_Action(M);
+                InvM = Elementary_Matrices_Action(M);
             }
             default -> throw new Exception("you entered an invalid number");
         }

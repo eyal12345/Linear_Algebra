@@ -26,7 +26,7 @@ public class Receive_Matrices extends ShareTools {
 
     /////////////////////////////////////////////// Input Matrices ///////////////////////////////////////////////
     // create diagonal matrix
-    public static float[][] Create_Diagonal_Matrix(int n) {
+    private static float[][] Create_Diagonal_Matrix(int n) {
         Scanner sc = new Scanner(System.in);
         float[][] D = new float[n][n];
         System.out.println("insert values to the main diagonal:");
@@ -38,7 +38,7 @@ public class Receive_Matrices extends ShareTools {
     }
 
     // create upper matrix
-    public static float[][] Create_Upper_Matrix(int n) {
+    private static float[][] Create_Upper_Matrix(int n) {
         Scanner sc = new Scanner(System.in);
         float[][] U = new float[n][n];
         System.out.println("insert values to the upper side:");
@@ -51,19 +51,93 @@ public class Receive_Matrices extends ShareTools {
         return U;
     }
 
-    ///////////////////////////////////////////////// Questions //////////////////////////////////////////////////
-    // check if all the values in the main diagonal which are equals to 1
-    public boolean Is_One_Slant(float[][] M) {
-        int n = M.length;
-        for (int i = 0; i < n; i++) {
-            if (M[i][i] != 1) {
-                return false;
-            }
+    // get the LU decomposition by multiplication of L and U (first algorithm)
+    private void From_LU_To_M_V1(float[][] L, float[][] U) {
+        if (Is_One_Slant(L)) {
+            float[][] M = Mul_Mats(L,U);
+            fr.println("M = ");
+            fr.println(Display_Status_Matrix(M,fn));
+        } else {
+            fr.println("these are values other than 1 on the main diagonal of L matrix");
         }
-        return true;
     }
 
-    /////////////////////////////////////// User Interface (Receive M) ///////////////////////////////////////
+    //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
+    // get the LL' decomposition by multiplication of L and L' (first algorithm)
+    private void From_LLT_To_M_V1(float[][] L, float[][] LT) {
+        float[][] M = Mul_Mats(L,LT);
+        fr.println("M = ");
+        fr.println(Display_Status_Matrix(M,fn));
+    }
+
+    // get the LDL' decomposition by multiplication of L, D and L' (first algorithm)
+    private void From_LDLT_To_M_V1(float[][] L, float[][] D, float[][] LT) {
+        if (Is_One_Slant(L)) {
+            float[][] M = Mul_Mats(Mul_Mats(L,D),LT);
+            fr.println("M = ");
+            fr.println(Display_Status_Matrix(M,fn));
+        } else {
+            fr.println("these are values other than 1 on the main diagonal of L matrix");
+        }
+    }
+
+    // get the LU decomposition by multiplication of L and U (second algorithm)
+    private void From_LU_To_M_V2(float[][] L, float[][] U) {
+        if (Is_One_Slant(L)) {
+            int n = L.length;
+            float[][] M = new float[n][n];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    int m = Math.min(i,j);
+                    for (int k = 0; k <= m; k++) {
+                        M[i][j] += L[i][k] * U[k][j];
+                    }
+                }
+            }
+            fr.println("M = ");
+            fr.println(Display_Status_Matrix(M,fn));
+        } else {
+            fr.println("these are values other than 1 on the main diagonal of L matrix");
+        }
+    }
+
+    // get the LL' decomposition by multiplication of L and L' (second algorithm)
+    private void From_LLT_To_M_V2(float[][] L, float[][] LT) {
+        int n = L.length;
+        float[][] M = new float[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int m = Math.min(i,j);
+                for (int k = 0; k <= m; k++) {
+                    M[i][j] += L[i][k] * LT[k][j];
+                }
+            }
+        }
+        fr.println("M = ");
+        fr.println(Display_Status_Matrix(M,fn));
+    }
+
+    // get the LDL' decomposition by multiplication of L, D and L' (second algorithm)
+    private void From_LDLT_To_M_V2(float[][] L, float[][] D, float[][] LT) {
+        if (Is_One_Slant(L)) {
+            int n = L.length;
+            float[][] M = new float[n][n];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    int m = Math.min(i,j);
+                    for (int k = 0; k <= m; k++) {
+                        M[i][j] += L[i][k] * D[k][k] * LT[k][j];
+                    }
+                }
+            }
+            fr.println("M = ");
+            fr.println(Display_Status_Matrix(M,fn));
+        } else {
+            fr.println("these are values other than 1 on the main diagonal of L matrix");
+        }
+    }
+
+    /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // get the matrix by a multiplication components
     public void Receive_Matrix(float[][] L) throws Exception {
         int n = L.length;
@@ -71,21 +145,20 @@ public class Receive_Matrices extends ShareTools {
         User_Menu_Receive();
         int op = sc.nextInt();
         float[][] U, D, LT;
-        Receive_Matrices_Methods run = new Receive_Matrices_Methods(L,fn,ne,fr);
         switch (op) {
             case 1 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
-                run.From_LU_To_M_V1(L,U);
+                From_LU_To_M_V1(L,U);
             }
             case 2 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                run.From_LLT_To_M_V1(L,LT);
+                From_LLT_To_M_V1(L,LT);
             }
             case 3 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
@@ -95,21 +168,21 @@ public class Receive_Matrices extends ShareTools {
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                run.From_LDLT_To_M_V1(L,D,LT);
+                From_LDLT_To_M_V1(L,D,LT);
             }
             case 4 -> {
                 fr.println("find the matrix by L and U multiplication:");
                 U = Create_Upper_Matrix(n);
                 fr.println("U = ");
                 fr.println(Display_Status_Matrix(U,fn));
-                run.From_LU_To_M_V2(L,U);
+                From_LU_To_M_V2(L,U);
             }
             case 5 -> {
                 fr.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                run.From_LLT_To_M_V2(L,LT);
+                From_LLT_To_M_V2(L,LT);
             }
             case 6 -> {
                 fr.println("find the matrix by L, D and L' multiplication:");
@@ -119,7 +192,7 @@ public class Receive_Matrices extends ShareTools {
                 LT = Transpose(L);
                 fr.println("L' = ");
                 fr.println(Display_Status_Matrix(LT,fn));
-                run.From_LDLT_To_M_V2(L,D,LT);
+                From_LDLT_To_M_V2(L,D,LT);
             }
             default -> throw new Exception("you entered an invalid number");
         }
