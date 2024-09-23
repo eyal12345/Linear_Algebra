@@ -20,8 +20,8 @@ public class Determinant_Calculate extends ShareTools {
         System.out.println("3. calculate determinant in the special method up to 3*3 size (second method)");
     }
 
-    //////////////////////////////////////////// Determinant Actions ////////////////////////////////////////////
-    public float Determinant_Up_To_3x3_V1(float[][] M) {
+    //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
+    private float Determinant_Up_To_3x3_V1(float[][] M) {
         int n = M.length;
         float det = (n > 1) ? 0 : M[0][0];
         for (int i = 0 ;i < n ;i++) {
@@ -47,7 +47,7 @@ public class Determinant_Calculate extends ShareTools {
         return det;
     }
 
-    public float Determinant_Up_To_3x3_V2(float[][] M) {
+    private float Determinant_Up_To_3x3_V2(float[][] M) {
         int n = M.length;
         float det = (n > 1) ? 0 : M[0][0];
         for (int i = 0 ;i < n ;i++) {
@@ -62,7 +62,7 @@ public class Determinant_Calculate extends ShareTools {
         return det;
     }
 
-    ///////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     // choose option in order to correctness check for M matrix
     private void Determinant_Calculator(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
@@ -122,7 +122,7 @@ public class Determinant_Calculate extends ShareTools {
         }
     }
 
-    /////////////////////////////////////////////// Check Input ///////////////////////////////////////////////
+    //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
     // check if user input is valid
     public void Progress_Run() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
