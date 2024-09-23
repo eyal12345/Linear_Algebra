@@ -1,6 +1,5 @@
-package Features.Invertible_Matrices;
+package Features;
 
-import Features.ShareTools;
 import java.util.Scanner;
 import java.io.PrintWriter;
 

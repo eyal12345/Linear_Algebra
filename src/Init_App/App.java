@@ -1,10 +1,10 @@
 package Init_App;
 
 import Features.System_Linear_Equations.System_Linear_Equations;
-import Features.Invertible_Matrices.Invertible_Matrices;
-import Features.Decompose_Matrices.Decompose_Matrices;
-import Features.Determinants.Determinant_Calculate;
-import Features.Receive_Matrices.Receive_Matrices;
+import Features.Invertible_Matrices;
+import Features.Decompose_Matrices;
+import Features.Determinant_Calculate;
+import Features.Receive_Matrices;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
 import java.util.Properties;

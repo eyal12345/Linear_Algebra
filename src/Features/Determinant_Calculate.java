@@ -1,6 +1,4 @@
-package Features.Determinants;
-
-import Features.ShareTools;
+package Features;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
