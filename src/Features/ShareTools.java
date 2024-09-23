@@ -162,6 +162,20 @@ public class ShareTools {
         }
     }
 
+    // calculate invertible matrix of a matrix
+    public static float[][] Invertible(float[][] M) {
+        int n = M.length;
+        float det = Determinant(M);
+        float[][] invM = new float[n][n];
+        float[][] adj = Adjoint(M);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                invM[i][j] = (1 / det) * adj[i][j];
+            }
+        }
+        return invM;
+    }
+
     // calculate multiplication between two matrices provided that M1's length column is equal to M2's length row
     public static float[][] Mul_Mats(float[][] M1, float[][] M2) {
         int m = M1.length, n = M2[0].length;
@@ -174,6 +188,30 @@ public class ShareTools {
             }
         }
         return M;
+    }
+
+    // calculate ranking of a matrix by upper triangular
+    public static float[][] Ranking_Matrix(float[][] M) {
+        int n = M.length;
+        float[][] rM = Copy_Matrix(M);
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = i + 1; j < n; j++) {
+                if (rM[i][i] == 0) {
+                    int r = (i + 1) % n;
+                    for (int k = 0; k < n; k++) {
+                        float t = rM[i][k];
+                        rM[i][k] = rM[r][k];
+                        rM[r][k] = t;
+                    }
+                } if (rM[j][i] != 0) {
+                    float c = rM[j][i] / rM[i][i];
+                    for (int k = 0; k < n; k++) {
+                        rM[j][k] = rM[j][k] - rM[i][k] * c;
+                    }
+                }
+            }
+        }
+        return rM;
     }
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////

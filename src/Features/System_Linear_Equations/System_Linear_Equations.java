@@ -545,24 +545,22 @@ public class System_Linear_Equations extends ShareTools {
         User_Menu_System();
         int op = sc.nextInt();
         Write_Status_System(A,b);
+        System_Linear_Equations_Methods run = new System_Linear_Equations_Methods(A,b,fn,ne,fr);
         if (Is_Invalid_System(A,b)) {
             fr.println("does not an exists solutions");
             x = null;
         } else switch (op) {
             case 1 -> {
                 fr.println("implement the solution by invertible method:");
-                Invertible_Method met = new Invertible_Method(A,b,fn,ne,fr);
-                x = met.Invertible_Action(A,b);
+                x = run.Invertible_Action(A,b);
             }
             case 2 -> {
                 fr.println("implement the solution by cramer method:");
-                Cramer_Method met = new Cramer_Method(A,b,fn,ne,fr);
-                x = met.Cramer_Action(A,b);
+                x = run.Cramer_Action(A,b);
             }
             case 3 -> {
                 fr.println("implement the solution by forward backward method:");
-                Forward_Backward_Method met = new Forward_Backward_Method(A,b,fn,ne,fr);
-                x = met.Forward_Backward_Action(A,b);
+                x = run.Forward_Backward_Action(A,b);
             }
             case 4 -> {
                 fr.println("implement the solution by ranking rows method:");
