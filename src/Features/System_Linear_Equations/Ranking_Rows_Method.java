@@ -85,5 +85,4 @@ public class Ranking_Rows_Method extends System_Linear_Equations_Extended implem
         }
         return b;
     }
-
 }
