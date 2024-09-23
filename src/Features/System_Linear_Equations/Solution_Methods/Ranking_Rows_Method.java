@@ -17,7 +17,8 @@ public class Ranking_Rows_Method extends System_Linear_Equations {
             if (r >= 0 && r < m && r != c) {
                 A[r][c] = (A[r][c] >= -0.0001 && A[r][c] <= 0.0001) ? 0 : A[r][c];
                 Retreat_Elementary_Description(c,r);
-                Retreat_Rows_System(A,b,c,r);
+                Retreat_Rows_Matrix(A,c,r);
+                Retreat_Rows_Matrix(b,c,r);
                 Write_Status_System(A,b);
             }
         }

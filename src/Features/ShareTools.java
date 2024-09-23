@@ -1,6 +1,7 @@
 package Features;
 
 import java.io.PrintWriter;
+import java.util.Vector;
 
 public class ShareTools {
 
@@ -38,7 +39,7 @@ public class ShareTools {
 
     ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
     // check if all the values in the main diagonal which are equals to 1
-    public boolean Is_One_Slant(float[][] M) {
+    public static boolean Is_One_Slant(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] != 1) {
@@ -49,7 +50,7 @@ public class ShareTools {
     }
 
     // check if the matrix is a symmetrical matrix
-    public boolean Is_Symmetrical_Matrix(float[][] M) {
+    public static boolean Is_Symmetrical_Matrix(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -62,7 +63,7 @@ public class ShareTools {
     }
 
     // check if all the values in the main diagonal which are positive
-    public boolean Is_Values_Positives(float[][] M) {
+    public static boolean Is_Values_Positives(float[][] M) {
         int n = M.length;
         for (int i = 0; i < n; i++) {
             if (M[i][i] < 0) {
@@ -73,7 +74,7 @@ public class ShareTools {
     }
 
     // check if exist in the matrix a zeros row
-    public boolean Is_Zero_Row(float[][] A, int r) {
+    public static boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
         for (int j = 0; j < n; j++) {
             if (A[r][j] != 0) {
@@ -84,7 +85,7 @@ public class ShareTools {
     }
 
     // check if exist in the vector a zeros column
-    public boolean Is_Zero_Col(float[][] v, int c) {
+    public static boolean Is_Zero_Col(float[][] v, int c) {
         int m = v.length, n = v[0].length;
         for (int i = 0; i < m && c < n; i++) {
             if (v[i][c] != 0) {
@@ -132,13 +133,125 @@ public class ShareTools {
         return true;
     }
 
+    // check if exist invalid row in the system which is not allow to reach a solution
+    public static boolean Is_Invalid_System(float[][] A, float[][] b) {
+        int m = A.length;
+        for (int i = 0; i < m; i++) {
+            if (Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // check if the vector is a zero vector
+    public static boolean Is_Zero_Vector(float[] v) {
+        int n = v.length;
+        for (int i = 0; i < n; i++) {
+            if (v[i] != 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if all vector values is equal to each other
+    public static boolean Is_Equals_Values(Vector<Float> R) {
+        int n = R.size();
+        for (int i = 0; i < n - 1; i++) {
+            if (!R.get(i).equals(R.get(i + 1))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // check if the specific row in the matrix is a unit vector
+    public static boolean Is_Exist_Vector(float[][] A, int r) {
+        int m = A.length;
+        float[] v = Row_from_Matrix(A,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Index_for_Unit_Vector(v);
+        for (int i = 0; i < m; i++) {
+            if (i != r && Is_Unit_Vector(A,r) && Is_Unit_Vector(A,i)) {
+                int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
+                if (c1 == c2 && c1 != -1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // check if exists two vectors in the matrix which are linearly dependent
+    public static boolean Is_Linear_Dependent_Rows(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int r1 = 0; r1 < m - 1; r1++) {
+            for (int r2 = r1 + 1; r2 < m; r2++) {
+                if (!Is_Unit_Vector(A,r1) && !Is_Unit_Vector(A,r2)) {
+                    Vector<Float> R  = new Vector<Float>();
+                    for (int j = 0; j < n; j++) {
+                        if (A[r1][j] != 0 || A[r2][j] != 0) {
+                            R.add(A[r1][j] / A[r2][j]);
+                            if (r2 == r1 + 1 && Is_Equals_Values(R) && R.size() >= 2) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
+    // get the index from the vector that is indicating a unit vector
+    public static int Index_for_Unit_Vector(float[] v) {
+        int n = v.length;
+        for (int c = 0; c < n; c++) {
+            if (v[c] != 0) {
+                return c;
+            }
+        }
+        return -1;
+    }
+
     // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public int Index_UnZero_Value(float[][] M, int k) {
+    public static int Index_UnZero_Value(float[][] M, int k) {
         int n = M.length;
         for (int i = k + 1; i < n + k; i++) {
             if (M[i % n][k] != 0) {
                 return i % n;
+            }
+        }
+        return -1;
+    }
+
+    // find two columns in the matrix which are linearly dependent
+    public static int Linear_Dependent_Columns(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int c1 = 0; c1 < n - 1; c1++) {
+            for (int c2 = c1 + 1; c2 < n; c2++) {
+                Vector<Float> C  = new Vector<Float>();
+                for (int r = 0; r < m; r++) {
+                    if (A[r][c1] != 0 || A[r][c2] != 0) {
+                        C.add(A[r][c1] / A[r][c2]);
+                    }
+                }
+                if (Is_Equals_Values(C) && C.size() > 1) {
+                    return c1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
+    public static int Intersection_Zero_Row_Col(float[][] A, int r) {
+        int n = A[0].length;
+        for (int c = 0; c < n; c++) {
+            if (Is_Zero_Col(A,c) && Is_Zero_Row(A,r)) {
+                return c;
             }
         }
         return -1;
@@ -284,6 +397,16 @@ public class ShareTools {
     }
 
     ///////////////////////////////////////////////// Matrix Rows ////////////////////////////////////////////////
+    // import the specific row from the matrix
+    public static float[] Row_from_Matrix(float[][] A, int r) {
+        int n = A[0].length;
+        float[] v = new float[n];
+        for (int j = 0; j < n; j++) {
+            v[j] = A[r][j];
+        }
+        return v;
+    }
+
     // replace between two rows in a matrix
     public static void Retreat_Rows_Matrix(float[][] M, int r1, int r2) {
         int n = M[0].length;
