@@ -3,6 +3,7 @@ package Init_App;
 import Features.System_Linear_Equations.System_Linear_Equations;
 import Features.Invertible_Matrices.Invertible_Matrices;
 import Features.Decompose_Matrices.Decompose_Matrices;
+import Features.Determinants.Determinant_Calculate;
 import Features.Receive_Matrices.Receive_Matrices;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -83,7 +84,11 @@ public class App {
     }
 
     private static void Choose_Mathematical_Branch(float[][] M, String title, String exercise, String format) throws Exception {
-        if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
+        if (title.equals("Calculate_Determinant") || title.equals("Calculate Determinant")) {
+            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
+            Determinant_Calculate dc = new Determinant_Calculate(M,format,exercise,fr);
+            dc.Progress_Run();
+        } else if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
             PrintWriter fr = Create_Exercise_Path(M,title,exercise);
             Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
             re.Progress_Run();

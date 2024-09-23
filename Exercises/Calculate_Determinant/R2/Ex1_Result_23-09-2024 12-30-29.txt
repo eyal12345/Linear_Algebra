@@ -1,0 +1,7 @@
+calculate determinant of the next matrix (2*2 size):
+1 ,-3
+2 ,4
+
+implement the solution by first special method:
+the determinant of this matrix is:
+10
