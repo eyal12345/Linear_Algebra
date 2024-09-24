@@ -84,25 +84,30 @@ public class ContentReader {
 
     private static void Choose_Mathematical_Branch(float[][] M, String title, String space, String exercise, String format) throws Exception {
         PrintWriter fr = Create_Exercise_Path(title,space,exercise,format);
-        if (title.equals("Calculate_Determinant") || title.equals("Calculate Determinant")) {
-            Determinant_Calculate dc = new Determinant_Calculate(M,format,exercise,fr);
-            dc.Progress_Run();
-        } else if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
-            Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
-            re.Progress_Run();
-        } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
-            Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
-            de.Progress_Run();
-        } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
-            Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
-            inv.Progress_Run();
-        } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
-            float[][] A = Extract_Matrix_Component(M);
-            float[][] b = Extract_Vector_Component(M);
-            System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
-            sle.Progress_Run();
-        } else {
-            throw new Exception("you entered an invalid value of title subject");
+        switch (title) {
+            case "Calculate_Determinant" -> {
+                Determinant_Calculate dc = new Determinant_Calculate(M, format, exercise, fr);
+                dc.Progress_Run();
+            }
+            case "Receive_Matrices" -> {
+                Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
+                re.Progress_Run();
+            }
+            case "Decompose_Matrices" -> {
+                Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
+                de.Progress_Run();
+            }
+            case "Invertible_Matrices" -> {
+                Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
+                inv.Progress_Run();
+            }
+            case "System_Linear_Equations" -> {
+                float[][] A = Extract_Matrix_Component(M);
+                float[][] b = Extract_Vector_Component(M);
+                System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
+                sle.Progress_Run();
+            }
+            default -> throw new Exception("you entered an invalid value of title subject");
         }
     }
 
