@@ -10,10 +10,11 @@ import java.io.*;
 
 public class ContentReader {
 
-    private static PrintWriter Create_Exercise_Path(String title, String space, String exercise) throws IOException {
+    private static PrintWriter Create_Exercise_Path(String title, String space, String exercise, String format) throws IOException {
         LocalDateTime cur = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        File file = new File("Exercises/" + title + "/" + space + "/" + exercise.split("\\.")[0] + "_Result_" + cur.format(formatter) + ".txt");
+        String name = exercise.split("\\.")[0] + "_results_(" + format + ")_" + cur.format(formatter) + ".txt";
+        File file = new File("Exercises/" + title + "/" + space + "/" + name);
         return new PrintWriter(new FileWriter(file, true));
     }
 
@@ -82,7 +83,7 @@ public class ContentReader {
     }
 
     private static void Choose_Mathematical_Branch(float[][] M, String title, String space, String exercise, String format) throws Exception {
-        PrintWriter fr = Create_Exercise_Path(title,space,exercise);
+        PrintWriter fr = Create_Exercise_Path(title,space,exercise,format);
         if (title.equals("Calculate_Determinant") || title.equals("Calculate Determinant")) {
             Determinant_Calculate dc = new Determinant_Calculate(M,format,exercise,fr);
             dc.Progress_Run();
