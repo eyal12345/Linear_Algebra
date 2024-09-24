@@ -10,11 +10,10 @@ import java.io.*;
 
 public class ContentReader {
 
-    private static PrintWriter Create_Exercise_Path(float[][] M, String title, String exercise) throws IOException {
-        int n = M[0].length;
+    private static PrintWriter Create_Exercise_Path(String title, String space, String exercise) throws IOException {
         LocalDateTime cur = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
-        File file = new File("Exercises/" + title + "/R" + n + "/" + exercise.split("\\.")[0] + "_Result_" + cur.format(formatter) + ".txt");
+        File file = new File("Exercises/" + title + "/" + space + "/" + exercise.split("\\.")[0] + "_Result_" + cur.format(formatter) + ".txt");
         return new PrintWriter(new FileWriter(file, true));
     }
 
@@ -59,6 +58,8 @@ public class ContentReader {
         }
     }
 
+    ///////////////////////////////////////////// Extract Components /////////////////////////////////////////////
+    // extract A matrix component from M matrix
     private static float[][] Extract_Matrix_Component(float[][] M) {
         int m = M.length, n = M[0].length;
         float[][] A = new float[m][n - 1];
@@ -70,6 +71,7 @@ public class ContentReader {
         return A;
     }
 
+    // extract b vector component from M matrix
     private static float[][] Extract_Vector_Component(float[][] M) {
         int m = M.length, n = M[0].length;
         float[][] b = new float[m][1];
@@ -79,27 +81,23 @@ public class ContentReader {
         return b;
     }
 
-    private static void Choose_Mathematical_Branch(float[][] M, String title, String exercise, String format) throws Exception {
+    private static void Choose_Mathematical_Branch(float[][] M, String title, String space, String exercise, String format) throws Exception {
+        PrintWriter fr = Create_Exercise_Path(title,space,exercise);
         if (title.equals("Calculate_Determinant") || title.equals("Calculate Determinant")) {
-            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
             Determinant_Calculate dc = new Determinant_Calculate(M,format,exercise,fr);
             dc.Progress_Run();
         } else if (title.equals("Receive_Matrices") || title.equals("Receive Matrices")) {
-            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
             Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
             re.Progress_Run();
         } else if (title.equals("Decompose_Matrices") || title.equals("Decompose Matrices")) {
-            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
             Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
             de.Progress_Run();
         } else if (title.equals("Invertible_Matrices") || title.equals("Invertible Matrices")) {
-            PrintWriter fr = Create_Exercise_Path(M,title,exercise);
             Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
             inv.Progress_Run();
         } else if (title.equals("System_Linear_Equations") || title.equals("System Linear Equations")) {
             float[][] A = Extract_Matrix_Component(M);
             float[][] b = Extract_Vector_Component(M);
-            PrintWriter fr = Create_Exercise_Path(A,title,exercise);
             System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
             sle.Progress_Run();
         } else {
@@ -112,7 +110,7 @@ public class ContentReader {
         if (path != null) {
             float[][] M = Read_Exercise(path);
             if (M != null) {
-                Choose_Mathematical_Branch(M,title,exercise,format);
+                Choose_Mathematical_Branch(M,title,space,exercise,format);
             }
         }
     }
