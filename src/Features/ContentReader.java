@@ -84,22 +84,23 @@ public class ContentReader {
 
     private static void Choose_Mathematical_Branch(float[][] M, String title, String space, String exercise, String format) throws Exception {
         PrintWriter fr = Create_Exercise_Path(title,space,exercise,format);
+        MenuActions run;
         switch (title) {
             case "Calculate_Determinant" -> {
-                Determinant_Calculate dc = new Determinant_Calculate(M, format, exercise, fr);
-                dc.Progress_Run();
+                run = new Determinant_Calculate(M, format, exercise, fr);
+                run.Run_Progress();
             }
             case "Receive_Matrices" -> {
-                Receive_Matrices re = new Receive_Matrices(M,format,exercise,fr);
-                re.Progress_Run();
+                run = new Receive_Matrices(M,format,exercise,fr);
+                run.Run_Progress();
             }
             case "Decompose_Matrices" -> {
-                Decompose_Matrices de = new Decompose_Matrices(M,format,exercise,fr);
-                de.Progress_Run();
+                run = new Decompose_Matrices(M,format,exercise,fr);
+                run.Run_Progress();
             }
             case "Invertible_Matrices" -> {
-                Invertible_Matrices inv = new Invertible_Matrices(M,format,exercise,fr);
-                inv.Progress_Run();
+                run = new Invertible_Matrices(M,format,exercise,fr);
+                run.Run_Progress();
             }
             case "System_Linear_Equations" -> {
                 float[][] A = Extract_Matrix_Component(M);

@@ -1,10 +1,11 @@
 package Features.Mathematical_Matrices;
 
+import Features.MenuActions;
 import Features.ShareTools;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
-public class Decompose_Matrices extends ShareTools {
+public class Decompose_Matrices extends ShareTools implements MenuActions {
     private final float[][] M;
 
     public Decompose_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
@@ -223,8 +224,9 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    @Override
     // get the matrix components
-    private void Decompose_Matrix(float[][] M) throws Exception {
+    public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Decompose();
         int op = sc.nextInt();
@@ -258,8 +260,9 @@ public class Decompose_Matrices extends ShareTools {
     }
 
     //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
+    @Override
     // check if user input is valid
-    public void Progress_Run() throws Exception {
+    public void Run_Progress() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = M.length, n = M[0].length;
             fr.println("decompose the next matrix (" + m + "*" + n + " size):");
@@ -269,7 +272,7 @@ public class Decompose_Matrices extends ShareTools {
             } else {
                 fr.println("M = ");
                 fr.println(Display_Status_Matrix(M,fn));
-                Decompose_Matrix(M);
+                User_Interface(M);
             }
             fr.close();
         } else {

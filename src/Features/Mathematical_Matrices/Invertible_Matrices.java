@@ -1,10 +1,11 @@
 package Features.Mathematical_Matrices;
 
+import Features.MenuActions;
 import Features.ShareTools;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
-public class Invertible_Matrices extends ShareTools {
+public class Invertible_Matrices extends ShareTools implements MenuActions {
     public float[][] M;
     public float[][] InvM;
 
@@ -160,8 +161,9 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    @Override
     // choose option in order to correctness check for M matrix
-    private void Invert_Matrix(float[][] M) throws Exception {
+    public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Invertible();
         int op = sc.nextInt();
@@ -190,8 +192,9 @@ public class Invertible_Matrices extends ShareTools {
     }
 
     //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
+    @Override
     // check if user input is valid
-    public void Progress_Run() throws Exception {
+    public void Run_Progress() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = M.length, n = M[0].length;
             fr.println("invert the next matrix (" + m + "*" + n + " size):");
@@ -199,7 +202,7 @@ public class Invertible_Matrices extends ShareTools {
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
-                Invert_Matrix(M);
+                User_Interface(M);
             }
             fr.close();
         } else {

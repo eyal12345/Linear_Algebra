@@ -1,10 +1,11 @@
 package Features.Mathematical_Matrices;
 
+import Features.MenuActions;
 import Features.ShareTools;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class Determinant_Calculate extends ShareTools {
+public class Determinant_Calculate extends ShareTools implements MenuActions {
     public float[][] M;
 
     public Determinant_Calculate(float[][] nM, String fn, String ne, PrintWriter fr) {
@@ -64,8 +65,9 @@ public class Determinant_Calculate extends ShareTools {
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    @Override
     // choose option in order to correctness check for M matrix
-    private void Determinant_Calculator(float[][] M) throws Exception {
+    public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_Determinant();
         int op = sc.nextInt();
@@ -124,8 +126,9 @@ public class Determinant_Calculate extends ShareTools {
     }
 
     //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
+    @Override
     // check if user input is valid
-    public void Progress_Run() throws Exception {
+    public void Run_Progress() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = M.length, n = M[0].length;
             fr.println("calculate determinant of the next matrix (" + m + "*" + n + " size):");
@@ -133,7 +136,7 @@ public class Determinant_Calculate extends ShareTools {
             if (m != n) {
                 fr.println("this is a matrix which is not a square matrix");
             } else {
-                Determinant_Calculator(M);
+                User_Interface(M);
             }
             fr.close();
         } else {

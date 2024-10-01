@@ -1,10 +1,11 @@
 package Features.Mathematical_Matrices;
 
+import Features.MenuActions;
 import Features.ShareTools;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
-public class Receive_Matrices extends ShareTools {
+public class Receive_Matrices extends ShareTools implements MenuActions {
     private final float[][] L;
 
     public Receive_Matrices(float[][] nL, String fn, String ne, PrintWriter fr) {
@@ -138,8 +139,9 @@ public class Receive_Matrices extends ShareTools {
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    @Override
     // get the matrix by a multiplication components
-    public void Receive_Matrix(float[][] L) throws Exception {
+    public void User_Interface(float[][] L) throws Exception {
         int n = L.length;
         Scanner sc = new Scanner(System.in);
         User_Menu_Receive();
@@ -199,8 +201,9 @@ public class Receive_Matrices extends ShareTools {
     }
 
     //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
+    @Override
     // check if user input is valid
-    public void Progress_Run() throws Exception {
+    public void Run_Progress() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = L.length, n = L[0].length;
             fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
@@ -213,7 +216,7 @@ public class Receive_Matrices extends ShareTools {
                 if (!Is_Lower_Triangular(L)) {
                     fr.println("this is a matrix which is not a lower triangular");
                 } else {
-                    Receive_Matrix(L);
+                    User_Interface(L);
                 }
             }
             fr.close();
