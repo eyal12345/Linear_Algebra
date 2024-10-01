@@ -367,6 +367,7 @@ public class ShareTools {
                 for (int k = 0; k < m; k++) {
                     M[i][j] += M1[i][k] * M2[k][j];
                 }
+                M[i][j] = (M[i][j] >= -0.0001 && M[i][j] <= 0.0001) ? 0 : M[i][j];
             }
         }
         return M;
