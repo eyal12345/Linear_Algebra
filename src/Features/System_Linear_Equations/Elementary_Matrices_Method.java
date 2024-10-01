@@ -59,7 +59,7 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
     @Override
     // solve system of linear equations Ax = b by parallel elementary matrices
     public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
-        fr.println("transform A matrix to I by an elementary matrices:");
+        fr.println("transform A matrix to I by elementary matrices:");
         int i = 0, j = 0;
         while (!Is_Unit_Matrix(A)) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
@@ -71,7 +71,7 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
             A = this.A; b = this.b;
             int m = A.length, n = A[0].length;
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                fr.println("does not an exists solutions");
+                fr.println("does not exists solutions");
                 return null;
             }
             if (j == m - 1) {

@@ -4,6 +4,7 @@ import Features.Mathematical_Matrices.*;
 import Features.System_Linear_Equations.System_Linear_Equations;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
+import java.util.Properties;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.*;
@@ -107,11 +108,17 @@ public class ContentReader {
                 MenuActionsSLE run = new System_Linear_Equations(A,b,format,fr);
                 run.Run_Progress();
             }
-            default -> throw new Exception("you entered an invalid value of title subject");
+            default -> throw new Exception("you entered invalid value of title subject");
         }
     }
 
-    public static void Run_Progress(String title, String space, String exercise, String format) throws Exception {
+    public static void Run_Progress() throws Exception {
+        Properties prop = new Properties();
+        prop.load(new FileInputStream("config.properties"));
+        String title = prop.getProperty("TITLE");
+        String space = prop.getProperty("SPACE");
+        String exercise = prop.getProperty("EXERCISE");
+        String format = prop.getProperty("FORMAT");
         String path = Build_Path_Exercise(title,space,exercise);
         if (path != null) {
             float[][] M = Read_Exercise(path);

@@ -55,7 +55,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         int n = M.length;
         float det = Determinant(M);
         if (det == 0) {
-            fr.println("this is a singular matrix");
+            fr.println("this is singular matrix");
             return null;
         } else {
             float[][] InvM = new float[n][n];
@@ -95,7 +95,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
                         Write_Status_Matrices(M,InvM);
                     }
                     if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
-                        fr.println("this is a singular matrix");
+                        fr.println("this is singular matrix");
                         return null;
                     } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
                         float c = 1 / M[j][j];
@@ -114,7 +114,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
 
     // invert the M matrix by parallel elementary matrices
     private float[][] Elementary_Matrices_Action(float[][] M) {
-        fr.println("transform M matrix to I by an elementary matrices:");
+        fr.println("transform M matrix to I by elementary matrices:");
         int n = M.length, i = 0, j = 0;
         float[][] InvM = this.InvM;
         float[][] E = Unit_Matrix(n);
@@ -134,7 +134,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
                 Write_Status_Matrices(M,InvM);
             }
             if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
-                fr.println("this is a singular matrix");
+                fr.println("this is singular matrix");
                 return null;
             } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
                 E[j][j] = 1 / M[j][j];
@@ -156,9 +156,9 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     // display user interface by selection method for solution
     public void User_Menu() {
         System.out.println("choose number method to solution:");
-        System.out.println("1. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
-        System.out.println("2. invert a matrix by ranking rows");
-        System.out.println("3. invert a matrix by elementary matrices");
+        System.out.println("1. invert matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
+        System.out.println("2. invert matrix by ranking rows");
+        System.out.println("3. invert matrix by elementary matrices");
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
@@ -184,7 +184,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
                 fr.println("implement the solution by elementary matrices method:");
                 InvM = Elementary_Matrices_Action(M);
             }
-            default -> throw new Exception("you entered an invalid number");
+            default -> throw new Exception("you entered invalid number");
         }
         if (InvM != null) {
             fr.println("the invertible of this matrix is:");
@@ -201,13 +201,13 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             fr.println("invert the next matrix (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(M,fn));
             if (m != n) {
-                fr.println("this is a matrix which is not a square matrix");
+                fr.println("this is a matrix which is not square matrix");
             } else {
                 User_Interface(M);
             }
             fr.close();
         } else {
-            throw new Exception("you entered invalid value for a representation elementary actions and solution");
+            throw new Exception("you entered invalid value for representation elementary actions and solution");
         }
     }
 }

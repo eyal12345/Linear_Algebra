@@ -352,7 +352,7 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
                 Elementary_Method_Actions met = new Elementary_Matrices_Method(A,b,fn,fr);
                 x = met.Elementary_Method_Action(A,b);
             }
-            default -> throw new Exception("you entered an invalid value for an option number to solution");
+            default -> throw new Exception("you entered invalid value for an option number to solution");
         }
         if (x != null) {
             Write_Solution(x);
@@ -369,11 +369,11 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
             if (m == k && l == 1) {
                 User_Interface(A,b);
             } else {
-                fr.println("this is an input does not meet the conditions for system of linear equations");
+                fr.println("this is input does not meet the conditions for system of linear equations");
             }
             fr.close();
         } else {
-            throw new Exception("you entered invalid value for a representation elementary actions and solution");
+            throw new Exception("you entered invalid value for representation elementary actions and solution");
         }
     }
 }

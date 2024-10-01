@@ -122,7 +122,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
                     fr.println("you entered matrix with size greater than 3");
                 }
             }
-            default -> throw new Exception("you entered an invalid number");
+            default -> throw new Exception("you entered invalid number");
         }
     }
 

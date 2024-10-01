@@ -197,7 +197,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
                 fr.println(Display_Status_Matrix(LT,fn));
                 From_LDLT_To_M_V2(L,D,LT);
             }
-            default -> throw new Exception("you entered an invalid number");
+            default -> throw new Exception("you entered invalid number");
         }
     }
 
@@ -210,12 +210,12 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
             fr.println("receive the M matrix from the L and another matrices (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(L,fn));
             if (m != n) {
-                fr.println("this is a matrix which is not a square matrix");
+                fr.println("this is a matrix which is not square matrix");
             } else {
                 fr.println("L = ");
                 fr.println(Display_Status_Matrix(L,fn));
                 if (!Is_Lower_Triangular(L)) {
-                    fr.println("this is a matrix which is not a lower triangular");
+                    fr.println("this is a matrix which is not lower triangular");
                 } else {
                     User_Interface(L);
                 }

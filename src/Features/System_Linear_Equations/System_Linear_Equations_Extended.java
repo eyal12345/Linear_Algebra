@@ -89,7 +89,7 @@ public class System_Linear_Equations_Extended extends System_Linear_Equations {
     public void Define_Free_Variable(float[][] A, float[][] b, int r) {
         int m = A.length, n = A[0].length;
         if (m < n && (Is_Unit_Vector(A,r) || m == 1)) {
-            fr.println("adding a new row to the system");
+            fr.println("adding new row to the system");
             Add_Zero_Row(A,b);
             A = this.A; b = this.b;
             m = A.length;
@@ -106,7 +106,7 @@ public class System_Linear_Equations_Extended extends System_Linear_Equations {
                 d = r;
             } if (d < m && Is_Zero_Row(b,r)) {
                 A[r][d] = 1;
-                fr.println("define a new column in the vector b when x" + (d + 1) + " is a free variable in R" + m + " space:");
+                fr.println("define new column in the vector b when x" + (d + 1) + " is free variable in R" + m + " space:");
                 b = Increase_Col_in_Vector(b);
                 b[r][++t] = 1;
                 Write_Status_System(A,b);

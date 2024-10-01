@@ -78,7 +78,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             fr.println("L' = ");
             fr.println(Display_Status_Matrix(LT,fn));
         } else {
-            fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
+            fr.println("this is a matrix which is not symmetrical matrix or positive values on the main diagonal");
         }
     }
 
@@ -125,7 +125,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             fr.println("L' = ");
             fr.println(Display_Status_Matrix(LT,fn));
         } else {
-            fr.println("this is a matrix which is not a symmetrical matrix");
+            fr.println("this is a matrix which is not symmetrical matrix");
         }
     }
 
@@ -174,7 +174,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             fr.println("L' = ");
             fr.println(Display_Status_Matrix(LT,fn));
         } else {
-            fr.println("this is a matrix which is not a symmetrical matrix or positive values on the main diagonal");
+            fr.println("this is a matrix which is not symmetrical matrix or positive values on the main diagonal");
         }
     }
 
@@ -207,7 +207,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             fr.println("L' = ");
             fr.println(Display_Status_Matrix(LT,fn));
         } else {
-            fr.println("this is a matrix which is not a symmetrical matrix");
+            fr.println("this is a matrix which is not symmetrical matrix");
         }
     }
 
@@ -256,7 +256,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
                 fr.println("find L, D and L' by decomposition of M:");
                 From_M_To_LDLT_V2(M);
             }
-            default -> throw new Exception("you entered an invalid number");
+            default -> throw new Exception("you entered invalid number");
         }
     }
 
@@ -269,7 +269,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             fr.println("decompose the next matrix (" + m + "*" + n + " size):");
             fr.println(Display_Status_Matrix(M,fn));
             if (m != n) {
-                fr.println("this is a matrix which is not a square matrix");
+                fr.println("this is a matrix which is not square matrix");
             } else {
                 fr.println("M = ");
                 fr.println(Display_Status_Matrix(M,fn));
@@ -277,7 +277,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
             }
             fr.close();
         } else {
-            throw new Exception("you entered invalid value for a representation elementary actions and solution");
+            throw new Exception("you entered invalid value for representation elementary actions and solution");
         }
     }
 }
