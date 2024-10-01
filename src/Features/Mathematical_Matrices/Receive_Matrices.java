@@ -13,18 +13,6 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
         this.L = nL;
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    // display user interface by selection method for receive matrices
-    private static void User_Menu_Receive() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. LU decomposition by L and U multiplication (first method)");
-        System.out.println("2. LL' decomposition by L and L' multiplication (first method)");
-        System.out.println("3. LDL' decomposition by L, D and L' multiplication (first method)");
-        System.out.println("4. LU decomposition by L and U multiplication (second method)");
-        System.out.println("5. LL' decomposition by L and L' multiplication (second method)");
-        System.out.println("6. LDL' decomposition by L, D and L' multiplication (second method)");
-    }
-
     /////////////////////////////////////////////// Input Matrices ///////////////////////////////////////////////
     // create diagonal matrix
     private static float[][] Create_Diagonal_Matrix(int n) {
@@ -138,13 +126,26 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
         }
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    @Override
+    // display user interface by selection method for receive matrices
+    public void User_Menu() {
+        System.out.println("choose number method to solution:");
+        System.out.println("1. LU decomposition by L and U multiplication (first method)");
+        System.out.println("2. LL' decomposition by L and L' multiplication (first method)");
+        System.out.println("3. LDL' decomposition by L, D and L' multiplication (first method)");
+        System.out.println("4. LU decomposition by L and U multiplication (second method)");
+        System.out.println("5. LL' decomposition by L and L' multiplication (second method)");
+        System.out.println("6. LDL' decomposition by L, D and L' multiplication (second method)");
+    }
+
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // get the matrix by a multiplication components
     public void User_Interface(float[][] L) throws Exception {
         int n = L.length;
         Scanner sc = new Scanner(System.in);
-        User_Menu_Receive();
+        User_Menu();
         int op = sc.nextInt();
         float[][] U, D, LT;
         switch (op) {

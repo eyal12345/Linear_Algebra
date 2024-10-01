@@ -13,18 +13,6 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
         this.M = nM;
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    // display user interface by selection method for decompose matrices
-    private static void User_Menu_Decompose() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. get L and U matrices by decomposition of M (first method)");
-        System.out.println("2. get L and L' matrices by decomposition of M (first method)");
-        System.out.println("3. get L, D and L' matrices by decomposition of M (first method)");
-        System.out.println("4. get L and U matrices by decomposition of M (second method)");
-        System.out.println("5. get L and L' matrices by decomposition of M (second method)");
-        System.out.println("6. get L, D and L' matrices by decomposition of M (second method)");
-    }
-
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
     private void From_M_To_LU_V1(float[][] M) {
@@ -223,12 +211,25 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
         }
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    @Override
+    // display user interface by selection method for decompose matrices
+    public void User_Menu() {
+        System.out.println("choose number method to solution:");
+        System.out.println("1. get L and U matrices by decomposition of M (first method)");
+        System.out.println("2. get L and L' matrices by decomposition of M (first method)");
+        System.out.println("3. get L, D and L' matrices by decomposition of M (first method)");
+        System.out.println("4. get L and U matrices by decomposition of M (second method)");
+        System.out.println("5. get L and L' matrices by decomposition of M (second method)");
+        System.out.println("6. get L, D and L' matrices by decomposition of M (second method)");
+    }
+
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // get the matrix components
     public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_Decompose();
+        User_Menu();
         int op = sc.nextInt();
         switch (op) {
             case 1 -> {

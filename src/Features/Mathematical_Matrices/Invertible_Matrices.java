@@ -49,15 +49,6 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         this.M = M; this.InvM = InvM;
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    // display user interface by selection method for solution
-    private static void User_Menu_Invertible() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
-        System.out.println("2. invert a matrix by ranking rows");
-        System.out.println("3. invert a matrix by elementary matrices");
-    }
-
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
     private float[][] Invertible_Direct(float[][] M) {
@@ -160,12 +151,22 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         return InvM;
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    @Override
+    // display user interface by selection method for solution
+    public void User_Menu() {
+        System.out.println("choose number method to solution:");
+        System.out.println("1. invert a matrix by formula: Inv(M) = (1/|M|) * Adj(M)");
+        System.out.println("2. invert a matrix by ranking rows");
+        System.out.println("3. invert a matrix by elementary matrices");
+    }
+
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // choose option in order to correctness check for M matrix
     public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_Invertible();
+        User_Menu();
         int op = sc.nextInt();
         InvM = Unit_Matrix(M.length);
         switch (op) {

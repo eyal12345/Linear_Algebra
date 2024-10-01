@@ -13,15 +13,6 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         this.M = nM;
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    // display user interface by selection method for solution
-    private static void User_Menu_Determinant() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. calculate determinant in the standard method");
-        System.out.println("2. calculate determinant in the special method up to 3*3 size (first method)");
-        System.out.println("3. calculate determinant in the special method up to 3*3 size (second method)");
-    }
-
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     private float Determinant_Up_To_3x3_V1(float[][] M) {
         int n = M.length;
@@ -64,12 +55,22 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         return det;
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    @Override
+    // display user interface by selection method for solution
+    public void User_Menu() {
+        System.out.println("choose number method to solution:");
+        System.out.println("1. calculate determinant in the standard method");
+        System.out.println("2. calculate determinant in the special method up to 3*3 size (first method)");
+        System.out.println("3. calculate determinant in the special method up to 3*3 size (second method)");
+    }
+
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // choose option in order to correctness check for M matrix
     public void User_Interface(float[][] M) throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_Determinant();
+        User_Menu();
         int op = sc.nextInt();
         int n = M.length;
         float det;

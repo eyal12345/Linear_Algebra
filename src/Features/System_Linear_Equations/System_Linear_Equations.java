@@ -169,17 +169,6 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         fr.println("x = " + sol.append(suf));
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    // display user interface by selection method for solution
-    private void User_Menu_System() {
-        System.out.println("choose the number of method to solution:");
-        System.out.println("1. invertible method (not support vector solutions)");
-        System.out.println("2. cramer method (not support vector solutions)");
-        System.out.println("3. forward backward method (not support vector solutions)");
-        System.out.println("4. ranking rows method");
-        System.out.println("5. elementary matrices method");
-    }
-
     /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
     // display the coordinates as a vector representation
     private String Display_Vector(float[][] x, int c) {
@@ -317,12 +306,24 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         return null;
     }
 
+    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
+    @Override
+    // display user interface by selection method for solution
+    public void User_Menu() {
+        System.out.println("choose the number of method to solution:");
+        System.out.println("1. invertible method (not support vector solutions)");
+        System.out.println("2. cramer method (not support vector solutions)");
+        System.out.println("3. forward backward method (not support vector solutions)");
+        System.out.println("4. ranking rows method");
+        System.out.println("5. elementary matrices method");
+    }
+
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // choose action in order to solve a system Ax = b
     public void User_Interface(float[][] A, float[][] b) throws Exception {
         Scanner sc = new Scanner(System.in);
-        User_Menu_System();
+        User_Menu();
         int op = sc.nextInt();
         Write_Status_System(A,b);
         if (Is_Invalid_System(A,b)) {
