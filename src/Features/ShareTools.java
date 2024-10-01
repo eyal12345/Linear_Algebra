@@ -6,12 +6,10 @@ import java.util.Vector;
 public class ShareTools {
 
     public final String fn;
-    public final String ne;
     public PrintWriter fr;
 
-    public ShareTools(String fn, String ne, PrintWriter fr) {
+    public ShareTools(String fn, PrintWriter fr) {
         this.fn = fn;
-        this.ne = ne;
         this.fr = fr;
     }
 

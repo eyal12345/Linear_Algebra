@@ -4,8 +4,8 @@ import java.io.PrintWriter;
 
 public class Elementary_Matrices_Method extends System_Linear_Equations_Extended implements Elementary_Method_Actions {
 
-    public Elementary_Matrices_Method(float[][] nA, float[][] nb, String fn, String ne, PrintWriter fr) {
-        super(nA, nb, fn, ne, fr);
+    public Elementary_Matrices_Method(float[][] nA, float[][] nb, String fn, PrintWriter fr) {
+        super(nA, nb, fn, fr);
     }
 
     @Override

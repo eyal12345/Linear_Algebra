@@ -8,8 +8,8 @@ import java.util.Scanner;
 public class Determinant_Calculate extends ShareTools implements MenuActions {
     public float[][] M;
 
-    public Determinant_Calculate(float[][] nM, String fn, String ne, PrintWriter fr) {
-        super(fn, ne, fr);
+    public Determinant_Calculate(float[][] nM, String fn, PrintWriter fr) {
+        super(fn, fr);
         this.M = nM;
     }
 

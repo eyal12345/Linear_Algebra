@@ -86,25 +86,25 @@ public class ContentReader {
         PrintWriter fr = Create_Exercise_Path(title,space,exercise,format);
         switch (title) {
             case "Calculate_Determinant" -> {
-                MenuActions run = new Determinant_Calculate(M, format, exercise, fr);
+                MenuActions run = new Determinant_Calculate(M,format,fr);
                 run.Run_Progress();
             }
             case "Receive_Matrices" -> {
-                MenuActions run = new Receive_Matrices(M,format,exercise,fr);
+                MenuActions run = new Receive_Matrices(M,format,fr);
                 run.Run_Progress();
             }
             case "Decompose_Matrices" -> {
-                MenuActions run = new Decompose_Matrices(M,format,exercise,fr);
+                MenuActions run = new Decompose_Matrices(M,format,fr);
                 run.Run_Progress();
             }
             case "Invertible_Matrices" -> {
-                MenuActions run = new Invertible_Matrices(M,format,exercise,fr);
+                MenuActions run = new Invertible_Matrices(M,format,fr);
                 run.Run_Progress();
             }
             case "System_Linear_Equations" -> {
                 float[][] A = Extract_Matrix_Component(M);
                 float[][] b = Extract_Vector_Component(M);
-                MenuActionsSLE run = new System_Linear_Equations(A,b,format,exercise,fr);
+                MenuActionsSLE run = new System_Linear_Equations(A,b,format,fr);
                 run.Run_Progress();
             }
             default -> throw new Exception("you entered an invalid value of title subject");

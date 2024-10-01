@@ -9,8 +9,8 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     public float[][] M;
     public float[][] InvM;
 
-    public Invertible_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
-        super(fn, ne, fr);
+    public Invertible_Matrices(float[][] nM, String fn, PrintWriter fr) {
+        super(fn, fr);
         this.M = nM;
         this.InvM = Unit_Matrix(nM.length);
     }

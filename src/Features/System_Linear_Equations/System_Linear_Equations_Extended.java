@@ -4,8 +4,8 @@ import java.io.PrintWriter;
 
 public class System_Linear_Equations_Extended extends System_Linear_Equations {
 
-    public System_Linear_Equations_Extended(float[][] nA, float[][] nb, String fn, String ne, PrintWriter fr) {
-        super(nA, nb, fn, ne, fr);
+    public System_Linear_Equations_Extended(float[][] nA, float[][] nb, String fn, PrintWriter fr) {
+        super(nA, nb, fn, fr);
     }
 
     //////////////////////////////////////// Actions for Ranking Methods ////////////////////////////////////////

@@ -8,8 +8,8 @@ import java.io.PrintWriter;
 public class Decompose_Matrices extends ShareTools implements MenuActions {
     private final float[][] M;
 
-    public Decompose_Matrices(float[][] nM, String fn, String ne, PrintWriter fr) {
-        super(fn, ne, fr);
+    public Decompose_Matrices(float[][] nM, String fn, PrintWriter fr) {
+        super(fn, fr);
         this.M = nM;
     }
 

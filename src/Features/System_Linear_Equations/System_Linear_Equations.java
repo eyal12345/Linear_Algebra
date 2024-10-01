@@ -10,8 +10,8 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
     public float[][] b;
     public float[][] x;
 
-    public System_Linear_Equations(float[][] nA, float[][] nb, String fn, String ne, PrintWriter fr) {
-        super(fn, ne, fr);
+    public System_Linear_Equations(float[][] nA, float[][] nb, String fn, PrintWriter fr) {
+        super(fn, fr);
         this.A = nA;
         this.b = nb;
         this.x = null;
@@ -344,12 +344,12 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
             }
             case 4 -> {
                 fr.println("implement the solution by ranking rows method:");
-                Elementary_Method_Actions met = new Ranking_Rows_Method(A,b,fn,ne,fr);
+                Elementary_Method_Actions met = new Ranking_Rows_Method(A,b,fn,fr);
                 x = met.Elementary_Method_Action(A,b);
             }
             case 5 -> {
                 fr.println("implement the solution by elementary matrices method:");
-                Elementary_Method_Actions met = new Elementary_Matrices_Method(A,b,fn,ne,fr);
+                Elementary_Method_Actions met = new Elementary_Matrices_Method(A,b,fn,fr);
                 x = met.Elementary_Method_Action(A,b);
             }
             default -> throw new Exception("you entered an invalid value for an option number to solution");

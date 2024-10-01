@@ -8,8 +8,8 @@ import java.io.PrintWriter;
 public class Receive_Matrices extends ShareTools implements MenuActions {
     private final float[][] L;
 
-    public Receive_Matrices(float[][] nL, String fn, String ne, PrintWriter fr) {
-        super(fn, ne, fr);
+    public Receive_Matrices(float[][] nL, String fn, PrintWriter fr) {
+        super(fn, fr);
         this.L = nL;
     }
 
