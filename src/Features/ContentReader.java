@@ -84,29 +84,28 @@ public class ContentReader {
 
     private static void Choose_Mathematical_Branch(float[][] M, String title, String space, String exercise, String format) throws Exception {
         PrintWriter fr = Create_Exercise_Path(title,space,exercise,format);
-        MenuActions run;
         switch (title) {
             case "Calculate_Determinant" -> {
-                run = new Determinant_Calculate(M, format, exercise, fr);
+                MenuActions run = new Determinant_Calculate(M, format, exercise, fr);
                 run.Run_Progress();
             }
             case "Receive_Matrices" -> {
-                run = new Receive_Matrices(M,format,exercise,fr);
+                MenuActions run = new Receive_Matrices(M,format,exercise,fr);
                 run.Run_Progress();
             }
             case "Decompose_Matrices" -> {
-                run = new Decompose_Matrices(M,format,exercise,fr);
+                MenuActions run = new Decompose_Matrices(M,format,exercise,fr);
                 run.Run_Progress();
             }
             case "Invertible_Matrices" -> {
-                run = new Invertible_Matrices(M,format,exercise,fr);
+                MenuActions run = new Invertible_Matrices(M,format,exercise,fr);
                 run.Run_Progress();
             }
             case "System_Linear_Equations" -> {
                 float[][] A = Extract_Matrix_Component(M);
                 float[][] b = Extract_Vector_Component(M);
-                System_Linear_Equations sle = new System_Linear_Equations(A,b,format,exercise,fr);
-                sle.Progress_Run();
+                MenuActionsSLE run = new System_Linear_Equations(A,b,format,exercise,fr);
+                run.Run_Progress();
             }
             default -> throw new Exception("you entered an invalid value of title subject");
         }

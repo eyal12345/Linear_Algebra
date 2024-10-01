@@ -1,10 +1,11 @@
 package Features.System_Linear_Equations;
 
+import Features.MenuActionsSLE;
 import Features.ShareTools;
 import java.util.Scanner;
 import java.io.PrintWriter;
 
-public class System_Linear_Equations extends ShareTools {
+public class System_Linear_Equations extends ShareTools implements MenuActionsSLE {
     public float[][] A;
     public float[][] b;
     public float[][] x;
@@ -317,8 +318,9 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
+    @Override
     // choose action in order to solve a system Ax = b
-    private void Solve_System(float[][] A, float[][] b) throws Exception {
+    public void User_Interface(float[][] A, float[][] b) throws Exception {
         Scanner sc = new Scanner(System.in);
         User_Menu_System();
         int op = sc.nextInt();
@@ -357,13 +359,14 @@ public class System_Linear_Equations extends ShareTools {
     }
 
     //////////////////////////////////////////////// Check Input ////////////////////////////////////////////////
+    @Override
     // check if user input is valid
-    public void Progress_Run() throws Exception {
+    public void Run_Progress() throws Exception {
         if (fn.equals("decimal") || fn.equals("rational")) {
             int m = A.length, k = b.length, l = b[0].length;
             Write_Exercise(A,b);
             if (m == k && l == 1) {
-                Solve_System(A,b);
+                User_Interface(A,b);
             } else {
                 fr.println("this is an input does not meet the conditions for system of linear equations");
             }
