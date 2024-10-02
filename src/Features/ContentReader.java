@@ -10,11 +10,11 @@ import java.io.*;
 
 public class ContentReader {
 
-    public String title;
-    public String method;
-    public String space;
-    public String exercise;
-    public String format;
+    public final String title;
+    public final String method;
+    public final String space;
+    public final String exercise;
+    public final String format;
 
     public ContentReader(String title, String method, String space, String exercise, String format) {
         this.title = title;
