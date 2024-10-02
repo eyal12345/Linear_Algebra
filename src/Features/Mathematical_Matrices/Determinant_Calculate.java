@@ -13,7 +13,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     }
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
-    private float Determinant_Up_To_3x3_V1(float[][] M) {
+    private float Determinant_Up_To_3x3(float[][] M) {
         int n = M.length;
         float det = (n > 1) ? 0 : M[0][0];
         for (int i = 0 ;i < n ;i++) {
@@ -78,7 +78,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
                 Display_Status_Matrix(M,format);
                 writer.println("implement the solution by first special method:");
                 if (n <= 3) {
-                    det = Determinant_Up_To_3x3_V1(M);
+                    det = Determinant_Up_To_3x3(M);
                     writer.println("the determinant of this matrix is:");
                     if ((Math.round(det * 1000.0) / 1000.0) % 1 == 0) {
                         writer.print((int) (Math.round(det * 1000.0) / 1000.0));

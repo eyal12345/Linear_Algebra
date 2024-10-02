@@ -14,7 +14,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
-    private void from_M_To_LU_V1(float[][] M) {
+    private void from_M_To_LU(float[][] M) {
         int n = M.length;
         float[][] L = new float[n][n];
         float[][] U = new float[n][n];
@@ -43,7 +43,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
     }
 
     // get the LL' decomposition of M (first algorithm)
-    private void from_M_To_LLT_V1(float[][] M) {
+    private void from_M_To_LLT(float[][] M) {
         if (Is_Symmetrical_Matrix(M) && Is_Values_Positives(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -82,7 +82,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
     }
 
     // get the LDL' decomposition of M (first algorithm)
-    private void from_M_To_LDLT_V1(float[][] M) {
+    private void from_M_To_LDLT(float[][] M) {
         if (Is_Symmetrical_Matrix(M)) {
             int n = M.length;
             float[][] L = new float[n][n];
@@ -217,15 +217,15 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
         switch (method) {
             case "LU_Decomposition" -> {
                 writer.println("find L and U by decomposition of M:");
-                from_M_To_LU_V1(M);
+                from_M_To_LU(M);
             }
             case "LLT_Decomposition" -> {
                 writer.println("find L and L' by decomposition of M:");
-                from_M_To_LLT_V1(M);
+                from_M_To_LLT(M);
             }
             case "LDLT_Decomposition" -> {
                 writer.println("find L, D and L' by decomposition of M:");
-                from_M_To_LDLT_V1(M);
+                from_M_To_LDLT(M);
             }
             case "LU_Decomposition_2" -> {
                 writer.println("find L and U by decomposition of M:");

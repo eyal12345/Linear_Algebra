@@ -41,7 +41,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
     }
 
     // get the LU decomposition by multiplication of L and U (first algorithm)
-    private void from_LU_To_M_V1(float[][] L, float[][] U) {
+    private void from_LU_To_M(float[][] L, float[][] U) {
         if (Is_One_Slant(L)) {
             float[][] M = Mul_Mats(L,U);
             writer.println("M = ");
@@ -53,14 +53,14 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // get the LL' decomposition by multiplication of L and L' (first algorithm)
-    private void from_LLT_To_M_V1(float[][] L, float[][] LT) {
+    private void from_LLT_To_M(float[][] L, float[][] LT) {
         float[][] M = Mul_Mats(L,LT);
         writer.println("M = ");
         writer.println(Display_Status_Matrix(M,format));
     }
 
     // get the LDL' decomposition by multiplication of L, D and L' (first algorithm)
-    private void from_LDLT_To_M_V1(float[][] L, float[][] D, float[][] LT) {
+    private void from_LDLT_To_M(float[][] L, float[][] D, float[][] LT) {
         if (Is_One_Slant(L)) {
             float[][] M = Mul_Mats(Mul_Mats(L,D),LT);
             writer.println("M = ");
@@ -138,14 +138,14 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
                 U = Create_Upper_Matrix(n);
                 writer.println("U = ");
                 writer.println(Display_Status_Matrix(U,format));
-                from_LU_To_M_V1(L,U);
+                from_LU_To_M(L,U);
             }
             case "LLT_Multiplication" -> {
                 writer.println("find the matrix by L and L' multiplication:");
                 LT = Transpose(L);
                 writer.println("L' = ");
                 writer.println(Display_Status_Matrix(LT,format));
-                from_LLT_To_M_V1(L,LT);
+                from_LLT_To_M(L,LT);
             }
             case "LDLT_Multiplication" -> {
                 writer.println("find the matrix by L, D and L' multiplication:");
@@ -155,7 +155,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
                 LT = Transpose(L);
                 writer.println("L' = ");
                 writer.println(Display_Status_Matrix(LT,format));
-                from_LDLT_To_M_V1(L,D,LT);
+                from_LDLT_To_M(L,D,LT);
             }
             case "LU_Multiplication_2" -> {
                 writer.println("find the matrix by L and U multiplication:");
