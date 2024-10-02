@@ -4,8 +4,8 @@ import java.io.PrintWriter;
 
 public class Ranking_Rows_Method extends System_Linear_Equations_Extended implements Elementary_Method_Actions {
 
-    public Ranking_Rows_Method(float[][] nA, float[][] nb, String fn, PrintWriter fr) {
-        super(nA, nb, fn, fr);
+    public Ranking_Rows_Method(float[][] nA, float[][] nb, String method, String format, PrintWriter writer) {
+        super(nA, nb, method, format, writer);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class Ranking_Rows_Method extends System_Linear_Equations_Extended implem
     @Override
     // solve system of linear equations Ax = b by ranking rows
     public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
-        fr.println("transform A matrix to I by ranking rows:");
+        writer.println("transform A matrix to I by ranking rows:");
         int m = A.length, n = A[0].length;
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
@@ -77,7 +77,7 @@ public class Ranking_Rows_Method extends System_Linear_Equations_Extended implem
                     A = this.A; b = this.b;
                     m = A.length; n = A[0].length;
                     if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                        fr.println("does not exists solutions");
+                        writer.println("does not exists solutions");
                         return null;
                     }
                 }

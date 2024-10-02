@@ -3,13 +3,12 @@ package Features.Mathematical_Matrices;
 import Features.MenuActions;
 import Features.ShareTools;
 import java.io.PrintWriter;
-import java.util.Scanner;
 
 public class Determinant_Calculate extends ShareTools implements MenuActions {
     public float[][] M;
 
-    public Determinant_Calculate(float[][] nM, String fn, PrintWriter fr) {
-        super(fn, fr);
+    public Determinant_Calculate(float[][] nM, String method, String format, PrintWriter writer) {
+        super(method, format, writer);
         this.M = nM;
     }
 
@@ -55,71 +54,58 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         return det;
     }
 
-    ///////////////////////////////////////////////// User Menus /////////////////////////////////////////////////
-    @Override
-    // display user interface by selection method for solution
-    public void User_Menu() {
-        System.out.println("choose number method to solution:");
-        System.out.println("1. calculate determinant in the standard method");
-        System.out.println("2. calculate determinant in the special method up to 3*3 size (first method)");
-        System.out.println("3. calculate determinant in the special method up to 3*3 size (second method)");
-    }
-
     /////////////////////////////////////////////// User Interface ///////////////////////////////////////////////
     @Override
     // choose option in order to correctness check for M matrix
     public void User_Interface(float[][] M) throws Exception {
-        Scanner sc = new Scanner(System.in);
-        User_Menu();
-        int op = sc.nextInt();
         int n = M.length;
         float det;
-        switch (op) {
-            case 1 -> {
-                Display_Status_Matrix(M,fn);
-                fr.println("implement the solution by regular method");
+        switch (method) {
+            case "Standard_Method" -> {
+                Display_Status_Matrix(M,format);
+                writer.println("implement the solution by regular method");
                 det = Determinant(M);
-                fr.println("the determinant of this matrix is:");
+                writer.println("the determinant of this matrix is:");
                 if ((Math.round(det * 1000.0) / 1000.0) % 1 == 0) {
-                    fr.print((int) (Math.round(det * 1000.0) / 1000.0));
-                } else if (fn.equals("decimal")) {
-                    fr.print(Math.round(det * 1000.0) / 1000.0);
-                } else if (fn.equals("rational")) {
-                    fr.print(convertDecimalToFraction(det));
+                    writer.print((int) (Math.round(det * 1000.0) / 1000.0));
+                } else if (format.equals("decimal")) {
+                    writer.print(Math.round(det * 1000.0) / 1000.0);
+                } else if (format.equals("rational")) {
+                    writer.print(convertDecimalToFraction(det));
                 }
             }
-            case 2 -> {
-                Display_Status_Matrix(M,fn);
-                fr.println("implement the solution by first special method:");
+            case "Special_Method" -> {
+                Display_Status_Matrix(M,format);
+                writer.println("implement the solution by first special method:");
                 if (n <= 3) {
                     det = Determinant_Up_To_3x3_V1(M);
-                    fr.println("the determinant of this matrix is:");
+                    writer.println("the determinant of this matrix is:");
                     if ((Math.round(det * 1000.0) / 1000.0) % 1 == 0) {
-                        fr.print((int) (Math.round(det * 1000.0) / 1000.0));
-                    } else if (fn.equals("decimal")) {
-                        fr.print(Math.round(det * 1000.0) / 1000.0);
-                    } else if (fn.equals("rational")) {
-                        fr.print(convertDecimalToFraction(det));
+                        writer.print((int) (Math.round(det * 1000.0) / 1000.0));
+                    } else if (format.equals("decimal")) {
+                        writer.print(Math.round(det * 1000.0) / 1000.0);
+                    } else if (format.equals("rational")) {
+                        writer.print(convertDecimalToFraction(det));
                     }
                 } else {
-                    fr.println("you entered matrix with size greater than 3");
+                    writer.println("you entered matrix with size greater than 3");
                 }
             }
-            case 3 -> {
-                Display_Status_Matrix(M,fn);
-                fr.println("implement the solution by second special method:");
+            case "Special_Method_2" -> {
+                Display_Status_Matrix(M,format);
+                writer.println("implement the solution by second special method:");
                 if (n <= 3) {
                     det = Determinant_Up_To_3x3_V2(M);
-                    fr.println("the determinant of this matrix is:");
+                    writer.println("the determinant of this matrix is:");
                     if ((Math.round(det * 1000.0) / 1000.0) % 1 == 0) {
-                        fr.print((int) (Math.round(det * 1000.0) / 1000.0));
-                    } else if (fn.equals("decimal")) {
-                        fr.print(Math.round(det * 1000.0) / 1000.0);
-                    } else if (fn.equals("rational")) {
-                        fr.print(convertDecimalToFraction(det));
+                        writer.print((int) (Math.round(det * 1000.0) / 1000.0));
+                    } else if (format.equals("decimal")) {
+                        writer.print(Math.round(det * 1000.0) / 1000.0);
+                    } else if (format.equals("rational")) {
+                        writer.print(convertDecimalToFraction(det));
                     }
                 } else {
-                    fr.println("you entered matrix with size greater than 3");
+                    writer.println("you entered matrix with size greater than 3");
                 }
             }
             default -> throw new Exception("you entered invalid number");
@@ -130,16 +116,16 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     @Override
     // check if user input is valid
     public void Run_Progress() throws Exception {
-        if (fn.equals("decimal") || fn.equals("rational")) {
+        if (format.equals("decimal") || format.equals("rational")) {
             int m = M.length, n = M[0].length;
-            fr.println("calculate determinant of the next matrix (" + m + "*" + n + " size):");
-            fr.println(Display_Status_Matrix(M,fn));
+            writer.println("calculate determinant of the next matrix (" + m + "*" + n + " size):");
+            writer.println(Display_Status_Matrix(M,format));
             if (m != n) {
-                fr.println("this is a matrix which is not a square matrix");
+                writer.println("this is a matrix which is not a square matrix");
             } else {
                 User_Interface(M);
             }
-            fr.close();
+            writer.close();
         } else {
             throw new Exception("you entered invalid value for a representation elementary actions and solution");
         }

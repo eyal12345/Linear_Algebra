@@ -5,12 +5,14 @@ import java.util.Vector;
 
 public class ShareTools {
 
-    public final String fn;
-    public PrintWriter fr;
+    public final String method;
+    public final String format;
+    public PrintWriter writer;
 
-    public ShareTools(String fn, PrintWriter fr) {
-        this.fn = fn;
-        this.fr = fr;
+    public ShareTools(String method, String format, PrintWriter writer) {
+        this.method = method;
+        this.format = format;
+        this.writer = writer;
     }
 
     /////////////////////////////////////////////// Display Matrix ///////////////////////////////////////////////
@@ -446,11 +448,11 @@ public class ShareTools {
     public void Retreat_Elementary_Description(int i, int j) {
         int r1 = i + 1, r2 = j + 1;
         if (r1 <= r2) {
-            fr.println("R" + r1 + " <--> R" + r2);
+            writer.println("R" + r1 + " <--> R" + r2);
         } else {
-            fr.println("R" + r2 + " <--> R" + r1);
+            writer.println("R" + r2 + " <--> R" + r1);
         }
-        fr.println();
+        writer.println();
     }
 
     // show elementary actions for sum between rows in the system
@@ -461,47 +463,47 @@ public class ShareTools {
             if (k > 0) {
                 if (k % 1 == 0) {
                     if (k == 1) {
-                        fr.println("R" + r + " --> R" + r + " - R" + c);
+                        writer.println("R" + r + " --> R" + r + " - R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c);
                     }
-                } else if (fn.equals("decimal")) {
+                } else if (format.equals("decimal")) {
                     if (k % 1 == 0) {
-                        fr.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " - " + (int) k + "*R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " - " + k + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " - " + k + "*R" + c);
                     }
-                } else if (fn.equals("rational")) {
+                } else if (format.equals("rational")) {
                     String v = convertDecimalToFraction(k);
                     if (!v.equals("1")) {
-                        fr.println("R" + r + " --> R" + r + " - " + convertDecimalToFraction(k) + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " - " + convertDecimalToFraction(k) + "*R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " - R" + c);
+                        writer.println("R" + r + " --> R" + r + " - R" + c);
                     }
                 }
             } else {
                 if (k % 1 == 0) {
                     if (k == -1) {
-                        fr.println("R" + r + " --> R" + r + " + R" + c);
+                        writer.println("R" + r + " --> R" + r + " + R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c);
                     }
-                } else if (fn.equals("decimal")) {
+                } else if (format.equals("decimal")) {
                     if (k % 1 == 0) {
-                        fr.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " + " + (int) (-k) + "*R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " + " + (-k) + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " + " + (-k) + "*R" + c);
                     }
-                } else if (fn.equals("rational")) {
+                } else if (format.equals("rational")) {
                     String v = convertDecimalToFraction(-k);
                     if (!v.equals("-1")) {
-                        fr.println("R" + r + " --> R" + r + " + " + convertDecimalToFraction(-k) + "*R" + c);
+                        writer.println("R" + r + " --> R" + r + " + " + convertDecimalToFraction(-k) + "*R" + c);
                     } else {
-                        fr.println("R" + r + " --> R" + r + " + R" + c);
+                        writer.println("R" + r + " --> R" + r + " + R" + c);
                     }
                 }
             }
-            fr.println();
+            writer.println();
         }
     }
 
@@ -511,26 +513,26 @@ public class ShareTools {
             int r = j + 1;
             if (k % 1 == 0) {
                 if (k == -1) {
-                    fr.println("R" + r + " --> - R" + r);
+                    writer.println("R" + r + " --> - R" + r);
                 } else {
-                    fr.println("R" + r + " --> " + (int) k + "*R" + r);
+                    writer.println("R" + r + " --> " + (int) k + "*R" + r);
                 }
-            } else if (fn.equals("decimal")) {
+            } else if (format.equals("decimal")) {
                 k = (float) (Math.round(k * 1000.0) / 1000.0);
                 if (k % 1 == 0) {
-                    fr.println("R" + r + " --> " + (int) k + "*R" + r);
+                    writer.println("R" + r + " --> " + (int) k + "*R" + r);
                 } else {
-                    fr.println("R" + r + " --> " + k + "*R" + r);
+                    writer.println("R" + r + " --> " + k + "*R" + r);
                 }
-            } else if (fn.equals("rational")) {
+            } else if (format.equals("rational")) {
                 k = (float) (Math.round(k * 1000.0) / 1000.0);
                 if (k == -1) {
-                    fr.println("R" + r + " --> - R" + r);
+                    writer.println("R" + r + " --> - R" + r);
                 } else {
-                    fr.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r);
+                    writer.println("R" + r + " --> " + convertDecimalToFraction(k) + "*R" + r);
                 }
             }
-            fr.println();
+            writer.println();
         }
     }
 }
