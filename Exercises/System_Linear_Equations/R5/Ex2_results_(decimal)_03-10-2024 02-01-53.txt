@@ -12,7 +12,7 @@ eq5: - 6*x1 -   x2 - 6*x3 + 5*x4 +   x5  = 0
 -6 ,-1 ,-6 ,5 ,1 | 0
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 R3 --> R3 - 1.2*R1
 
 -5 ,-6 ,-5 ,-5 ,-3 | 0
@@ -173,7 +173,7 @@ R4 --> 0.028*R4
 0 ,0 ,0 ,1 ,0 | 0
 0 ,0 ,0 ,0 ,1 | 0
 
-define a new column in the vector b when x1 is a free variable in R5 space:
+define new column in the vector b when x1 is free variable in R5 space:
 1 ,0 ,0 ,0 ,0 | 0 ,1
 0 ,1 ,0 ,0 ,0 | 0 ,0
 -5 ,0 ,-5 ,0 ,0 | 0 ,0

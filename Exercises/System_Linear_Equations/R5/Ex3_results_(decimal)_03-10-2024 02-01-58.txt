@@ -11,8 +11,8 @@ eq5: + 8*x1 - 5*x2 + 3*x3 + 4*x4 - 2*x5  = 0
 1 ,-8 ,-3 ,0 ,-7 | 0
 8 ,-5 ,3 ,4 ,-2 | 0
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - 2*R1
 
 1 ,5 ,7 ,3 ,-5 | 0
@@ -141,7 +141,7 @@ R5 --> R5 - 0.311*R4
 0 ,0 ,0 ,1.01 ,-11.24 | 0
 0 ,0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x5 is a free variable in R5 space:
+define new column in the vector b when x5 is free variable in R5 space:
 1 ,0 ,0 ,0 ,4.125 | 0 ,0
 0 ,-14 ,0 ,0 ,-1.75 | 0 ,0
 0 ,0 ,34.5 ,0 ,116.438 | 0 ,0

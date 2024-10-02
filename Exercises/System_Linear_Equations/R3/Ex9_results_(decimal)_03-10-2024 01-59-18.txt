@@ -3,18 +3,18 @@ eq1: +   x1 +   x2 +   x3  = 5
 
 1 ,1 ,1 | 5
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
-adding a new row to the system
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
+adding new row to the system
 1 ,1 ,1 | 5
 0 ,0 ,0 | 0
 
-adding a new row to the system
+adding new row to the system
 1 ,1 ,1 | 5
 0 ,0 ,0 | 0
 0 ,0 ,0 | 0
 
-define a new column in the vector b when x2 is a free variable in R3 space:
+define new column in the vector b when x2 is free variable in R3 space:
 1 ,1 ,1 | 5 ,0
 0 ,1 ,0 | 0 ,1
 0 ,0 ,0 | 0 ,0
@@ -25,7 +25,7 @@ R1 --> R1 - R2
 0 ,1 ,0 | 0 ,1
 0 ,0 ,0 | 0 ,0
 
-define a new column in the vector b when x3 is a free variable in R3 space:
+define new column in the vector b when x3 is free variable in R3 space:
 1 ,0 ,1 | 5 ,-1 ,0
 0 ,1 ,0 | 0 ,1 ,0
 0 ,0 ,1 | 0 ,0 ,1

@@ -8,7 +8,7 @@ eq3: + 5*x1 - 2*x2  = 11
 5 ,-2 | 11
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - R1
 
 2 ,-3 | 0

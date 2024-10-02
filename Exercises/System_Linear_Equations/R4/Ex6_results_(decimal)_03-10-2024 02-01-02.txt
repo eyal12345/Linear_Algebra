@@ -18,7 +18,7 @@ eq8:                              = 0
 0 ,0 ,0 ,0 | 0
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 delete the zero row from the system:
 0 ,0 ,0 ,0 | 0
 0 ,0 ,0 ,0 | 0
@@ -49,25 +49,25 @@ delete the zero row from the system:
 0 ,0 ,0 ,0 | 0
 0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x1 is a free variable in R4 space:
+define new column in the vector b when x1 is free variable in R4 space:
 0 ,0 ,0 ,0 | 0 ,0
 1 ,0 ,0 ,0 | 0 ,1
 0 ,0 ,0 ,0 | 0 ,0
 0 ,0 ,0 ,0 | 0 ,0
 
-define a new column in the vector b when x2 is a free variable in R4 space:
+define new column in the vector b when x2 is free variable in R4 space:
 0 ,0 ,0 ,0 | 0 ,0 ,0
 1 ,0 ,0 ,0 | 0 ,1 ,0
 0 ,1 ,0 ,0 | 0 ,0 ,1
 0 ,0 ,0 ,0 | 0 ,0 ,0
 
-define a new column in the vector b when x3 is a free variable in R4 space:
+define new column in the vector b when x3 is free variable in R4 space:
 0 ,0 ,0 ,0 | 0 ,0 ,0 ,0
 1 ,0 ,0 ,0 | 0 ,1 ,0 ,0
 0 ,1 ,0 ,0 | 0 ,0 ,1 ,0
 0 ,0 ,1 ,0 | 0 ,0 ,0 ,1
 
-define a new column in the vector b when x4 is a free variable in R4 space:
+define new column in the vector b when x4 is free variable in R4 space:
 0 ,0 ,0 ,1 | 0 ,0 ,0 ,0 ,1
 1 ,0 ,0 ,0 | 0 ,1 ,0 ,0 ,0
 0 ,1 ,0 ,0 | 0 ,0 ,1 ,0 ,0

@@ -7,8 +7,8 @@ eq3: - 2*x1 +   x2 + 2*x3  = -3
 -3 ,-1 ,2 | -11
 -2 ,1 ,2 | -3
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 + 1.5*R1
 
 2 ,1 ,-1 | 8

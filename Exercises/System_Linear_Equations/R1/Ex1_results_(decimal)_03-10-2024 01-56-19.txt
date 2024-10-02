@@ -3,8 +3,8 @@ eq1: 2x = 4
 
 2 | 4
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R1 --> 0.5*R1
 
 1 | 2

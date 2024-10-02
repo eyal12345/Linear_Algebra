@@ -13,8 +13,8 @@ eq6: - 5*x1        -   x3        -   x5 + 6*x6  = 0
 1 ,6 ,2 ,5 ,-4 ,-4 | 0
 -5 ,0 ,-1 ,0 ,-1 ,6 | 0
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 + R1
 
 5 ,5 ,-1 ,4 ,-1 ,-3 | 0
@@ -231,7 +231,7 @@ R6 --> R6 + 0.211*R5
 0 ,0 ,0 ,0 ,-11.4 ,15.2 | 0
 0 ,0 ,0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x6 is a free variable in R6 space:
+define new column in the vector b when x6 is free variable in R6 space:
 5 ,0 ,0 ,0 ,0 ,-2.778 | 0 ,0
 0 ,11 ,0 ,0 ,0 ,30.556 | 0 ,0
 0 ,0 ,-4.8 ,0 ,0 ,9.067 | 0 ,0

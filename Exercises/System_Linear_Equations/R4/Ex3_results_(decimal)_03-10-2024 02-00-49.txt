@@ -5,8 +5,8 @@ eq2: + 4*x1 - 2*x2 + 6*x3 + 5*x4  = 4
 2 ,-1 ,3 ,3 | 4
 4 ,-2 ,6 ,5 | 4
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - 2*R1
 
 2 ,-1 ,3 ,3 | 4
@@ -17,7 +17,7 @@ R2 --> - R2
 2 ,-1 ,3 ,3 | 4
 0 ,0 ,0 ,1 | 4
 
-adding a new row to the system
+adding new row to the system
 2 ,-1 ,3 ,3 | 4
 0 ,0 ,0 ,1 | 4
 0 ,0 ,0 ,0 | 0
@@ -28,13 +28,13 @@ R1 <--> R2
 2 ,-1 ,3 ,3 | 4
 0 ,0 ,0 ,0 | 0
 
-adding a new row to the system
+adding new row to the system
 0 ,0 ,0 ,1 | 4
 2 ,-1 ,3 ,3 | 4
 0 ,0 ,0 ,0 | 0
 0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x3 is a free variable in R4 space:
+define new column in the vector b when x3 is free variable in R4 space:
 0 ,0 ,0 ,1 | 4 ,0
 2 ,-1 ,3 ,3 | 4 ,0
 0 ,0 ,1 ,0 | 0 ,1
@@ -61,7 +61,7 @@ R2 --> R2 - 3*R4
 0 ,0 ,1 ,0 | 0 ,1
 0 ,0 ,0 ,1 | 4 ,0
 
-define a new column in the vector b when x1 is a free variable in R4 space:
+define new column in the vector b when x1 is free variable in R4 space:
 1 ,0 ,0 ,0 | 0 ,0 ,1
 2 ,-1 ,0 ,0 | -8 ,-3 ,0
 0 ,0 ,1 ,0 | 0 ,1 ,0

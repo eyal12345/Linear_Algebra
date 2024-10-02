@@ -11,8 +11,8 @@ eq5: + 5*x1 + 5*x2 + 3*x3 + 5*x4 + 5*x5  = 52
 -3 ,-1 ,1 ,2 ,2 | 8
 5 ,5 ,3 ,5 ,5 | 52
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - 2*R1
 
 -2 ,2 ,2 ,-1 ,1 | 1

@@ -7,8 +7,8 @@ eq3: + 2*x1 -   x2 + 4*x3  = 0
 1 ,2 ,7 | 0
 2 ,-1 ,4 | 0
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - R1
 
 1 ,1 ,5 | 0
@@ -33,7 +33,7 @@ R3 --> R3 + 3*R2
 0 ,1 ,2 | 0
 0 ,0 ,0 | 0
 
-define a new column in the vector b when x3 is a free variable in R3 space:
+define new column in the vector b when x3 is free variable in R3 space:
 1 ,0 ,3 | 0 ,0
 0 ,1 ,2 | 0 ,0
 0 ,0 ,1 | 0 ,1
