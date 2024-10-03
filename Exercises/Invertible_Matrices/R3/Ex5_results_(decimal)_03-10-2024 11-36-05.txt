@@ -15,4 +15,4 @@ R2 --> R2 + 2*R1
 0 ,0 ,0 | 2 ,1 ,0
 6 ,6 ,30 | 0 ,0 ,1
 
-this is a singular matrix
+this is singular matrix

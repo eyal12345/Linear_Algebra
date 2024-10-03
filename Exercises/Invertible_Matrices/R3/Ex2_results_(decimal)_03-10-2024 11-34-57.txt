@@ -8,7 +8,7 @@ invert the next matrix (3*3 size):
 -1 ,3 ,5 | 0 ,0 ,1
 
 implement the solution by elementary matrices method:
-transform M matrix to I by an elementary matrices:
+transform M matrix to I by elementary matrices:
 R2 --> R2 - 2*R1
 
 1 ,-1 ,-2 | 1 ,0 ,0

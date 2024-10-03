@@ -15,4 +15,4 @@ R1 <--> R2
 0 ,0 ,0 | 1 ,0 ,0
 1 ,3 ,6 | 0 ,0 ,1
 
-this is a singular matrix
+this is singular matrix
