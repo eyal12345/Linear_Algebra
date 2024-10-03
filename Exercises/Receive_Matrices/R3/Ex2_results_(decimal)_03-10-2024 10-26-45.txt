@@ -1,4 +1,4 @@
-receive the M matrix from the L and another matrices (3*3 size):
+receive the M matrix writerom the L and another matrices (3*3 size):
 1 ,0 ,0
 3 ,1 ,0
 -4 ,5 ,1
