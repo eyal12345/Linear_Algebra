@@ -61,7 +61,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         int n = M.length;
         float det;
         switch (method) {
-            case "Standard_Method" -> {
+            case "Regular_Method" -> {
                 Display_Status_Matrix(M,format);
                 writer.println("implement the solution by regular method");
                 det = Determinant(M);
