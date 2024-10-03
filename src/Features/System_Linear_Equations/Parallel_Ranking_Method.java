@@ -60,6 +60,7 @@ public class Parallel_Ranking_Method extends System_Linear_Equations_Extended im
         }
     }
 
+    @Override
     // solve system of linear equations Ax = b by ranking rows
     public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
         writer.println("transform A matrix to I by ranking rows:");
