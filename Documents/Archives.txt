@@ -91,7 +91,7 @@ public float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
                 r = Index_UnZero_Value(A,i,false);
             } if (r >= 0 && r < m && r != i) {
                 A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
-                Retreat_Elementary_Action(i,r);
+                Retreat_Elementary_Description(i,r);
                 Retreat_Rows_Matrix(A,i,r);
                 Retreat_Rows_Matrix(b,i,r);
                 Write_Status_System(A,b);
@@ -102,7 +102,7 @@ public float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
         for (int j = s; j < m; j++) {
             if (A[i][i] != 0 && A[j][i] != 0 && !single) {
                 float c = A[j][i] / A[i][i];
-                Sum_Elementary_Action(c,j,i);
+                Sum_Elementary_Description(c,j,i);
                 for (int k = 0; k < n; k++) {
                     A[j][k] -= A[i][k] * c;
                     if (k <= t) {
@@ -129,7 +129,7 @@ public float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
                 int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
                 if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
                     float c = 1 / A[j][d];
-                    Mul_Elementary_Action(c,j);
+                    Mul_Elementary_Description(c,j);
                     for (int k = 0; k <= t; k++) {
                         b[j][k] /= A[j][d];
                     }
@@ -170,7 +170,7 @@ public float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
                 r = Index_UnZero_Value(A,i,true);
             } if (r >= 0 && r < m && r != i) {
                 A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
-                Retreat_Elementary_Action(i,r);
+                Retreat_Elementary_Description(i,r);
                 Retreat_Rows_Matrix(A,i,r);
                 Retreat_Rows_Matrix(b,i,r);
                 Write_Status_System(A,b);
@@ -181,7 +181,7 @@ public float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         for (int j = s; j >= 0; j--) {
             if (A[i][i] != 0 && A[j][i] != 0 && !single) {
                 float c = A[j][i] / A[i][i];
-                Sum_Elementary_Action(c,j,i);
+                Sum_Elementary_Description(c,j,i);
                 for (int k = n - 1; k >= 0; k--) {
                     A[j][k] -= A[i][k] * c;
                     if (k <= t) {
@@ -208,7 +208,7 @@ public float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
                 int d = Index_for_Unit_Vector(Row_from_Matrix(A,j));
                 if (d != -1 && A[j][d] != 0 && A[j][d] != 1) {
                     float c = 1 / A[j][d];
-                    Mul_Elementary_Action(c,j);
+                    Mul_Elementary_Description(c,j);
                     for (int k = 0; k <= t; k++) {
                         b[j][k] /= A[j][d];
                     }
