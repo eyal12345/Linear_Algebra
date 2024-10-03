@@ -16,7 +16,7 @@ eq7: + 2*x1 + 2*x2 - 7*x3 - 3*x4 + 3*x5 - 6*x6         = 5
 2 ,2 ,-7 ,-3 ,3 ,-6 ,0 | 5
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 R1 <--> R2
 
 7 ,-4 ,0 ,-7 ,1 ,-7 ,-4 | 5

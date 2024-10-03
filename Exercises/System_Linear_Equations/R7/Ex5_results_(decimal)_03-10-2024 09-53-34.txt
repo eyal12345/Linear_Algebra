@@ -15,8 +15,8 @@ eq7: - 3*x1 - 2*x2 + 6*x3 + 5*x4        -   x6 + 7*x7  = -15
 5 ,-5 ,2 ,1 ,7 ,-2 ,-5 | -10
 -3 ,-2 ,6 ,5 ,0 ,-1 ,7 | -15
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 + 1.333*R1
 
 -3 ,6 ,-3 ,3 ,-4 ,6 ,6 | 14

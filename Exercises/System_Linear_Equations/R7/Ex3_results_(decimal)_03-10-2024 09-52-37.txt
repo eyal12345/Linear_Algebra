@@ -15,8 +15,8 @@ eq7:        + 4*x2 - 4*x3 - 2*x4 - 3*x5 - 2*x6 + 3*x7  = 0
 1 ,-2 ,3 ,0 ,-4 ,-2 ,-4 | 0
 0 ,4 ,-4 ,-2 ,-3 ,-2 ,3 | 0
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R2 --> R2 + 1.5*R1
 
 2 ,3 ,1 ,-4 ,0 ,-3 ,0 | 0
@@ -357,7 +357,7 @@ R7 --> R7 + 2.391*R6
 0 ,0 ,0 ,0 ,0 ,-0.475 ,-1.307 | 0
 0 ,0 ,0 ,0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x7 is a free variable in R7 space:
+define new column in the vector b when x7 is free variable in R7 space:
 2 ,0 ,0 ,0 ,0 ,0 ,-5 | 0 ,0
 0 ,5.5 ,0 ,0 ,0 ,0 ,12.375 | 0 ,0
 0 ,0 ,-0.455 ,0 ,0 ,0 ,-0.682 | 0 ,0

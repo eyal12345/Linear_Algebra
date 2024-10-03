@@ -15,8 +15,8 @@ eq7: +   x1        -   x3 -   x4 + 4*x5 - 4*x6 + 5*x7  = 5
 4 ,2 ,-4 ,0 ,-1 ,0 ,0 | 15
 1 ,0 ,-1 ,-1 ,4 ,-4 ,5 | 5
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R1 <--> R2
 
 -2 ,1 ,3 ,-7 ,6 ,7 ,-6 | -2
