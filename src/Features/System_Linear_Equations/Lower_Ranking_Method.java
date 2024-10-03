@@ -77,13 +77,13 @@ public class Lower_Ranking_Method extends System_Linear_Equations_Extended imple
                 Sum_Elementary_Action(this.A,this.b,j,i);
                 Mul_Elementary_Action(this.A,this.b,j);
                 boolean changed = Is_Reduced_Rows(this.A,this.b,j);
-                A = this.A; b = this.b;
                 m = A.length; n = A[0].length;
                 if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
                     writer.println("does not exists solutions");
                     return null;
                 }
             }
+            A = this.A; b = this.b;
             if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
                 writer.print("and now ");
                 Elementary_Method_Actions met = new Upper_Ranking_Method(A,b,method,format,writer);
