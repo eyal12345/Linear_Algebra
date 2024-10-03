@@ -48,6 +48,25 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         this.M = M; this.InvM = InvM;
     }
 
+    // determine what kind of matrix
+    public String Which_Type_Triangular(float[][] M, boolean flag) {
+        if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
+            return "M is already parallel triangular so now will be change directly to I:";
+        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && flag) {
+            return "M is already upper triangular so now we'll go directly to the lower ranking:";
+        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && !flag) {
+            return "M is already lower triangular so now we'll go directly to the upper ranking:";
+        } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && flag) {
+            return "transform L matrix to I by upper ranking:";
+        } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && !flag) {
+            return "transform U matrix to I by lower ranking:";
+        } else if (flag) {
+            return "transform M matrix to U by upper ranking:";
+        } else {
+            return "transform M matrix to L by lower ranking:";
+        }
+    }
+
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
     private float[][] Invertible_Direct(float[][] M) {
@@ -66,6 +85,102 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             }
             return InvM;
         }
+    }
+
+    // invert the M matrix by upper ranking and then lower ranking
+    private float[][] Upper_Ranking_Rows_Action(float[][] M) {
+        writer.println(Which_Type_Triangular(M,true));
+        int n = M.length;
+        float[][] InvM = this.InvM;
+        for (int i = 0; i < n; i++) {
+            if (M[i][i] == 0) {
+                int r = Index_UnZero_Value(M,i,true);
+                Retreat_Elementary_Description(i,r);
+                Retreat_Rows_Matrix(M,i,r);
+                Retreat_Rows_Matrix(InvM,i,r);
+                Write_Status_Matrices(M,InvM);
+            }
+            for (int j = i + 1; j < n; j++) {
+                if (M[j][i] != 0) {
+                    float c = M[j][i] / M[i][i];
+                    Sum_Elementary_Description(c,j,i);
+                    for (int k = 0; k < n; k++) {
+                        M[j][k] -= M[i][k] * c;
+                        InvM[j][k] -= InvM[i][k] * c;
+                    }
+                    M[j][i] = 0;
+                    Write_Status_Matrices(M,InvM);
+                } if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
+                    writer.println("this is singular matrix");
+                    return null;
+                } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
+                    float c = 1 / M[j][j];
+                    Mul_Elementary_Description(c,j);
+                    for (int k = 0; k < n; k++) {
+                        InvM[j][k] /= M[j][j];
+                    }
+                    M[j][j] = 1;
+                    Write_Status_Matrices(M,InvM);
+                }
+            }
+            if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M)) {
+                writer.print("and now ");
+                return Lower_Ranking_Rows_Action(M);
+            }
+        }
+        if (!Is_Unit_Matrix(M)) {
+            writer.println("still not yet received unit matrix");
+            return Lower_Ranking_Rows_Action(M);
+        }
+        return InvM;
+    }
+
+    // invert the M matrix by lower ranking and then upper ranking
+    private float[][] Lower_Ranking_Rows_Action(float[][] M) {
+        writer.println(Which_Type_Triangular(M,false));
+        int n = M.length;
+        float[][] InvM = this.InvM;
+        for (int i = n - 1; i >= 0; i--) {
+            if (M[i][i] == 0) {
+                int r = Index_UnZero_Value(M,i,false);
+                Retreat_Elementary_Description(i,r);
+                Retreat_Rows_Matrix(M,i,r);
+                Retreat_Rows_Matrix(InvM,i,r);
+                Write_Status_Matrices(M,InvM);
+            }
+            for (int j = i - 1; j >= 0; j--) {
+                if (M[j][i] != 0) {
+                    float c = M[j][i] / M[i][i];
+                    Sum_Elementary_Description(c,j,i);
+                    for (int k = n - 1; k >= 0; k--) {
+                        M[j][k] -= M[i][k] * c;
+                        InvM[j][k] -= InvM[i][k] * c;
+                    }
+                    M[j][i] = 0;
+                    Write_Status_Matrices(M,InvM);
+                } if (Is_Zero_Row(M,j) || Is_Zero_Col(M,i)) {
+                    writer.println("this is singular matrix");
+                    return null;
+                } else if (Is_Unit_Vector(M,j) && M[j][j] != 0 && M[j][j] != 1) {
+                    float c = 1 / M[j][j];
+                    Mul_Elementary_Description(c,j);
+                    for (int k = 0; k < n; k++) {
+                        InvM[j][k] /= M[j][j];
+                    }
+                    M[j][j] = 1;
+                    Write_Status_Matrices(M,InvM);
+                }
+            }
+            if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
+                writer.print("and now ");
+                return Upper_Ranking_Rows_Action(M);
+            }
+        }
+        if (!Is_Unit_Matrix(M)) {
+            writer.println("still not yet received unit matrix");
+            return Upper_Ranking_Rows_Action(M);
+        }
+        return InvM;
     }
 
     // invert the M matrix by parallel ranking
@@ -160,9 +275,19 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
                 writer.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");
                 InvM = Invertible_Direct(M);
             }
+            case "Upper_Ranking_Method" -> {
+                Write_Status_Matrices(M,InvM);
+                writer.println("implement the solution by upper ranking method and then lower ranking method:");
+                InvM = Upper_Ranking_Rows_Action(M);
+            }
+            case "Lower_Ranking_Method" -> {
+                Write_Status_Matrices(M,InvM);
+                writer.println("implement the solution by lower ranking method and then upper ranking method:");
+                InvM = Lower_Ranking_Rows_Action(M);
+            }
             case "Ranking_Rows_Method" -> {
                 Write_Status_Matrices(M,InvM);
-                writer.println("implement the solution by ranking rows method:");
+                writer.println("implement the solution by parallel ranking rows method:");
                 InvM = Ranking_Rows_Action(M);
             }
             case "Elementary_Matrices_Method" -> {
