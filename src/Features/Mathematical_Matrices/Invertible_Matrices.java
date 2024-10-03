@@ -88,7 +88,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     }
 
     // invert the M matrix by upper ranking and then lower ranking
-    private float[][] Upper_Ranking_Rows_Action(float[][] M) {
+    private float[][] Upper_Ranking_Action(float[][] M) {
         writer.println(Which_Type_Triangular(M,true));
         int n = M.length;
         float[][] InvM = this.InvM;
@@ -125,18 +125,18 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             }
             if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M)) {
                 writer.print("and now ");
-                return Lower_Ranking_Rows_Action(M);
+                return Lower_Ranking_Action(M);
             }
         }
         if (!Is_Unit_Matrix(M)) {
             writer.println("still not yet received unit matrix");
-            return Lower_Ranking_Rows_Action(M);
+            return Lower_Ranking_Action(M);
         }
         return InvM;
     }
 
     // invert the M matrix by lower ranking and then upper ranking
-    private float[][] Lower_Ranking_Rows_Action(float[][] M) {
+    private float[][] Lower_Ranking_Action(float[][] M) {
         writer.println(Which_Type_Triangular(M,false));
         int n = M.length;
         float[][] InvM = this.InvM;
@@ -173,18 +173,18 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             }
             if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
                 writer.print("and now ");
-                return Upper_Ranking_Rows_Action(M);
+                return Upper_Ranking_Action(M);
             }
         }
         if (!Is_Unit_Matrix(M)) {
             writer.println("still not yet received unit matrix");
-            return Upper_Ranking_Rows_Action(M);
+            return Upper_Ranking_Action(M);
         }
         return InvM;
     }
 
     // invert the M matrix by parallel ranking
-    private float[][] Ranking_Rows_Action(float[][] M) {
+    private float[][] Parallel_Ranking_Action(float[][] M) {
         writer.println("transform M matrix to I by a parallel ranking:");
         int n = M.length;
         float[][] InvM = this.InvM;
@@ -278,17 +278,17 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             case "Upper_Ranking_Method" -> {
                 Write_Status_Matrices(M,InvM);
                 writer.println("implement the solution by upper ranking method and then lower ranking method:");
-                InvM = Upper_Ranking_Rows_Action(M);
+                InvM = Upper_Ranking_Action(M);
             }
             case "Lower_Ranking_Method" -> {
                 Write_Status_Matrices(M,InvM);
                 writer.println("implement the solution by lower ranking method and then upper ranking method:");
-                InvM = Lower_Ranking_Rows_Action(M);
+                InvM = Lower_Ranking_Action(M);
             }
-            case "Ranking_Rows_Method" -> {
+            case "Parallel_Ranking_Method" -> {
                 Write_Status_Matrices(M,InvM);
                 writer.println("implement the solution by parallel ranking rows method:");
-                InvM = Ranking_Rows_Action(M);
+                InvM = Parallel_Ranking_Action(M);
             }
             case "Elementary_Matrices_Method" -> {
                 Write_Status_Matrices(M,InvM);
