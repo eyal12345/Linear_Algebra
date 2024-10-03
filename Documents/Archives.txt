@@ -42,7 +42,7 @@ private int Index_UnZero_Value(float[][] M, int k, boolean flag) {
 /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
 // invert the M matrix by an upper ranking and then a lower ranking
 private float[][] Upper_Ranking_Method(float[][] M) {
-    fr.println(Which_Type_Triangular(M,true));
+    writer.println(Which_Type_Triangular(M,true));
     int n = M.length;
     float[][] InvM = this.InvM;
     for (int i = 0; i < n; i++) {
@@ -73,12 +73,12 @@ private float[][] Upper_Ranking_Method(float[][] M) {
             }
         }
         if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M)) {
-            fr.print("and now ");
+            writer.print("and now ");
             return Lower_Ranking_Method(M);
         }
     }
     if (!Is_Unit_Matrix(M)) {
-        fr.println("still not yet received an unit matrix");
+        writer.println("still not yet received an unit matrix");
         return Lower_Ranking_Method(M);
     }
     return InvM;
@@ -86,7 +86,7 @@ private float[][] Upper_Ranking_Method(float[][] M) {
 
 // invert the M matrix by a lower ranking and then an upper ranking
 private float[][] Lower_Ranking_Method(float[][] M) {
-    fr.println(Which_Type_Triangular(M,false));
+    writer.println(Which_Type_Triangular(M,false));
     int n = M.length;
     float[][] InvM = this.InvM;
     for (int i = n - 1; i >= 0; i--) {
@@ -117,12 +117,12 @@ private float[][] Lower_Ranking_Method(float[][] M) {
             }
         }
         if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            fr.print("and now ");
+            writer.print("and now ");
             return Upper_Ranking_Method(M);
         }
     }
     if (!Is_Unit_Matrix(M)) {
-        fr.println("still not yet received an unit matrix");
+        writer.println("still not yet received an unit matrix");
         return Upper_Ranking_Method(M);
     }
     return InvM;
@@ -170,9 +170,9 @@ private void Fill_Square_System(float[][] A, float[][] b) {
     int m = A.length, n = A[0].length;
     if (m < n) { // Underdetermined Systems
         if (n - m == 1) {
-            fr.println("added one more row of zeros in order to get a square completion");
+            writer.println("added one more row of zeros in order to get a square completion");
         } else {
-            fr.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
+            writer.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
         }
         Increase_Rows_in_System(A,b);
     }
@@ -242,7 +242,7 @@ private int Index_UnZero_Value(float[][] A, int k, boolean flag) {
 ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
 // solve system of linear equations Ax = b by an upper ranking and then a lower ranking
 private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
-    fr.println(Which_Type_Triangular(A,true));
+    writer.println(Which_Type_Triangular(A,true));
     int m = A.length, n = A[0].length;
     boolean single = (m == 1 && n == 1);
     for (int i = 0; i < Math.min(m,n); i++) {
@@ -283,7 +283,7 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
             }
             boolean changed = false;
             if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
-                fr.println("delete the zero row from the system:");
+                writer.println("delete the zero row from the system:");
                 Delete_Zero_Row(A,b,j);
                 A = this.A; b = this.b;
                 m = A.length; n = A[0].length;
@@ -302,17 +302,17 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                fr.println("does not an exists solutions");
+                writer.println("does not an exists solutions");
                 return null;
             }
         }
         if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
-            fr.print("and now ");
+            writer.print("and now ");
             return Lower_Ranking_Method(A,b);
         }
     }
     if (!Is_Unit_Matrix(A)) {
-        fr.println("still not yet received an unit matrix");
+        writer.println("still not yet received an unit matrix");
         return Lower_Ranking_Method(A,b);
     }
     return b;
@@ -320,7 +320,7 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
 
 // solve system of linear equations Ax = b by a lower ranking and then an upper ranking
 private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
-    fr.println(Which_Type_Triangular(A,false));
+    writer.println(Which_Type_Triangular(A,false));
     int m = A.length, n = A[0].length;
     boolean single = (m == 1 && n == 1);
     for (int i = Math.min(m,n) - 1; i >= 0; i--) {
@@ -361,7 +361,7 @@ private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
             }
             boolean changed = false;
             if (m > n && Is_Zero_Row(A,j) && Is_Zero_Row(b,j)) {
-                fr.println("delete the zero row from the system:");
+                writer.println("delete the zero row from the system:");
                 Delete_Zero_Row(A,b,j);
                 A = this.A; b = this.b;
                 m = A.length; n = A[0].length;
@@ -380,17 +380,17 @@ private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                fr.println("does not an exists solutions");
+                writer.println("does not an exists solutions");
                 return null;
             }
         }
         if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            fr.print("and now ");
+            writer.print("and now ");
             return Upper_Ranking_Method(A,b);
         }
     }
     if (!Is_Unit_Matrix(A)) {
-        fr.println("still not yet received an unit matrix");
+        writer.println("still not yet received an unit matrix");
         return Upper_Ranking_Method(A,b);
     }
     return b;
