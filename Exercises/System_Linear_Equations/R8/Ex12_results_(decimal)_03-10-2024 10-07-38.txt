@@ -18,7 +18,7 @@ eq8: -   x1               + 4*x4               - 3*x7 - 4*x8  = 0
 -1 ,0 ,0 ,4 ,0 ,0 ,-3 ,-4 | 0
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 R2 --> R2 - R1
 
 3 ,1 ,2 ,-1 ,-1 ,0 ,1 ,1 | 0
@@ -547,7 +547,7 @@ R8 --> R8 - 0.583*R7
 0 ,0 ,0 ,0 ,0 ,0 ,-1.377 ,-7.869 | 0
 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x8 is a free variable in R8 space:
+define new column in the vector b when x8 is free variable in R8 space:
 3 ,0 ,0 ,0 ,0 ,0 ,0 ,30.857 | 0 ,0
 0 ,-1 ,0 ,0 ,0 ,0 ,0 ,14.286 | 0 ,0
 0 ,0 ,-2.667 ,0 ,0 ,0 ,0 ,17.524 | 0 ,0

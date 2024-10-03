@@ -18,7 +18,7 @@ eq8: + 2*x1 - 2*x2        - 4*x4 - 3*x5        + 3*x7 -   x8  = 0
 2 ,-2 ,0 ,-4 ,-3 ,0 ,3 ,-1 | 0
 
 implement the solution by elementary matrices method:
-transform A matrix to I by an elementary matrices:
+transform A matrix to I by elementary matrices:
 R2 --> R2 + 2*R1
 
 2 ,1 ,0 ,-2 ,3 ,0 ,2 ,0 | 0
@@ -558,7 +558,7 @@ R7 --> 0.304*R7
 0 ,0 ,0 ,0 ,0 ,0 ,1 ,0 | 0
 0 ,0 ,0 ,0 ,0 ,0 ,0 ,1 | 0
 
-define a new column in the vector b when x3 is a free variable in R8 space:
+define new column in the vector b when x3 is free variable in R8 space:
 1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 | 0 ,0
 0 ,1 ,0 ,0 ,0 ,0 ,0 ,0 | 0 ,0
 0 ,0 ,1 ,0 ,0 ,0 ,0 ,0 | 0 ,1

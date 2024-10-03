@@ -17,8 +17,8 @@ eq8: - 4*x1 + 4*x2 -   x3 +   x4 + 4*x5 + 2*x6 + 3*x7 -   x8  = 0
 3 ,-3 ,-2 ,3 ,-2 ,0 ,-1 ,0 | 0
 -4 ,4 ,-1 ,1 ,4 ,2 ,3 ,-1 | 0
 
-implement the solution by ranking rows method:
-transform A matrix to I by a ranking rows:
+implement the solution by elementary matrices method:
+transform A matrix to I by elementary matrices:
 R3 --> R3 - 1.333*R1
 
 -3 ,0 ,-2 ,1 ,1 ,-4 ,-4 ,-3 | 0
@@ -503,7 +503,7 @@ R8 --> R8 + 5*R7
 0 ,0 ,0 ,0 ,0 ,0 ,-1.8 ,-2.6 | 0
 0 ,0 ,0 ,0 ,0 ,0 ,0 ,0 | 0
 
-define a new column in the vector b when x8 is a free variable in R8 space:
+define new column in the vector b when x8 is free variable in R8 space:
 -3 ,0 ,0 ,0 ,0 ,0 ,0 ,-36.333 | 0 ,0
 0 ,2 ,0 ,0 ,0 ,0 ,0 ,21.556 | 0 ,0
 0 ,0 ,2.167 ,0 ,0 ,0 ,0 ,1.204 | 0 ,0
