@@ -168,6 +168,25 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         writer.println("x = " + sol.append(suf));
     }
 
+    // determine what kind of matrix
+    public String Which_Type_Triangular(float[][] A, boolean flag) {
+        if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
+            return "A is already parallel triangular so now will be change directly to I:";
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
+            return "A is already upper triangular so now we'll go directly to the lower ranking:";
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
+            return "A is already lower triangular so now we'll go directly to the upper ranking:";
+        } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
+            return "transform L matrix to I by upper ranking:";
+        } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
+            return "transform U matrix to I by lower ranking:";
+        } else if (flag) {
+            return "transform A matrix to U by upper ranking:";
+        } else {
+            return "transform A matrix to L by lower ranking:";
+        }
+    }
+
     /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
     // display the coordinates as a vector representation
     private String Display_Vector(float[][] x, int c) {
@@ -326,9 +345,9 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
                 writer.println("implement the solution by forward backward method:");
                 x = Forward_Backward_Action(A,b);
             }
-            case "Ranking_Rows_Method" -> {
-                writer.println("implement the solution by ranking rows method:");
-                Elementary_Method_Actions met = new Ranking_Rows_Method(A,b,method,format,writer);
+            case "Parallel_Ranking_Method" -> {
+                writer.println("implement the solution by parallel ranking method:");
+                Elementary_Method_Actions met = new Parallel_Ranking_Method(A,b,method,format,writer);
                 x = met.Elementary_Method_Action(A,b);
             }
             case "Elementary_Matrices_Method" -> {

@@ -93,7 +93,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         int n = M.length;
         float[][] InvM = this.InvM;
         for (int i = 0; i < n; i++) {
-            if (M[i][i] == 0) {
+            if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
                 int r = Index_UnZero_Value(M,i,true);
                 Retreat_Elementary_Description(i,r);
                 Retreat_Rows_Matrix(M,i,r);
@@ -141,7 +141,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         int n = M.length;
         float[][] InvM = this.InvM;
         for (int i = n - 1; i >= 0; i--) {
-            if (M[i][i] == 0) {
+            if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
                 int r = Index_UnZero_Value(M,i,false);
                 Retreat_Elementary_Description(i,r);
                 Retreat_Rows_Matrix(M,i,r);
@@ -287,7 +287,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
             }
             case "Parallel_Ranking_Method" -> {
                 Write_Status_Matrices(M,InvM);
-                writer.println("implement the solution by parallel ranking rows method:");
+                writer.println("implement the solution by parallel ranking method:");
                 InvM = Parallel_Ranking_Action(M);
             }
             case "Elementary_Matrices_Method" -> {

@@ -2,9 +2,9 @@ package Features.System_Linear_Equations;
 
 import java.io.PrintWriter;
 
-public class Ranking_Rows_Method extends System_Linear_Equations_Extended implements Elementary_Method_Actions {
+public class Parallel_Ranking_Method extends System_Linear_Equations_Extended implements Elementary_Method_Actions {
 
-    public Ranking_Rows_Method(float[][] nA, float[][] nb, String method, String format, PrintWriter writer) {
+    public Parallel_Ranking_Method(float[][] nA, float[][] nb, String method, String format, PrintWriter writer) {
         super(nA, nb, method, format, writer);
     }
 
@@ -60,7 +60,6 @@ public class Ranking_Rows_Method extends System_Linear_Equations_Extended implem
         }
     }
 
-    @Override
     // solve system of linear equations Ax = b by ranking rows
     public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
         writer.println("transform A matrix to I by ranking rows:");
