@@ -19,26 +19,6 @@ private String Which_Type_Triangular(float[][] M, boolean flag) {
     }
 }
 
-///////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-// get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
-private int Index_UnZero_Value(float[][] M, int k, boolean flag) {
-    int n = M.length;
-    if (flag) {
-        for (int i = k + 1; i < n + k; i++) {
-            if (M[i % n][k] != 0) {
-                return i % n;
-            }
-        }
-    } else {
-        for (int i = n + k - 1; i > k - 1; i--) {
-            if (M[i % n][k] != 0) {
-                return i % n;
-            }
-        }
-    }
-    return -1;
-}
-
 /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
 // invert the M matrix by upper ranking and then lower ranking
 private float[][] Upper_Ranking_Method(float[][] M) {
@@ -204,41 +184,6 @@ private boolean Is_Linear_Independent(float[][] A, float[][] b) {
     return false;
 }
 
-////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-// get the specific column index of the row requested from the matrix which are indicating unit vector
-private int Index_Row_from_Matrix(float[][] A, int r) {
-    int m = A.length;
-    float[] v = Row_from_Matrix(A,r);
-    v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
-    int c1 = Index_for_Unit_Vector(v);
-    for (int i = 0; i < m; i++) {
-        int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
-        if (c1 == c2 && c1 != -1) {
-            return i;
-        }
-    }
-    return -1;
-}
-
-// get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
-private int Index_UnZero_Value(float[][] A, int k, boolean flag) {
-    int n = A.length;
-    if (flag) {
-        for (int i = k + 1; i < n + k; i++) {
-            if (A[i % n][k] != 0) {
-                return i % n;
-            }
-        }
-    } else {
-        for (int i = n + k - 1; i > k - 1; i--) {
-            if (A[i % n][k] != 0) {
-                return i % n;
-            }
-        }
-    }
-    return -1;
-}
-
 ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
 // solve system of linear equations Ax = b by upper ranking and then lower ranking
 private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
@@ -394,18 +339,4 @@ private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         return Upper_Ranking_Method(A,b);
     }
     return b;
-}
-
------------------------------------------------------------- ShareTools ------------------------------------------------------------
-// check if the matrix is upper triangular
-public static boolean Is_Upper_Triangular(float[][] M) {
-    int m = M.length;
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < i; j++) {
-            if (M[i][j] != 0) {
-                return false;
-            }
-        }
-    }
-    return true;
 }
