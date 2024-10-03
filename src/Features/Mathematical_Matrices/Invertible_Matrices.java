@@ -76,7 +76,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         while (!Is_Unit_Matrix(M)) {
             for (int i = 0; i < n; i++) {
                 if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
-                    int r = Index_UnZero_Value(M,i);
+                    int r = Index_UnZero_Value(M,i,true);
                     Retreat_Elementary_Description(i,r);
                     Retreat_Rows_Matrix(M,i,r);
                     Retreat_Rows_Matrix(InvM,i,r);
@@ -119,7 +119,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         float[][] E = Unit_Matrix(n);
         while (!Is_Unit_Matrix(M)) {
             if (M[i][i] == 0 && !Is_Zero_Col(M,i)) {
-                int r = Index_UnZero_Value(M,i);
+                int r = Index_UnZero_Value(M,i,true);
                 Retreat_Elementary_Description(i,r);
                 Retreat_Rows_Matrix(E,i,r);
                 M = Mul_Mats(E,M); InvM = Mul_Mats(E,InvM); E = Unit_Matrix(n);

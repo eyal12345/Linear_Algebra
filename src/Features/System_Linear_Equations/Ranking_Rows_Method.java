@@ -12,7 +12,7 @@ public class Ranking_Rows_Method extends System_Linear_Equations_Extended implem
     public void Retreat_Elementary_Action(float[][] A, float[][] b, int c) {
         int m = A.length;
         if (A[c][c] == 0 && !Is_Zero_Col(A,c)) {
-            int r = Index_UnZero_Value(A,c);
+            int r = Index_UnZero_Value(A,c,true);
             if (r >= 0 && r < m && r != c) {
                 A[r][c] = (A[r][c] >= -0.0001 && A[r][c] <= 0.0001) ? 0 : A[r][c];
                 Retreat_Elementary_Description(c,r);

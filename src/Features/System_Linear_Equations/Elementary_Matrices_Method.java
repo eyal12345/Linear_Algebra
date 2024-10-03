@@ -13,7 +13,7 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
         int m = A.length;
         float[][] E = Unit_Matrix(m);
         if (A[c][c] == 0 && !Is_Zero_Col(A,c)) {
-            int r = Index_UnZero_Value(A,c);
+            int r = Index_UnZero_Value(A,c,true);
             if (r >= 0 && r < m && r != c) {
                 A[r][c] = (A[r][c] >= -0.0001 && A[r][c] <= 0.0001) ? 0 : A[r][c];
                 Retreat_Elementary_Description(c,r);

@@ -229,12 +229,20 @@ public class ShareTools {
         return -1;
     }
 
-    // get the index starting from the specific column in the matrix which are him value not equal to 0
-    public int Index_UnZero_Value(float[][] M, int k) {
+    // get the index starting from the specific column in the matrix which are him value not equal to 0 with or in the negative direction
+    public int Index_UnZero_Value(float[][] M, int k, boolean flag) {
         int n = M.length;
-        for (int i = k + 1; i < n + k; i++) {
-            if (M[i % n][k] != 0) {
-                return i % n;
+        if (flag) {
+            for (int i = k + 1; i < n + k; i++) {
+                if (M[i % n][k] != 0) {
+                    return i % n;
+                }
+            }
+        } else {
+            for (int i = n + k - 1; i > k - 1; i--) {
+                if (M[i % n][k] != 0) {
+                    return i % n;
+                }
             }
         }
         return -1;
