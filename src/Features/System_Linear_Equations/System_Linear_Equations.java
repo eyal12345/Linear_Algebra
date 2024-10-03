@@ -347,11 +347,13 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
             }
             case "Upper_Ranking_Method" -> {
                 writer.println("implement the solution by upper ranking method and then lower ranking method:");
-                // fill-in
+                Elementary_Method_Actions met = new Upper_Ranking_Method(A,b,method,format,writer);
+                x = met.Elementary_Method_Action(A,b);
             }
             case "Lower_Ranking_Method" -> {
                 writer.println("implement the solution by lower ranking method and then upper ranking method:");
-                // fill-in
+                Elementary_Method_Actions met = new Lower_Ranking_Method(A,b,method,format,writer);
+                x = met.Elementary_Method_Action(A,b);
             }
             case "Parallel_Ranking_Method" -> {
                 writer.println("implement the solution by parallel ranking method:");
