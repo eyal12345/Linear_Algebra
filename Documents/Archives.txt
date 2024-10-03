@@ -92,7 +92,8 @@ public float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
             } if (r >= 0 && r < m && r != i) {
                 A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_System(A,b,i,r);
+                Retreat_Rows_Matrix(A,i,r);
+                Retreat_Rows_Matrix(b,i,r);
                 Write_Status_System(A,b);
             }
         }
@@ -170,7 +171,8 @@ public float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
             } if (r >= 0 && r < m && r != i) {
                 A[r][i] = (A[r][i] >= -0.0001 && A[r][i] <= 0.0001) ? 0 : A[r][i];
                 Retreat_Elementary_Action(i,r);
-                Retreat_Rows_System(A,b,i,r);
+                Retreat_Rows_Matrix(A,i,r);
+                Retreat_Rows_Matrix(b,i,r);
                 Write_Status_System(A,b);
             }
         }
