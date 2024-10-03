@@ -68,19 +68,19 @@ public class Parallel_Ranking_Method extends System_Linear_Equations_Extended im
         while (!Is_Unit_Matrix(A)) {
             for (int i = 0; i < n; i++) {
                 A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-                Define_Free_Variable(this.A,this.b,i);
-                Retreat_Elementary_Action(this.A,this.b,i);
+                Define_Free_Variable(A,b,i);
+                A = this.A; b = this.b;
+                Retreat_Elementary_Action(A,b,i);
                 for (int j = 0; j < m; j++) {
-                    Sum_Elementary_Action(this.A,this.b,j,i);
-                    Mul_Elementary_Action(this.A,this.b,j);
-                    boolean changed = Is_Reduced_Rows(this.A,this.b,j);
+                    Sum_Elementary_Action(A,b,j,i);
+                    Mul_Elementary_Action(A,b,j);
+                    boolean changed = Is_Reduced_Rows(A,b,j);
                     m = A.length; n = A[0].length;
                     if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
                         writer.println("does not exists solutions");
                         return null;
                     }
                 }
-                A = this.A; b = this.b;
             }
         }
         return b;

@@ -70,20 +70,20 @@ public class Upper_Ranking_Method extends System_Linear_Equations_Extended imple
         int m = A.length, n = A[0].length;
         for (int i = 0; i < Math.min(m,n); i++) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(this.A,this.b,i);
-            Retreat_Elementary_Action(this.A,this.b,i);
+            Define_Free_Variable(A,b,i);
+            A = this.A; b = this.b;
+            Retreat_Elementary_Action(A,b,i);
             int s = (m == 1 && n == 1) ? i : i + 1;
             for (int j = s; j < m; j++) {
-                Sum_Elementary_Action(this.A,this.b,j,i);
-                Mul_Elementary_Action(this.A,this.b,j);
-                boolean changed = Is_Reduced_Rows(this.A,this.b,j);
+                Sum_Elementary_Action(A,b,j,i);
+                Mul_Elementary_Action(A,b,j);
+                boolean changed = Is_Reduced_Rows(A,b,j);
                 m = A.length; n = A[0].length;
                 if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
                     writer.println("does not exists solutions");
                     return null;
                 }
             }
-            A = this.A; b = this.b;
             if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A)) {
                 writer.print("and now ");
                 Elementary_Method_Actions met = new Lower_Ranking_Method(A,b,method,format,writer);
