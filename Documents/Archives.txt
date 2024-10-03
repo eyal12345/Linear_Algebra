@@ -9,13 +9,13 @@ private String Which_Type_Triangular(float[][] M, boolean flag) {
     } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && !flag) {
         return "M is already lower triangular so now we'll go directly to the upper ranking:";
     } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && flag) {
-        return "transform L matrix to I by an upper ranking:";
+        return "transform L matrix to I by upper ranking:";
     } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && !flag) {
-        return "transform U matrix to I by a lower ranking:";
+        return "transform U matrix to I by lower ranking:";
     } else if (flag) {
-        return "transform M matrix to U by an upper ranking:";
+        return "transform M matrix to U by upper ranking:";
     } else {
-        return "transform M matrix to L by a lower ranking:";
+        return "transform M matrix to L by lower ranking:";
     }
 }
 
@@ -40,7 +40,7 @@ private int Index_UnZero_Value(float[][] M, int k, boolean flag) {
 }
 
 /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
-// invert the M matrix by an upper ranking and then a lower ranking
+// invert the M matrix by upper ranking and then lower ranking
 private float[][] Upper_Ranking_Method(float[][] M) {
     writer.println(Which_Type_Triangular(M,true));
     int n = M.length;
@@ -78,13 +78,13 @@ private float[][] Upper_Ranking_Method(float[][] M) {
         }
     }
     if (!Is_Unit_Matrix(M)) {
-        writer.println("still not yet received an unit matrix");
+        writer.println("still not yet received unit matrix");
         return Lower_Ranking_Method(M);
     }
     return InvM;
 }
 
-// invert the M matrix by a lower ranking and then an upper ranking
+// invert the M matrix by lower ranking and then upper ranking
 private float[][] Lower_Ranking_Method(float[][] M) {
     writer.println(Which_Type_Triangular(M,false));
     int n = M.length;
@@ -122,7 +122,7 @@ private float[][] Lower_Ranking_Method(float[][] M) {
         }
     }
     if (!Is_Unit_Matrix(M)) {
-        writer.println("still not yet received an unit matrix");
+        writer.println("still not yet received unit matrix");
         return Upper_Ranking_Method(M);
     }
     return InvM;
@@ -139,13 +139,13 @@ private String Which_Type_Triangular(float[][] A, boolean flag) {
     } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
         return "A is already lower triangular so now we'll go directly to the upper ranking:";
     } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
-        return "transform L matrix to I by an upper ranking:";
+        return "transform L matrix to I by upper ranking:";
     } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
-        return "transform U matrix to I by a lower ranking:";
+        return "transform U matrix to I by lower ranking:";
     } else if (flag) {
-        return "transform A matrix to U by an upper ranking:";
+        return "transform A matrix to U by upper ranking:";
     } else {
-        return "transform A matrix to L by a lower ranking:";
+        return "transform A matrix to L by lower ranking:";
     }
 }
 
@@ -170,9 +170,9 @@ private void Fill_Square_System(float[][] A, float[][] b) {
     int m = A.length, n = A[0].length;
     if (m < n) { // Underdetermined Systems
         if (n - m == 1) {
-            writer.println("added one more row of zeros in order to get a square completion");
+            writer.println("added one more row of zeros in order to get square completion");
         } else {
-            writer.println("added " + (n - m) + " more rows of zeros in order to get a square completion");
+            writer.println("added " + (n - m) + " more rows of zeros in order to get square completion");
         }
         Increase_Rows_in_System(A,b);
     }
@@ -205,7 +205,7 @@ private boolean Is_Linear_Independent(float[][] A, float[][] b) {
 }
 
 ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
-// get the specific column index of the row requested from the matrix which are indicating a unit vector
+// get the specific column index of the row requested from the matrix which are indicating unit vector
 private int Index_Row_from_Matrix(float[][] A, int r) {
     int m = A.length;
     float[] v = Row_from_Matrix(A,r);
@@ -240,7 +240,7 @@ private int Index_UnZero_Value(float[][] A, int k, boolean flag) {
 }
 
 ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
-// solve system of linear equations Ax = b by an upper ranking and then a lower ranking
+// solve system of linear equations Ax = b by upper ranking and then lower ranking
 private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
     writer.println(Which_Type_Triangular(A,true));
     int m = A.length, n = A[0].length;
@@ -302,7 +302,7 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                writer.println("does not an exists solutions");
+                writer.println("does not exists solutions");
                 return null;
             }
         }
@@ -312,13 +312,13 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
         }
     }
     if (!Is_Unit_Matrix(A)) {
-        writer.println("still not yet received an unit matrix");
+        writer.println("still not yet received unit matrix");
         return Lower_Ranking_Method(A,b);
     }
     return b;
 }
 
-// solve system of linear equations Ax = b by a lower ranking and then an upper ranking
+// solve system of linear equations Ax = b by lower ranking and then upper ranking
 private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
     writer.println(Which_Type_Triangular(A,false));
     int m = A.length, n = A[0].length;
@@ -380,7 +380,7 @@ private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
                 }
             }
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {
-                writer.println("does not an exists solutions");
+                writer.println("does not exists solutions");
                 return null;
             }
         }
@@ -390,14 +390,14 @@ private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
         }
     }
     if (!Is_Unit_Matrix(A)) {
-        writer.println("still not yet received an unit matrix");
+        writer.println("still not yet received unit matrix");
         return Upper_Ranking_Method(A,b);
     }
     return b;
 }
 
 ------------------------------------------------------------ ShareTools ------------------------------------------------------------
-// check if the matrix is an upper triangular
+// check if the matrix is upper triangular
 public static boolean Is_Upper_Triangular(float[][] M) {
     int m = M.length;
     for (int i = 0; i < m; i++) {

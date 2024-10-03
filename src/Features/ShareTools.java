@@ -73,7 +73,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if exist in the matrix a zeros row
+    // check if exist in the matrix zeros row
     public boolean Is_Zero_Row(float[][] A, int r) {
         int n = A[0].length;
         for (int j = 0; j < n; j++) {
@@ -84,7 +84,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if exist in the vector a zeros column
+    // check if exist in the vector zeros column
     public boolean Is_Zero_Col(float[][] v, int c) {
         int m = v.length, n = v[0].length;
         for (int i = 0; i < m && c < n; i++) {
@@ -95,7 +95,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if a matrix is a unit matrix
+    // check if matrix is unit matrix
     public boolean Is_Unit_Matrix(float[][] M) {
         int m = M.length, n = M[0].length;
         for (int i = 0; i < m; i++) {
@@ -109,7 +109,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if the specific row in the matrix is a unit vector
+    // check if the specific row in the matrix is unit vector
     public boolean Is_Unit_Vector(float[][] M, int i) {
         int n = M[0].length, c = 0;
         for (int j = 0; j < n; j++) {
@@ -120,7 +120,7 @@ public class ShareTools {
         return (c <= 1);
     }
 
-    // check if the matrix is an upper triangular
+    // check if the matrix is upper triangular
     public boolean Is_Upper_Triangular(float[][] M) {
         int m = M.length;
         for (int i = 0; i < m; i++) {
@@ -133,7 +133,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if the matrix is a lower triangular
+    // check if the matrix is lower triangular
     public boolean Is_Lower_Triangular(float[][] M) {
         int m = M.length, n = M[0].length;
         for (int i = 0; i < m - 1; i++) {
@@ -146,7 +146,7 @@ public class ShareTools {
         return true;
     }
 
-    // check if exist invalid row in the system which is not allow to reach a solution
+    // check if exist invalid row in the system which is not allow to reach solution
     public boolean Is_Invalid_System(float[][] A, float[][] b) {
         int m = A.length;
         for (int i = 0; i < m; i++) {
