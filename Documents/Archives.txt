@@ -1,7 +1,7 @@
 -------------------------------------------------------- Invertible_Matrices --------------------------------------------------------
 ////////////////////////////////////////////// Write Methods ////////////////////////////////////////////////
 // determine what kind of matrix
-private String Which_Type_Triangular(float[][] M, boolean flag) {
+public String Which_Type_Triangular(float[][] M, boolean flag) {
     if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
         return "M is already parallel triangular so now will be change directly to I:";
     } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && flag) {
@@ -21,7 +21,7 @@ private String Which_Type_Triangular(float[][] M, boolean flag) {
 
 /////////////////////////////////////////// Methods to Solution /////////////////////////////////////////////
 // invert the M matrix by upper ranking and then lower ranking
-private float[][] Upper_Ranking_Method(float[][] M) {
+public float[][] Upper_Ranking_Method(float[][] M) {
     writer.println(Which_Type_Triangular(M,true));
     int n = M.length;
     float[][] InvM = this.InvM;
@@ -65,7 +65,7 @@ private float[][] Upper_Ranking_Method(float[][] M) {
 }
 
 // invert the M matrix by lower ranking and then upper ranking
-private float[][] Lower_Ranking_Method(float[][] M) {
+public float[][] Lower_Ranking_Method(float[][] M) {
     writer.println(Which_Type_Triangular(M,false));
     int n = M.length;
     float[][] InvM = this.InvM;
@@ -111,7 +111,7 @@ private float[][] Lower_Ranking_Method(float[][] M) {
 ------------------------------------------------------ System_Linear_Equations ------------------------------------------------------
 /////////////////////////////////////////////// Write Methods ////////////////////////////////////////////////
 // determine what kind of matrix
-private String Which_Type_Triangular(float[][] A, boolean flag) {
+public String Which_Type_Triangular(float[][] A, boolean flag) {
     if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
         return "A is already parallel triangular so now will be change directly to I:";
     } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
@@ -131,7 +131,7 @@ private String Which_Type_Triangular(float[][] A, boolean flag) {
 
 ///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
 // add more zero rows in the system by needed
-private void Increase_Rows_in_System(float[][] A, float[][] b) {
+public void Increase_Rows_in_System(float[][] A, float[][] b) {
     int m = A.length, n = A[0].length;
     float[][] nA = new float[n][n];
     float[][] nb = new float[n][1];
@@ -146,7 +146,7 @@ private void Increase_Rows_in_System(float[][] A, float[][] b) {
 
 ////////////////////////////////////////////// Free Variables ///////////////////////////////////////////////
 // fill rows to full square system
-private void Fill_Square_System(float[][] A, float[][] b) {
+public void Fill_Square_System(float[][] A, float[][] b) {
     int m = A.length, n = A[0].length;
     if (m < n) { // Underdetermined Systems
         if (n - m == 1) {
@@ -161,7 +161,7 @@ private void Fill_Square_System(float[][] A, float[][] b) {
 
 ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
 // check if exists two vectors in the matrix which are linearly independent
-private boolean Is_Linear_Independent(float[][] A, float[][] b) {
+public boolean Is_Linear_Independent(float[][] A, float[][] b) {
     int m = A.length, n = A[0].length;
     for (int r = 0; r < m; r++) {
         if (Is_Zero_Row(A,r) && b[r][0] != 0) {
@@ -186,7 +186,7 @@ private boolean Is_Linear_Independent(float[][] A, float[][] b) {
 
 ///////////////////////////////////// Methods to Solution (Ranking Methods) /////////////////////////////////////
 // solve system of linear equations Ax = b by upper ranking and then lower ranking
-private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
+public float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
     writer.println(Which_Type_Triangular(A,true));
     int m = A.length, n = A[0].length;
     boolean single = (m == 1 && n == 1);
@@ -264,7 +264,7 @@ private float[][] Upper_Ranking_Method(float[][] A, float[][] b) {
 }
 
 // solve system of linear equations Ax = b by lower ranking and then upper ranking
-private float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
+public float[][] Lower_Ranking_Method(float[][] A, float[][] b) {
     writer.println(Which_Type_Triangular(A,false));
     int m = A.length, n = A[0].length;
     boolean single = (m == 1 && n == 1);
