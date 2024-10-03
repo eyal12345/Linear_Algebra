@@ -345,6 +345,14 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
                 writer.println("implement the solution by forward backward method:");
                 x = Forward_Backward_Action(A,b);
             }
+            case "Upper_Ranking_Method" -> {
+                writer.println("implement the solution by upper ranking method and then lower ranking method:");
+                // fill-in
+            }
+            case "Lower_Ranking_Method" -> {
+                writer.println("implement the solution by lower ranking method and then upper ranking method:");
+                // fill-in
+            }
             case "Parallel_Ranking_Method" -> {
                 writer.println("implement the solution by parallel ranking method:");
                 Elementary_Method_Actions met = new Parallel_Ranking_Method(A,b,method,format,writer);
