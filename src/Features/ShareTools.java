@@ -122,9 +122,10 @@ public class ShareTools {
 
     // check if the matrix is upper triangular
     public boolean Is_Upper_Triangular(float[][] M) {
-        int m = M.length;
+        int m = M.length, n = M[0].length;
         for (int i = 0; i < m; i++) {
-            for (int j = 0; j < i; j++) {
+            int c = Math.min(i,n);
+            for (int j = 0; j < c; j++) {
                 if (M[i][j] != 0) {
                     return false;
                 }
