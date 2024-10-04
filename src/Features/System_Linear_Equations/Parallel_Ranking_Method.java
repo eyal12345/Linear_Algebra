@@ -73,6 +73,7 @@ public class Parallel_Ranking_Method extends System_Linear_Equations_Extended im
                 Retreat_Elementary_Action(A,b,i);
                 for (int j = 0; j < m; j++) {
                     Sum_Elementary_Action(A,b,j,i);
+                    b[j][0] = (b[j][0] >= -0.0001 && b[j][0] <= 0.0001) ? 0 : b[j][0];
                     Mul_Elementary_Action(A,b,j);
                     boolean changed = Is_Reduced_Rows(A,b,j);
                     A = this.A; b = this.b;

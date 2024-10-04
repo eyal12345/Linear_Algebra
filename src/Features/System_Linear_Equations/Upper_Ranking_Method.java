@@ -76,6 +76,7 @@ public class Upper_Ranking_Method extends System_Linear_Equations_Extended imple
             int s = (m == 1 && n == 1) ? i : i + 1;
             for (int j = s; j < m; j++) {
                 Sum_Elementary_Action(A,b,j,i);
+                b[j][0] = (b[j][0] >= -0.0001 && b[j][0] <= 0.0001) ? 0 : b[j][0];
                 Mul_Elementary_Action(A,b,j);
                 boolean changed = Is_Reduced_Rows(A,b,j);
                 A = this.A; b = this.b;

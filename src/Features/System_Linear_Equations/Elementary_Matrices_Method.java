@@ -66,6 +66,7 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
             Define_Free_Variable(this.A,this.b,i);
             Retreat_Elementary_Action(this.A,this.b,i);
             Sum_Elementary_Action(this.A,this.b,j,i);
+            b[j][0] = (b[j][0] >= -0.0001 && b[j][0] <= 0.0001) ? 0 : b[j][0];
             Mul_Elementary_Action(this.A,this.b,j);
             boolean changed = Is_Reduced_Rows(this.A,this.b,j);
             A = this.A; b = this.b;
