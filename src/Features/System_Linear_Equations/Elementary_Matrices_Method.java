@@ -63,12 +63,13 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
         int i = 0, j = 0;
         while (!Is_Unit_Matrix(A)) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
-            Define_Free_Variable(this.A,this.b,i);
-            Retreat_Elementary_Action(this.A,this.b,i);
-            Sum_Elementary_Action(this.A,this.b,j,i);
+            Define_Free_Variable(A,b,i);
+            A = this.A; b = this.b;
+            Retreat_Elementary_Action(A,b,i);
+            Sum_Elementary_Action(A,b,j,i);
             b[j][0] = (b[j][0] >= -0.0001 && b[j][0] <= 0.0001) ? 0 : b[j][0];
-            Mul_Elementary_Action(this.A,this.b,j);
-            boolean changed = Is_Reduced_Rows(this.A,this.b,j);
+            Mul_Elementary_Action(A,b,j);
+            boolean changed = Is_Reduced_Rows(A,b,j);
             A = this.A; b = this.b;
             int m = A.length, n = A[0].length;
             if (!changed && Is_Zero_Row(A,j) && !Is_Zero_Row(b,j)) {

@@ -1,34 +1,4 @@
 ------------------------------------------------------ System_Linear_Equations ------------------------------------------------------
-///////////////////////////////////////////// Change Dimensions //////////////////////////////////////////////
-// add more zero rows in the system by needed
-public void Increase_Rows_in_System(float[][] A, float[][] b) {
-    int m = A.length, n = A[0].length;
-    float[][] nA = new float[n][n];
-    float[][] nb = new float[n][1];
-    for (int i = 0; i < m; i++) {
-        for (int j = 0; j < n; j++) {
-            nA[i][j] = A[i][j];
-        }
-        nb[i][0] = b[i][0];
-    }
-    this.A = nA; this.b = nb;
-}
-
-////////////////////////////////////////////// Free Variables ///////////////////////////////////////////////
-// fill rows to full square system
-public void Fill_Square_System(float[][] A, float[][] b) {
-    int m = A.length, n = A[0].length;
-    if (m < n) { // Underdetermined Systems
-        if (n - m == 1) {
-            writer.println("added one more row of zeros in order to get square completion");
-        } else {
-            writer.println("added " + (n - m) + " more rows of zeros in order to get square completion");
-        }
-        Increase_Rows_in_System(A,b);
-    }
-    // Overdetermined Systems
-}
-
 ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
 // check if exists two vectors in the matrix which are linearly independent
 public boolean Is_Linear_Independent(float[][] A, float[][] b) {
