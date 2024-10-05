@@ -71,11 +71,11 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
         switch (method) {
-            case "F", "Formula" -> method = "Formula_Method";
-            case "U", "Upp", "Upper" -> method = "Upper_Ranking_Method";
-            case "L", "Low", "Lower" -> method = "Lower_Ranking_Method";
-            case "P", "Pra", "Parallel" -> method = "Parallel_Ranking_Method";
-            case "E", "Elem", "Elementary" -> method = "Elementary_Matrices_Method";
+            case "F", "FM", "Formula" -> method = "Formula_Method";
+            case "U", "UR",  "URM", "Upp", "Upper" -> method = "Upper_Ranking_Method";
+            case "L", "LR",  "LRM", "Low", "Lower" -> method = "Lower_Ranking_Method";
+            case "P", "PR",  "PRM", "Pra", "Parallel" -> method = "Parallel_Ranking_Method";
+            case "E", "EM",  "EMM", "Elem", "Elementary" -> method = "Elementary_Matrices_Method";
         }
         return method;
     }

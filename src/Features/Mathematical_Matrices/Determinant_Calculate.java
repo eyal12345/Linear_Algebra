@@ -17,7 +17,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
         switch (method) {
-            case "R", "Regular" -> method = "Regular_Method";
+            case "R", "RM", "Regular" -> method = "Regular_Method";
             case "SM", "Special" -> method = "Special_Method";
             case "SM2", "SM_2", "Special2", "Special_2" -> method = "Special_Method_2";
         }

@@ -191,13 +191,13 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
         switch (method) {
-            case "I", "Inv", "Invertible" -> method = "Invertible_Method";
-            case "C", "Cra", "Cramer" -> method = "Cramer_Method";
-            case "F", "FB", "FBM", "Forward", "Backward" -> method = "Forward_Backward_Method";
-            case "U", "Upp", "Upper" -> method = "Upper_Ranking_Method";
-            case "L", "Low", "Lower" -> method = "Lower_Ranking_Method";
-            case "P", "Pra", "Parallel" -> method = "Parallel_Ranking_Method";
-            case "E", "Elem", "Elementary" -> method = "Elementary_Matrices_Method";
+            case "I", "IM", "Inv", "InvM", "Invertible" -> method = "Invertible_Method";
+            case "C", "CM", "Cra", "CraM", "Cramer" -> method = "Cramer_Method";
+            case "F", "FM", "FB", "FBM", "Forward", "Backward" -> method = "Forward_Backward_Method";
+            case "U", "UR",  "URM", "Upp", "Upper" -> method = "Upper_Ranking_Method";
+            case "L", "LR",  "LRM", "Low", "Lower" -> method = "Lower_Ranking_Method";
+            case "P", "PR",  "PRM", "Pra", "Parallel" -> method = "Parallel_Ranking_Method";
+            case "E", "EM",  "EMM", "Elem", "Elementary" -> method = "Elementary_Matrices_Method";
         }
         return method;
     }
