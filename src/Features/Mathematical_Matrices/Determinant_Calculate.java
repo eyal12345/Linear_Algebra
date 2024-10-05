@@ -16,12 +16,10 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     @Override
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
-        if (method.startsWith("Regular")) {
-            method = "Regular_Method";
-        } else if (method.startsWith("Special")) {
-            method = "Special_Method";
-        } else if (method.startsWith("Special2") || method.startsWith("Special_2")) {
-            method = "Special_Method_2";
+        switch (method) {
+            case "R", "Regular" -> method = "Regular_Method";
+            case "SM", "Special" -> method = "Special_Method";
+            case "SM2", "SM_2", "Special2", "Special_2" -> method = "Special_Method_2";
         }
         return method;
     }

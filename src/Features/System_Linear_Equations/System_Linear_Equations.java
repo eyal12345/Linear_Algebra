@@ -190,20 +190,14 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
     @Override
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
-        if (method.startsWith("Invertible")) {
-            method = "Invertible_Method";
-        } else if (method.startsWith("Cramer")) {
-            method = "Cramer_Method";
-        } else if (method.startsWith("Forward")) {
-            method = "Forward_Backward_Method";
-        } else if (method.startsWith("Upper")) {
-            method = "Upper_Ranking_Method";
-        } else if (method.startsWith("Lower")) {
-            method = "Lower_Ranking_Method";
-        } else if (method.startsWith("Parallel")) {
-            method = "Parallel_Ranking_Method";
-        } else if (method.startsWith("Elementary")) {
-            method = "Elementary_Matrices_Method";
+        switch (method) {
+            case "I", "Inv", "Invertible" -> method = "Invertible_Method";
+            case "C", "Cra", "Cramer" -> method = "Cramer_Method";
+            case "F", "FB", "FBM", "Forward", "Backward" -> method = "Forward_Backward_Method";
+            case "U", "Upp", "Upper" -> method = "Upper_Ranking_Method";
+            case "L", "Low", "Lower" -> method = "Lower_Ranking_Method";
+            case "P", "Pra", "Parallel" -> method = "Parallel_Ranking_Method";
+            case "E", "Elem", "Elementary" -> method = "Elementary_Matrices_Method";
         }
         return method;
     }

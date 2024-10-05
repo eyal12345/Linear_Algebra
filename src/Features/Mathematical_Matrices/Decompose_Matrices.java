@@ -16,18 +16,13 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
     @Override
     // invoke which method match by method input user
     public String Fix_Method_Value(String method) {
-        if (method.startsWith("LU")) {
-            method = "LU_Decomposition";
-        } else if (method.startsWith("LLT")) {
-            method = "LLT_Decomposition";
-        } else if (method.startsWith("LDLT")) {
-            method = "LDLT_Decomposition";
-        } else if (method.startsWith("LU2") || method.startsWith("LU_2")) {
-            method = "LU_Decomposition_2";
-        } else if (method.startsWith("LLT2") || method.startsWith("LLT_2")) {
-            method = "LLT_Decomposition_2";
-        } else if (method.startsWith("LDLT2") || method.startsWith("LDLT_2")) {
-            method = "LDLT_Decomposition_2";
+        switch (method) {
+            case "LU", "L*U" -> method = "LU_Decomposition";
+            case "LLT", "L*LT" -> method = "LLT_Decomposition";
+            case "LDLT", "L*D*LT" -> method = "LDLT_Decomposition";
+            case "LU2", "LU_2" -> method = "LU_Decomposition_2";
+            case "LLT2", "LLT_2" -> method = "LLT_Decomposition_2";
+            case "LDLT2", "LDLT_2" -> method = "LDLT_Decomposition_2";
         }
         return method;
     }
