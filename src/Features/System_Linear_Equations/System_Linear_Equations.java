@@ -277,6 +277,21 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         return -1;
     }
 
+    // get the specific column index of the row requested from the matrix which are indicating unit vector
+    public int Index_Row_from_Matrix(float[][] A, int r) {
+        int m = A.length;
+        float[] v = Row_from_Matrix(A,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Index_for_Unit_Vector(v);
+        for (int i = 0; i < m; i++) {
+            int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
+            if (c1 == c2 && c1 != -1) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     // find two columns in the matrix which are linearly dependent
     public int Linear_Dependent_Columns(float[][] A) {
         int m = A.length, n = A[0].length;
