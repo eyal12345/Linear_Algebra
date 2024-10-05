@@ -12,6 +12,19 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         this.M = nM;
     }
 
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
+    @Override
+    // invoke which method match by method input user
+    public void Fix_Method_Value() {
+        if (method.startsWith("Regular")) {
+            method = "Regular_Method";
+        } else if (method.startsWith("Special")) {
+            method = "Special_Method";
+        } else if (method.startsWith("Special2") || method.startsWith("Special_2")) {
+            method = "Special_Method_2";
+        }
+    }
+
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     private float Determinant_Up_To_3x3(float[][] M) {
         int n = M.length;

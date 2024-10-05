@@ -5,7 +5,7 @@ import java.util.Vector;
 
 public class ShareTools {
 
-    public final String method;
+    public String method;
     public final String format;
     public PrintWriter writer;
 

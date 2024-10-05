@@ -13,6 +13,25 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
         this.L = nL;
     }
 
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
+    @Override
+    // invoke which method match by method input user
+    public void Fix_Method_Value() {
+        if (method.startsWith("LU")) {
+            method = "LU_Multiplication";
+        } else if (method.startsWith("LLT")) {
+            method = "LLT_Multiplication";
+        } else if (method.startsWith("LDLT")) {
+            method = "LDLT_Multiplication";
+        } else if (method.startsWith("LU2") || method.startsWith("LU_2")) {
+            method = "LU_Multiplication_2";
+        } else if (method.startsWith("LLT2") || method.startsWith("LLT_2")) {
+            method = "LLT_Multiplication_2";
+        } else if (method.startsWith("LDLT2") || method.startsWith("LDLT_2")) {
+            method = "LDLT_Multiplication_2";
+        }
+    }
+
     /////////////////////////////////////////////// Input Matrices ///////////////////////////////////////////////
     // create diagonal matrix
     private static float[][] Create_Diagonal_Matrix(int n) {

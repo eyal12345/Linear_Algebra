@@ -67,6 +67,22 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         }
     }
 
+    @Override
+    // invoke which method match by method input user
+    public void Fix_Method_Value() {
+        if (method.startsWith("Formula")) {
+            method = "Formula_Method";
+        } else if (method.startsWith("Upper")) {
+            method = "Upper_Ranking_Method";
+        } else if (method.startsWith("Lower")) {
+            method = "Lower_Ranking_Method";
+        } else if (method.startsWith("Parallel")) {
+            method = "Parallel_Ranking_Method";
+        } else if (method.startsWith("Elementary")) {
+            method = "Elementary_Matrices_Method";
+        }
+    }
+
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // invert the M matrix by the formula: Inv(M) = 1/|M| * Adj(M)
     private float[][] Invertible_Direct(float[][] M) {
@@ -270,6 +286,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     // choose option in order to correctness check for M matrix
     public void User_Interface(float[][] M) throws Exception {
         InvM = Unit_Matrix(M.length);
+        Fix_Method_Value();
         switch (method) {
             case "Formula_Method" -> {
                 writer.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");

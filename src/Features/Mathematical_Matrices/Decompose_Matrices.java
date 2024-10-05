@@ -12,6 +12,25 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
         this.M = nM;
     }
 
+    /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
+    @Override
+    // invoke which method match by method input user
+    public void Fix_Method_Value() {
+        if (method.startsWith("LU")) {
+            method = "LU_Decomposition";
+        } else if (method.startsWith("LLT")) {
+            method = "LLT_Decomposition";
+        } else if (method.startsWith("LDLT")) {
+            method = "LDLT_Decomposition";
+        } else if (method.startsWith("LU2") || method.startsWith("LU_2")) {
+            method = "LU_Decomposition_2";
+        } else if (method.startsWith("LLT2") || method.startsWith("LLT_2")) {
+            method = "LLT_Decomposition_2";
+        } else if (method.startsWith("LDLT2") || method.startsWith("LDLT_2")) {
+            method = "LDLT_Decomposition_2";
+        }
+    }
+
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
     // get the LU decomposition of M (first algorithm)
     private void from_M_To_LU(float[][] M) {

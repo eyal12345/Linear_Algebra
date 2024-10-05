@@ -187,6 +187,26 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         }
     }
 
+    @Override
+    // invoke which method match by method input user
+    public void Fix_Method_Value() {
+        if (method.startsWith("Invertible")) {
+            method = "Invertible_Method";
+        } else if (method.startsWith("Cramer")) {
+            method = "Cramer_Method";
+        } else if (method.startsWith("Forward")) {
+            method = "Forward_Backward_Method";
+        } else if (method.startsWith("Upper")) {
+            method = "Upper_Ranking_Method";
+        } else if (method.startsWith("Lower")) {
+            method = "Lower_Ranking_Method";
+        } else if (method.startsWith("Parallel")) {
+            method = "Parallel_Ranking_Method";
+        } else if (method.startsWith("Elementary")) {
+            method = "Elementary_Matrices_Method";
+        }
+    }
+
     /////////////////////////////////////////////// Display Format ///////////////////////////////////////////////
     // display the coordinates as a vector representation
     private String Display_Vector(float[][] x, int c) {
@@ -329,6 +349,7 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
     // choose action in order to solve a system Ax = b
     public void User_Interface(float[][] A, float[][] b) throws Exception {
         Write_Status_System(A,b);
+        Fix_Method_Value();
         if (Is_Invalid_System(A,b)) {
             writer.println("does not an exists solutions");
             x = null;
