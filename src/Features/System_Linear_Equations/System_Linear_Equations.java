@@ -170,21 +170,21 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
     }
 
     // determine what kind of matrix
-    public String Which_Type_Triangular(float[][] A, boolean flag) {
+    public void Which_Type_Triangular(float[][] A, boolean flag) {
         if (Is_Upper_Triangular(A) && Is_Lower_Triangular(A)) {
-            return "A is already parallel triangular so now will be change directly to I:";
+            writer.println("A is already parallel triangular so now will be change directly to I:");
         } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && flag) {
-            return "A is already upper triangular so now we'll go directly to the lower ranking:";
+            writer.println("A is already upper triangular so now we'll go directly to the lower ranking:");
         } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && !flag) {
-            return "A is already lower triangular so now we'll go directly to the upper ranking:";
+            writer.println("A is already lower triangular so now we'll go directly to the upper ranking:");
         } else if (!Is_Upper_Triangular(A) && Is_Lower_Triangular(A) && flag) {
-            return "transform L matrix to I by upper ranking:";
+            writer.println("transform L matrix to I by upper ranking:");
         } else if (Is_Upper_Triangular(A) && !Is_Lower_Triangular(A) && !flag) {
-            return "transform U matrix to I by lower ranking:";
+            writer.println("transform U matrix to I by lower ranking:");
         } else if (flag) {
-            return "transform A matrix to U by upper ranking:";
+            writer.println("transform A matrix to U by upper ranking:");
         } else {
-            return "transform A matrix to L by lower ranking:";
+            writer.println("transform A matrix to L by lower ranking:");
         }
     }
 

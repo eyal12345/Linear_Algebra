@@ -49,21 +49,21 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     }
 
     // determine what kind of matrix
-    public String Which_Type_Triangular(float[][] M, boolean flag) {
+    public void Which_Type_Triangular(float[][] M, boolean flag) {
         if (Is_Upper_Triangular(M) && Is_Lower_Triangular(M)) {
-            return "M is already parallel triangular so now will be change directly to I:";
+            writer.println("M is already parallel triangular so now will be change directly to I:");
         } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && flag) {
-            return "M is already upper triangular so now we'll go directly to the lower ranking:";
+            writer.println("M is already upper triangular so now we'll go directly to the lower ranking:");
         } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && !flag) {
-            return "M is already lower triangular so now we'll go directly to the upper ranking:";
+            writer.println("M is already lower triangular so now we'll go directly to the upper ranking:");
         } else if (!Is_Upper_Triangular(M) && Is_Lower_Triangular(M) && flag) {
-            return "transform L matrix to I by upper ranking:";
+            writer.println("transform L matrix to I by upper ranking:");
         } else if (Is_Upper_Triangular(M) && !Is_Lower_Triangular(M) && !flag) {
-            return "transform U matrix to I by lower ranking:";
+            writer.println("transform U matrix to I by lower ranking:");
         } else if (flag) {
-            return "transform M matrix to U by upper ranking:";
+            writer.println("transform M matrix to U by upper ranking:");
         } else {
-            return "transform M matrix to L by lower ranking:";
+            writer.println("transform M matrix to L by lower ranking:");
         }
     }
 
@@ -102,7 +102,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
 
     // invert the M matrix by upper ranking and then lower ranking
     private float[][] Upper_Ranking_Action(float[][] M) {
-        writer.println(Which_Type_Triangular(M,true));
+        Which_Type_Triangular(M,true);
         int n = M.length;
         float[][] InvM = this.InvM;
         for (int i = 0; i < n; i++) {
@@ -150,7 +150,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
 
     // invert the M matrix by lower ranking and then upper ranking
     private float[][] Lower_Ranking_Action(float[][] M) {
-        writer.println(Which_Type_Triangular(M,false));
+        Which_Type_Triangular(M,false);
         int n = M.length;
         float[][] InvM = this.InvM;
         for (int i = n - 1; i >= 0; i--) {

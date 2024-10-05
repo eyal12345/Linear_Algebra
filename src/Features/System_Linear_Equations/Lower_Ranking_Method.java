@@ -66,7 +66,7 @@ public class Lower_Ranking_Method extends System_Linear_Equations_Extended imple
     @Override
     // solve system of linear equations Ax = b by lower ranking rows and then upper ranking rows
     public float[][] Elementary_Method_Action(float[][] A, float[][] b) {
-        writer.println(Which_Type_Triangular(A,false));
+        Which_Type_Triangular(A,false);
         int m = A.length, n = A[0].length;
         for (int i = Math.min(m,n) - 1; i >= 0; i--) {
             A[i][i] = (A[i][i] >= -0.0001 && A[i][i] <= 0.0001) ? 0 : A[i][i];
