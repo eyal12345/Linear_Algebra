@@ -2,7 +2,7 @@ package Features;
 
 public interface MenuActions {
 
-    void Fix_Method_Value();
+    String Fix_Method_Value(String method);
 
     void User_Interface(float[][] M) throws Exception;
 

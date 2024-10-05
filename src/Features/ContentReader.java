@@ -24,12 +24,11 @@ public class ContentReader {
         this.format = format;
     }
 
-    private PrintWriter Create_Exercise_Path(String title, String space, String exercise, String format) throws IOException {
+    private String Create_Exercise_Path(String title, String space, String exercise, String format) throws IOException {
         LocalDateTime cur = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
         String name = exercise.split("\\.")[0] + "_results_(" + format + ")_" + cur.format(formatter) + ".txt";
-        File file = new File("Exercises/" + title + "/" + space + "/" + name);
-        return new PrintWriter(new FileWriter(file, true));
+        return "Exercises/" + title + "/" + space + "/" + name;
     }
 
     private String Build_Path_Exercise(String title, String space, String exercise) {
@@ -97,31 +96,41 @@ public class ContentReader {
     }
 
     private void Choose_Mathematical_Branch(float[][] M, String title, String method, String space, String exercise, String format) throws Exception {
-        PrintWriter writer = Create_Exercise_Path(title,space,exercise,format);
-        switch (title) {
-            case "Calculate_Determinant" -> {
-                MenuActions run = new Determinant_Calculate(M,method,format,writer);
-                run.Run_Progress();
+        String path = Create_Exercise_Path(title,space,exercise,format);
+        File file = new File(path);
+        PrintWriter writer = new PrintWriter(new FileWriter(file, true));
+        try {
+            switch (title) {
+                case "Calculate_Determinant" -> {
+                    MenuActions run = new Determinant_Calculate(M,method,format,writer);
+                    run.Run_Progress();
+                }
+                case "Receive_Matrices" -> {
+                    MenuActions run = new Receive_Matrices(M,method,format,writer);
+                    run.Run_Progress();
+                }
+                case "Decompose_Matrices" -> {
+                    MenuActions run = new Decompose_Matrices(M,method,format,writer);
+                    run.Run_Progress();
+                }
+                case "Invertible_Matrices" -> {
+                    MenuActions run = new Invertible_Matrices(M,method,format,writer);
+                    run.Run_Progress();
+                }
+                case "System_Linear_Equations" -> {
+                    float[][] A = Extract_Matrix_Component(M);
+                    float[][] b = Extract_Vector_Component(M);
+                    MenuActionsSLE run = new System_Linear_Equations(A,b,method,format,writer);
+                    run.Run_Progress();
+                }
+                default -> throw new Exception("you entered invalid value of title subject");
             }
-            case "Receive_Matrices" -> {
-                MenuActions run = new Receive_Matrices(M,method,format,writer);
-                run.Run_Progress();
+        } catch (Exception ex) {
+            if (file.delete()) {
+                System.out.println("File deleted successfully");
+            } else {
+                System.out.println("Failed to delete the file");
             }
-            case "Decompose_Matrices" -> {
-                MenuActions run = new Decompose_Matrices(M,method,format,writer);
-                run.Run_Progress();
-            }
-            case "Invertible_Matrices" -> {
-                MenuActions run = new Invertible_Matrices(M,method,format,writer);
-                run.Run_Progress();
-            }
-            case "System_Linear_Equations" -> {
-                float[][] A = Extract_Matrix_Component(M);
-                float[][] b = Extract_Vector_Component(M);
-                MenuActionsSLE run = new System_Linear_Equations(A,b,method,format,writer);
-                run.Run_Progress();
-            }
-            default -> throw new Exception("you entered invalid value of title subject");
         }
     }
 

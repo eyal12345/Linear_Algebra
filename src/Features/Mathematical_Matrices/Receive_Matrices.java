@@ -16,7 +16,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     @Override
     // invoke which method match by method input user
-    public void Fix_Method_Value() {
+    public String Fix_Method_Value(String method) {
         if (method.startsWith("LU")) {
             method = "LU_Multiplication";
         } else if (method.startsWith("LLT")) {
@@ -30,6 +30,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
         } else if (method.startsWith("LDLT2") || method.startsWith("LDLT_2")) {
             method = "LDLT_Multiplication_2";
         }
+        return method;
     }
 
     /////////////////////////////////////////////// Input Matrices ///////////////////////////////////////////////
@@ -151,6 +152,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
     public void User_Interface(float[][] L) throws Exception {
         int n = L.length;
         float[][] U, D, LT;
+        method = Fix_Method_Value(method);
         switch (method) {
             case "LU_Multiplication" -> {
                 writer.println("find the matrix by L and U multiplication:");

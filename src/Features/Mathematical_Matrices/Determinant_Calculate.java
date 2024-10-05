@@ -15,7 +15,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     @Override
     // invoke which method match by method input user
-    public void Fix_Method_Value() {
+    public String Fix_Method_Value(String method) {
         if (method.startsWith("Regular")) {
             method = "Regular_Method";
         } else if (method.startsWith("Special")) {
@@ -23,6 +23,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
         } else if (method.startsWith("Special2") || method.startsWith("Special_2")) {
             method = "Special_Method_2";
         }
+        return method;
     }
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
@@ -73,6 +74,7 @@ public class Determinant_Calculate extends ShareTools implements MenuActions {
     public void User_Interface(float[][] M) throws Exception {
         int n = M.length;
         float det;
+        method = Fix_Method_Value(method);
         switch (method) {
             case "Regular_Method" -> {
                 Display_Status_Matrix(M,format);

@@ -2,7 +2,7 @@ package Features;
 
 public interface MenuActionsSLE {
 
-    void Fix_Method_Value();
+    String Fix_Method_Value(String method);
 
     void User_Interface(float[][] A, float[][] b) throws Exception;
 

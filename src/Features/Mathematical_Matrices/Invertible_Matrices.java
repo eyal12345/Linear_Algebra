@@ -69,7 +69,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
 
     @Override
     // invoke which method match by method input user
-    public void Fix_Method_Value() {
+    public String Fix_Method_Value(String method) {
         if (method.startsWith("Formula")) {
             method = "Formula_Method";
         } else if (method.startsWith("Upper")) {
@@ -81,6 +81,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
         } else if (method.startsWith("Elementary")) {
             method = "Elementary_Matrices_Method";
         }
+        return method;
     }
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
@@ -286,7 +287,7 @@ public class Invertible_Matrices extends ShareTools implements MenuActions {
     // choose option in order to correctness check for M matrix
     public void User_Interface(float[][] M) throws Exception {
         InvM = Unit_Matrix(M.length);
-        Fix_Method_Value();
+        method = Fix_Method_Value(method);
         switch (method) {
             case "Formula_Method" -> {
                 writer.println("implement the solution by formula: Inv(M) = (1/|M|) * Adj(M)");

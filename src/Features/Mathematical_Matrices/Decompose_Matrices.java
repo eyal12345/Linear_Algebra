@@ -15,7 +15,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
     /////////////////////////////////////////////// Write Methods /////////////////////////////////////////////////
     @Override
     // invoke which method match by method input user
-    public void Fix_Method_Value() {
+    public String Fix_Method_Value(String method) {
         if (method.startsWith("LU")) {
             method = "LU_Decomposition";
         } else if (method.startsWith("LLT")) {
@@ -29,6 +29,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
         } else if (method.startsWith("LDLT2") || method.startsWith("LDLT_2")) {
             method = "LDLT_Decomposition_2";
         }
+        return method;
     }
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
@@ -233,6 +234,7 @@ public class Decompose_Matrices extends ShareTools implements MenuActions {
     @Override
     // get the matrix components
     public void User_Interface(float[][] M) throws Exception {
+        method = Fix_Method_Value(method);
         switch (method) {
             case "LU_Decomposition" -> {
                 writer.println("find L and U by decomposition of M:");
