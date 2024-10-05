@@ -237,7 +237,7 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         }
     }
 
-    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    ///////////////////////////////////////////////// SLE Methods /////////////////////////////////////////////////
     // check if exist invalid row in the system which is not allow to reach solution
     public boolean Is_Invalid_System(float[][] A, float[][] b) {
         int m = A.length;
@@ -264,6 +264,36 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
             }
         }
         return false;
+    }
+
+    // get the index column from the specific row in the matrix which are indicating intersection between zero rows and zero columns
+    public int Intersection_Zero_Row_Col(float[][] A, int r) {
+        int n = A[0].length;
+        for (int c = 0; c < n; c++) {
+            if (Is_Zero_Col(A,c) && Is_Zero_Row(A,r)) {
+                return c;
+            }
+        }
+        return -1;
+    }
+
+    // find two columns in the matrix which are linearly dependent
+    public int Linear_Dependent_Columns(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int c1 = 0; c1 < n - 1; c1++) {
+            for (int c2 = c1 + 1; c2 < n; c2++) {
+                Vector<Float> C  = new Vector<Float>();
+                for (int r = 0; r < m; r++) {
+                    if (A[r][c1] != 0 || A[r][c2] != 0) {
+                        C.add(A[r][c1] / A[r][c2]);
+                    }
+                }
+                if (Is_Equals_Values(C) && C.size() > 1) {
+                    return c1;
+                }
+            }
+        }
+        return -1;
     }
 
     // check if exists two vectors in the matrix which are linearly dependent
