@@ -3,6 +3,7 @@ package Features.System_Linear_Equations;
 import Features.MenuActionsSLE;
 import Features.ShareTools;
 import java.io.PrintWriter;
+import java.util.Vector;
 
 public class System_Linear_Equations extends ShareTools implements MenuActionsSLE {
     public float[][] A;
@@ -234,6 +235,79 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         } else {
             return "solve the next system in R" + n + " space (" + m + " equations)(" + n + " unknowns):";
         }
+    }
+
+    ////////////////////////////////////////////////// Questions /////////////////////////////////////////////////
+    // check if exist invalid row in the system which is not allow to reach solution
+    public boolean Is_Invalid_System(float[][] A, float[][] b) {
+        int m = A.length;
+        for (int i = 0; i < m; i++) {
+            if (Is_Zero_Row(A,i) && !Is_Zero_Row(b,i)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // check if the specific row in the matrix is a unit vector
+    public boolean Is_Exist_Vector(float[][] A, int r) {
+        int m = A.length;
+        float[] v = Row_from_Matrix(A,r);
+        v[r] = (Is_Zero_Vector(v)) ? 1 : v[r];
+        int c1 = Index_for_Unit_Vector(v);
+        for (int i = 0; i < m; i++) {
+            if (i != r && Is_Unit_Vector(A,r) && Is_Unit_Vector(A,i)) {
+                int c2 = Index_for_Unit_Vector(Row_from_Matrix(A,i));
+                if (c1 == c2 && c1 != -1) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // check if exists two vectors in the matrix which are linearly dependent
+    public boolean Is_Linear_Dependent_Rows(float[][] A) {
+        int m = A.length, n = A[0].length;
+        for (int r1 = 0; r1 < m - 1; r1++) {
+            for (int r2 = r1 + 1; r2 < m; r2++) {
+                if (!Is_Unit_Vector(A,r1) && !Is_Unit_Vector(A,r2)) {
+                    Vector<Float> R  = new Vector<Float>();
+                    for (int j = 0; j < n; j++) {
+                        if (A[r1][j] != 0 || A[r2][j] != 0) {
+                            R.add(A[r1][j] / A[r2][j]);
+                            if (r2 == r1 + 1 && Is_Equals_Values(R) && R.size() >= 2) {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean Is_Linear_Independent(float[][] A, float[][] b) {
+        int m = A.length, n = A[0].length;
+        for (int r = 0; r < m; r++) {
+            if (Is_Zero_Row(A,r) && b[r][0] != 0) {
+                return true;
+            }
+        }
+        for (int r1 = 0; r1 < m - 1; r1++) {
+            for (int r2 = r1 + 1; r2 < m; r2++) {
+                Vector<Float> R  = new Vector<Float>();
+                for (int j = 0; j < n; j++) {
+                    if (A[r1][j] != 0 || A[r2][j] != 0) {
+                        R.add(A[r1][j] / A[r2][j]);
+                    }
+                }
+                if (Is_Equals_Values(R) && !R.isEmpty() && (b[r1][0] != 0 || b[r2][0] != 0) && (b[r1][0] / b[r2][0] != R.get(0))) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //////////////////////////////////////////// Methods to Solution ////////////////////////////////////////////
