@@ -218,6 +218,29 @@ public class ShareTools {
         return false;
     }
 
+    public boolean Is_Linear_Independent(float[][] A, float[][] b) {
+        int m = A.length, n = A[0].length;
+        for (int r = 0; r < m; r++) {
+            if (Is_Zero_Row(A,r) && b[r][0] != 0) {
+                return true;
+            }
+        }
+        for (int r1 = 0; r1 < m - 1; r1++) {
+            for (int r2 = r1 + 1; r2 < m; r2++) {
+                Vector<Float> R  = new Vector<Float>();
+                for (int j = 0; j < n; j++) {
+                    if (A[r1][j] != 0 || A[r2][j] != 0) {
+                        R.add(A[r1][j] / A[r2][j]);
+                    }
+                }
+                if (Is_Equals_Values(R) && !R.isEmpty() && (b[r1][0] != 0 || b[r2][0] != 0) && (b[r1][0] / b[r2][0] != R.get(0))) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     ////////////////////////////////////////////////// Locations /////////////////////////////////////////////////
     // get the index from the vector that is indicating a unit vector
     public int Index_for_Unit_Vector(float[] v) {
