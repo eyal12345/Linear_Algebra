@@ -67,8 +67,10 @@ public class Elementary_Matrices_Method extends System_Linear_Equations_Extended
             A = this.A; b = this.b;
             Retreat_Elementary_Action(A,b,i);
             Sum_Elementary_Action(A,b,j,i);
+            A = this.A; b = this.b;
             b[j][0] = (b[j][0] >= -0.0001 && b[j][0] <= 0.0001) ? 0 : b[j][0];
             Mul_Elementary_Action(A,b,j);
+            A = this.A; b = this.b;
             boolean changed = Is_Reduced_Rows(A,b,j);
             A = this.A; b = this.b;
             int m = A.length, n = A[0].length;
