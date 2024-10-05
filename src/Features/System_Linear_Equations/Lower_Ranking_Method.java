@@ -93,6 +93,7 @@ public class Lower_Ranking_Method extends System_Linear_Equations_Extended imple
         }
         if (!Is_Unit_Matrix(A)) {
             writer.println("still not yet received unit matrix");
+            A = this.A; b = this.b;
             Elementary_Method_Actions met = new Upper_Ranking_Method(A,b,method,format,writer);
             return met.Elementary_Method_Action(A,b);
         }
