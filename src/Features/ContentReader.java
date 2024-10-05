@@ -126,6 +126,7 @@ public class ContentReader {
                 default -> throw new Exception("you entered invalid value of title subject");
             }
         } catch (Exception ex) {
+            writer.close();
             if (file.delete()) {
                 System.out.println("File deleted successfully");
             } else {
