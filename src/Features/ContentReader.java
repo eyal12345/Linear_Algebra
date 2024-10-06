@@ -24,7 +24,7 @@ public class ContentReader {
         this.format = format;
     }
 
-    private String Create_Exercise_Path(String title, String space, String exercise, String format) throws IOException {
+    private String Create_Exercise_Path(String title, String space, String exercise, String format) {
         LocalDateTime cur = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH-mm-ss");
         String name = exercise.split("\\.")[0] + "_results_(" + format + ")_" + cur.format(formatter) + ".txt";
@@ -42,7 +42,7 @@ public class ContentReader {
         }
     }
 
-    private float[][] Read_Exercise(String path) throws IOException {
+    private float[][] Read_Exercise(String path) {
         List<Float> list = new ArrayList<>();
         try {
             InputStream inputStream = new FileInputStream(path);
