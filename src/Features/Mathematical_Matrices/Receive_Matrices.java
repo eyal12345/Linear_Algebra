@@ -38,6 +38,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
             System.out.print("D[" + i + "][" + i + "]->");
             D[i][i] = sc.nextFloat();
         }
+        sc.close();
         return D;
     }
 
@@ -52,6 +53,7 @@ public class Receive_Matrices extends ShareTools implements MenuActions {
                 U[i][j] = sc.nextFloat();
             }
         }
+        sc.close();
         return U;
     }
 
