@@ -465,47 +465,50 @@ public class System_Linear_Equations extends ShareTools implements MenuActionsSL
         Write_Status_System(A,b);
         if (Is_Invalid_System(A,b)) {
             writer.println("does not an exists solutions");
-            x = null;
         } else {
             method = Fix_Method_Value(method);
             switch (method) {
                 case "Invertible_Method" -> {
                     writer.println("implement the solution by invertible method:");
                     x = Invertible_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Cramer_Method" -> {
                     writer.println("implement the solution by cramer method:");
                     x = Cramer_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Forward_Backward_Method" -> {
                     writer.println("implement the solution by forward backward method:");
                     x = Forward_Backward_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Upper_Ranking_Method" -> {
                     writer.println("implement the solution by upper ranking method and then lower ranking method:");
                     Elementary_Method_Actions met = new Upper_Ranking_Method(A,b,method,format,writer);
                     x = met.Elementary_Method_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Lower_Ranking_Method" -> {
                     writer.println("implement the solution by lower ranking method and then upper ranking method:");
                     Elementary_Method_Actions met = new Lower_Ranking_Method(A,b,method,format,writer);
                     x = met.Elementary_Method_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Parallel_Ranking_Method" -> {
                     writer.println("implement the solution by parallel ranking method:");
                     Elementary_Method_Actions met = new Parallel_Ranking_Method(A,b,method,format,writer);
                     x = met.Elementary_Method_Action(A,b);
+                    Write_Solution(x);
                 }
                 case "Elementary_Matrices_Method" -> {
                     writer.println("implement the solution by elementary matrices method:");
                     Elementary_Method_Actions met = new Elementary_Matrices_Method(A,b,method,format,writer);
                     x = met.Elementary_Method_Action(A,b);
+                    Write_Solution(x);
                 }
                 default -> throw new Exception("you entered invalid value of method solution");
             }
-        }
-        if (x != null) {
-            Write_Solution(x);
         }
     }
 
